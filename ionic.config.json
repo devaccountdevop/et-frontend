@@ -1,0 +1,7 @@
+{
+  "name": "estimation-tool",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

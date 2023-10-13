@@ -1,0 +1,10 @@
+
+  <ng-container class="bodycontent" >
+    <app-dashboard-body  *ngFor="let item of items | paginate: { itemsPerPage: 10, currentPage: p }" class="bodycontent" >
+      <div class="card-header">{{ items }}</div>
+      <!-- Additional card content here -->
+    </app-dashboard-body>
+  </ng-container>
+
+
+

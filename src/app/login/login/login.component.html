@@ -1,0 +1,41 @@
+<ion-content   >
+  <ion-card>
+    <!-- <div style="height: 100%;">
+      <span class="span">
+        parveen
+      </span>
+    </div> -->
+    <div class="split-container">
+      <div class="top-part">
+       <h1 style="color: white;">Estimation Tool</h1>
+      </div>
+      <div class="right-part">
+        <h1 style="text-align: center;">Login</h1>
+         <div class="input-box" > 
+          <ion-item class="input">
+          <ion-input [(ngModel)]="userName"  name="userName" required  placeholder="User Name"></ion-input> 
+        </ion-item>
+        <ion-item >
+          <ion-input [(ngModel)]="password" name="password" required  placeholder="Password" ></ion-input> 
+          <a class="type-toggle" (click)="toggleShow()">
+            <ion-icon class="show-option" *ngIf="!showPassword" name="eye-off-outline"></ion-icon>
+            <ion-icon class="hide-option" *ngIf="showPassword" name="eye-outline"></ion-icon>
+         </a>
+        </ion-item>
+        <ion-row >
+          <P class="row" >Forgot Your Password <ion-icon name="lock-closed-outline"></ion-icon></P>
+         </ion-row>
+         <button (click)="login()" class="button2">Login</button>
+         <p class="signup" >Don't have an account? <a routerLink="/signup">Sign Up</a> </p>
+      </div>
+      </div>
+    </div>
+    
+<!--     
+     <ion-row>
+      parveen
+     </ion-row>
+    -->
+  </ion-card>
+</ion-content>
+

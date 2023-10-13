@@ -1,0 +1,82 @@
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-card>
+        <div class="split-container">
+          <div class="top-part">
+            <h1 style="color: white;">Estimation Tool</h1>
+          </div>
+          <div class="right-part">
+            <h1 style="text-align: center;">Sign Up</h1>
+            <h3 style="text-align: left; margin-left: 45px;">Create Account</h3>
+            <form class="input-box" #signupForm="ngForm" (ngSubmit)="signUp()">
+              <ion-item class="input">
+                <ion-input [(ngModel)]="userName" name="userName"  placeholder="User Name"></ion-input>
+              </ion-item>
+              <p *ngIf="this.userName.length==0" class="errormessage">{{message}}</p>
+              <ion-item class="input">
+                <ion-input [(ngModel)]="email" name="email" required email placeholder="Email Address"></ion-input>
+               
+              </ion-item>
+              <p class="errormessage" *ngIf="signupForm.form.controls['email'].hasError('required') && signupForm.form.controls['email'].touched">Email is required.</p>
+              <p class="errormessage" *ngIf="signupForm.form.controls['email'].hasError('email')">Invalid email format.</p>
+              <ion-item>
+                <ion-input [(ngModel)]="password" name="password" required placeholder="Password"></ion-input>
+                <a class="type-toggle" (click)="toggleShow()">
+                  <ion-icon class="show-option" *ngIf="!showPassword" name="eye-off-outline"></ion-icon>
+                  <ion-icon class="hide-option" *ngIf="showPassword" name="eye-outline"></ion-icon>
+                </a>
+              </ion-item>
+              <ion-item>
+                <ion-input [(ngModel)]="confirmPassword" name="confirmPassword" required placeholder="Confirm Password"></ion-input>
+              </ion-item>
+              <p *ngIf="password !== confirmPassword" class="errormessage">{{message}}</p>
+              <button style="margin-left: 10px;" type="submit" [disabled]="!signupForm.form.valid" class="button2">Create Account</button>
+            </form>
+            <p style="text-align: left;margin-left: 45px;" class="signup">Already have an account? <a routerLink="/">Login</a></p>
+          </div>
+        </div>
+      </ion-card>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-card>
+        <div class="split-container">
+          <div class="top-part">
+            <h1 style="color: white;">Estimation Tool</h1>
+          </div>
+          <div class="right-part">
+            <h1 style="text-align: center;">Sign Up</h1>
+            <h3 style="text-align: left; margin-left: 45px;">Create Account</h3>
+            <form class="input-box" #signupForm="ngForm" (ngSubmit)="signUp()">
+              <ion-item class="input">
+                <ion-input [(ngModel)]="userName" name="userName" required placeholder="User Name"></ion-input>
+              </ion-item>
+              <ion-item class="input">
+                <ion-input [(ngModel)]="email" name="email" required email placeholder="Email Address"></ion-input>
+                <p class="errormessage" *ngIf="signupForm.form.controls['email'].hasError('required') && signupForm.form.controls['email'].touched">Email is required.</p>
+                <p class="errormessage" *ngIf="signupForm.form.controls['email'].hasError('email')">Invalid email format.</p>
+              </ion-item>
+              <ion-item>
+                <ion-input [(ngModel)]="password" name="password" required placeholder="Password"></ion-input>
+                <a class="type-toggle" (click)="toggleShow()">
+                  <ion-icon class="show-option" *ngIf="!showPassword" name="eye-off-outline"></ion-icon>
+                  <ion-icon class="hide-option" *ngIf="showPassword" name="eye-outline"></ion-icon>
+                </a>
+              </ion-item>
+              <ion-item>
+                <ion-input [(ngModel)]="confirmPassword" name="confirmPassword" required placeholder="Confirm Password"></ion-input>
+              </ion-item>
+              <p *ngIf="password !== confirmPassword" class="errormessage">{{message}}</p>
+              <button style="margin-left: 10px;" type="submit" [disabled]="!signupForm.form.valid" class="button2">Create Account</button>
+            </form>
+            <p style="text-align: left;margin-left: 45px;" class="signup">Already have an account? <a routerLink="/">Login</a></p>
+          </div>
+        </div>
+      </ion-card>
+    </ion-row>
+  </ion-grid>
+</ion-content>
