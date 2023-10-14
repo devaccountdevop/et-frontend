@@ -10,9 +10,12 @@ import { LoginModule } from './login/login.module';
 import { FormsModule } from '@angular/forms';
 import { HomepageModule } from './homepage/homepage.module';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { EtCommonModule } from './et-common/et-common.module';
+import { sample } from 'rxjs';
+//import { FilterPipe } from './filter.pipe';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ],
   imports: [BrowserModule, 
     IonicModule.forRoot(), 
     AppRoutingModule,
@@ -20,7 +23,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     FormsModule,
     HttpClientModule,
     HomepageModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    EtCommonModule,
    
   
   ],

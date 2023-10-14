@@ -71,9 +71,9 @@
       </div>
     </div>
   </ion-header>
-  <ion-content>
-    <div class="split-container">
-      <div class="top-part">
+  <ion-content style="overflow-x: hidden;" >
+    <ion-row style="height: 100%;"   >
+      <ion-col   size="2" style="margin: 0px; background-color: white;box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);height: 100%;">
         <ion-row style="
             display: flex;
             justify-content: center;
@@ -130,16 +130,16 @@
             Setting
           </ion-col>
         </ion-row>
-      </div>
-      <div class="right-part">
+      </ion-col>
+      <ion-col size="10"  style="margin: 0px; height: 100%; color: black; background-color: white;box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);" >
         <div class="innerbox">
           <ion-row class="subheader">
             <ion-buttons>
-              <button expand="block" (click)="setOpen(true)" class="button2">
+              <button expand="block" (click)="openModal()" class="button2">
                 Add Client
               </button>
 
-              <p style="margin-left: 330px">Client</p>
+              <p style="margin-left: 280px">Client</p>
               <select style="margin-left: 10px; width: 150px" [(ngModel)]="selectedValue">
                 <option>Select</option>
                 <option *ngFor="let item of dataList" [value]="item.code">
@@ -152,7 +152,7 @@
               <ion-icon style="margin-left: 5px; margin-bottom: -1.7px" name="sync-outline"></ion-icon>
             </button>
           </ion-row>
-          <ion-row>
+          <ion-row style="height: 35px;">
             <p style="margin-left: 15px; font-size: small">Show</p>
             <select (change)="optionSelected()" style="
                 margin-left: 10px;
@@ -168,15 +168,15 @@
                 margin-left: 15px;
                 font-size: small;
                 text-align: end;
-                margin-left: 680px;
+                margin-left: 52%;
                 margin-top: 20px;
               ">
               Search:
             </p>
           
-            <ion-searchbar style="width: 300px"></ion-searchbar>
+            <ion-searchbar [(ngModel)]="searchText" style="width: 300px"></ion-searchbar>
           </ion-row>
-         <span style="position: absolute;left: 53%; margin-top: -20px; color: rgba(26, 74, 96, 0.9);"><b>Projects({{names.length}})</b></span>
+         <span style="margin-left: 45%; margin-bottom: 10px; color: rgba(26, 74, 96, 0.9);"><b>Projects({{projectNamesWithId.length}})</b></span>
           <div class="contentlist">
             <ion-grid [fixed]="true">
               <ion-row style="
@@ -185,23 +185,21 @@
                   overflow-x: auto;
                   white-space: nowrap;
                 ">
-                <ng-container class="bodycontent" *ngFor="
-                    let name of names
-                      | paginate
-                        : { itemsPerPage: pageFilterDefault, currentPage: p }
-                  ">
+                <ng-container *ngFor="
+                    let item of projectNamesWithId |  filter :searchText | paginate: { itemsPerPage: pageFilterDefault, currentPage: p }  ">
                   <app-dashboard-body class="bodycontent">
-                    <div class="card-header">{{ name }}</div>
+                    <div class="card-header">{{ item.name }}</div>
                     <!-- Additional card content here -->
                   </app-dashboard-body>
                 </ng-container>
               </ion-row>
             </ion-grid>
+            
           </div>
           <pagination-controls style="font-size: small; " (pageChange)="p = $event"></pagination-controls>
         </div>
-      </div>
-    </div>
+      </ion-col>
+    </ion-row>
     <ion-modal [isOpen]="isModalOpen" [backdropDismiss]="false">
       <ng-template class="model">
         <ion-header class="popupheader">
@@ -210,7 +208,8 @@
             <ion-button (click)="setOpen(false)"><span>&#10006;</span></ion-button>
           </ion-buttons>
         </ion-header>
-        <ion-content class="ion-padding custom-modal-content">
+        <ion-content class="ion-padding custom-modal-content" style="height: 70vh;">
+          <!-- Adjust the width and height as per your requirements -->
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni illum
             quidem recusandae ducimus quos reprehenderit. Veniam, molestias
@@ -218,6 +217,7 @@
             Eaque, dicta.
           </p>
         </ion-content>
+    
       </ng-template>
     </ion-modal>
   </ion-content>

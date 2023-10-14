@@ -5,6 +5,7 @@ import { TestComponent } from './test/test.component';
 import { SideBarComponent } from './homepage/side-bar/side-bar.component';
 
 import { DashboadComponent } from './homepage/side-bar/dashboad/dashboad.component';
+import { AddClientModelComponent } from './add-client-model/add-client-model.component';
 
 const routes: Routes = [
 
@@ -12,6 +13,8 @@ const routes: Routes = [
   { path: 'test', component: TestComponent },
   { path: 'sidebar', component: SideBarComponent },
   { path: 'dashboard', component: DashboadComponent },
+  { path: 'addclient', component: AddClientModelComponent },
+
 ];
 
 @NgModule({

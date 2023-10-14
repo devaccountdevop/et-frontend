@@ -11,19 +11,28 @@ import { DashboardBodyComponent } from './dashboard-body/dashboard-body.componen
 import { TileComponent } from './homepage/tile/tile.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { DashboadComponent } from './homepage/side-bar/dashboad/dashboad.component';
+import { EtCommonModule } from '../et-common/et-common.module';
+import { FilterPipe } from '../pipes/filter.pipe';
+import { AddClientModelComponent } from './add-client-model/add-client-model.component';
+
+
 
 
 @NgModule({
   declarations: [HomepageComponent, SideBarComponent, 
-    TestComponent, 
+    TestComponent, AddClientModelComponent,
     DashboardBodyComponent,
-  TileComponent, DashboadComponent],
+  TileComponent, DashboadComponent, FilterPipe],
   imports: [
     CommonModule,
     HomepageRoutingModule,
     IonicModule,
     FormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    
+  
+   
+   
   ]
   
 })
