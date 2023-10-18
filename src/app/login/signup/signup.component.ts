@@ -31,9 +31,7 @@ export class SignupComponent  implements OnInit {
   ngOnInit() {
 
   }
-  login(){
-
-  }
+ 
   updateFormValidity() {
     this.isFormValid = this.signupForm.valid && this.password === this.confirmPassword;
   }

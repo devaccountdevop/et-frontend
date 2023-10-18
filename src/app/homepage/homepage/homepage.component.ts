@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { TestComponent } from '../test/test.component';
 import { ModalController } from '@ionic/angular';
+import { ProjectsService } from 'src/app/services/homepageServices/projects.service';
+import { Project } from './projects';
+import { MatDialog } from '@angular/material/dialog';
+import { AddClientModelComponent } from '../add-client-model/add-client-model.component';
 
 
 @Component({
@@ -10,22 +14,17 @@ import { ModalController } from '@ionic/angular';
 })
 export class HomepageComponent  implements OnInit {
 
-  //dataList: Array<any> = [];
-  schedule: { branch: ''; } | undefined;
   pageListNo = 15;
- 
+  menuType: string = 'reveal';
+  isModalOpen : boolean = false;
+  isDropdownOpen = false;
 
   // Pagination variables
   p: number = 1;
   searchText:any;
+  projectList: Project[] = [];
 
 
-  loadItems() {
-    // Simulated data loading
-    this.projectNamesWithId = [
-    
-    ];
-  }
   dataList = [
     { code: '1', name: 'M10' },
     { code: '2', name: ' Wipro' },
@@ -41,53 +40,33 @@ pageFilterDefault: any= 15;
 
 
   selectedValue: string = 'Select'; 
-  constructor(private modalController: ModalController ) {
+  constructor(private modalController: ModalController, private projectService: ProjectsService, public dialog: MatDialog  ) {
   
    }
-  menuType: string = 'reveal';
-  isModalOpen : boolean = false;
-  isDropdownOpen = false;
-  projectNamesWithId: { id: number, name: string }[] = [
-    { id: 1, name: 'Project1' },
-    { id: 2, name: 'Project2' },
-    { id: 3, name: 'Project3' },
-    { id: 4, name: 'Project4' },
-    { id: 5, name: 'Project6' },
-    { id: 6, name: 'Project6' },
-    { id: 7, name: 'Project7' },
-    { id: 8, name: 'Project8' },
-    { id: 9, name: 'Project9' },
-    { id: 10, name: 'Project10' },
-    { id: 11, name: 'Project11' },
-    { id: 12, name: 'Project12' },
-    { id: 13, name: 'Project13' },
-    { id: 14, name: 'Project14' },
-    { id: 15, name: 'Project15' },
-    { id: 16, name: 'Project16' },
-    { id: 17, name: 'Project17' },
-    { id: 18, name: 'Project18' },
-    { id: 19, name: 'Project19' },
-    { id: 20, name: 'Project20' },
-    { id: 21, name: 'Project21' },
-    { id: 22, name: 'Project22' },
-    { id: 23, name: 'Project23' },
-    { id: 34, name: 'Project24' },
-    { id: 25, name: 'Project25' },
-    { id: 26, name: 'Project26' },
-    { id: 27, name: 'Project27' },
-    { id: 28, name: 'Project28' },
-    { id: 29, name: 'Project29' },
-    { id: 30, name: 'test' },
-    // Add more data here...
-  ];
+
+   ngOnInit() {
+    this.projectService.getProjects().subscribe((res)=>{
+     this.projectList=res.data;
+     console.log(res.data);
+       });   
+   }
+   setOpen(isOpen: boolean) {
+     this.isModalOpen = isOpen;
+ 
+     
+   }
+   loadItems() {
+    // Simulated data loading
+    this.projectList = [
+    
+    ];
+  }
+
+ 
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
-  ngOnInit() {}
-  setOpen(isOpen: boolean) {
-    this.isModalOpen = isOpen;
-    
-  }
+
   optionSelected() {
    
     console.log(this.pageFilterDefault); // This will print the selected option's value
@@ -102,5 +81,31 @@ pageFilterDefault: any= 15;
     await modal.present();
   }
 
-  
+  handleCardClick(projectId:number){
+    console.log("handel in same file:"+ projectId)
+  }
+
+  public isDialogVisible: boolean = false;
+  animal!: string;
+  name!: string;
+ 
+ //modal
+ openDialog(): void {
+
+  let dialogRef = this.dialog.open(AddClientModelComponent, {
+    width: '700px',
+    height: '300px',
+    // maxHeight:'50000px',
+    maxWidth:'100%',
+    
+    data: { name: this.name, animal: this.animal },
+    disableClose: true
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    console.log('The dialog was closed');
+    this.animal = result;
+    
+  });
+}
 }

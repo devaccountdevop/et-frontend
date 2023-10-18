@@ -1,3 +1,54 @@
-<p>
-  add-client-model works!
-</p>
+<div class="custom-dialog-header"><span class="header">Client</span>
+  <span class="closebtn">
+    <ion-buttons>
+      <ion-button mat-button [mat-dialog-close]="true"><span>&#10006;</span></ion-button>
+    </ion-buttons>
+  </span>
+</div>
+<mat-dialog-content style="padding: 2px;">
+  <div class="table">
+    <table>
+      <tr>
+        <th style="width: 150px;">Client Name</th>
+        <th style="width: 150px;">User Name</th>
+        <th style="width: 150px;">Taken</th>
+      </tr>
+      <tr *ngFor="let item of clientList let i = index" [ngClass]="{'editing': item.isEditing}" style="height: 30px;">
+        <td style="width: 150px;">
+          <span *ngIf="!item.isEditing">{{ item.clientName }}</span>
+          <input style="width: 80%;" *ngIf="item.isEditing" type="text" [(ngModel)]="item.clientName" />
+        </td>
+        <td style="width: 150px;">
+          <span *ngIf="!item.isEditing">{{ item.jiraUserName }}</span>
+          <input style="width: 80%;" *ngIf="item.isEditing" type="text" [(ngModel)]="item.jiraUserName" />
+        </td>
+        <td style="width: 150px;">
+          <span *ngIf="!item.isEditing">{{ item.token }}</span>
+          <input style="width: 80%;" *ngIf="item.isEditing" type="text" [(ngModel)]="item.token" />
+        </td>
+        <td style="width: 20px; "><button
+            style="margin-left: -30px; width: 80%; font-size: medium; color: rgba(26, 74, 96, 0.9); background-color: unset;"
+            *ngIf="!item.isEditing" (click)="toggleEdit(item)"><span style="font-size: larger;"
+              class="edit">&#9998;</span></button></td>
+        <td style="width: 30px; margin-left: -15px;"><button class="clientbtnadd"><span>&#9866;</span></button></td>
+        <td style="width: 30px; margin-left: 10px; "><button (click)="updateClient(item, item.id)" class="clientbtnadd"
+            style="background-color: rgba(26, 74, 96, 0.9);"><span>&#10011;</span></button></td>
+      </tr>
+
+      <tr style="width: 100%;">
+        <td style="width: 150px;"><input class="input" type="text" [(ngModel)]="clientName" required
+            placeholder="Enter Client" /></td>
+        <td style="width: 150px;"><input class="input" type="email" [(ngModel)]="jiraUserName" required
+            placeholder="Enter User Name" /></td>
+        <td style="width: 150px;"><input class="input" type="password" [(ngModel)]="token" required
+            placeholder="Enter Token" /></td>
+        <td></td>
+        <td> <button class="clientbtnremove" (click)="clearInputs()"><span>&#9866;</span></button></td>
+        <td style="width: 30px; margin-left: 10px; ">
+          <button class="clientbtnadd" (click)="addClient()"><span>&#10011;</span></button>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+</mat-dialog-content>

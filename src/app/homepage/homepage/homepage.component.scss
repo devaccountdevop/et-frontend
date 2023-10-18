@@ -101,7 +101,7 @@ box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 .innerbox{
   width: 99%;
-  height: 98%;
+  height: 98.5%;
   margin-left: 5px;
   margin-top: 5px;
   box-shadow: 0px 4px 11px rgba(0, 0, 0, 0.3);
@@ -250,8 +250,3 @@ input#search-bar{
 
 
 
-:host {
-  --width: 48%;
-  --min-width: auto;
-  --max-width: auto;
-  --height: 20%;}

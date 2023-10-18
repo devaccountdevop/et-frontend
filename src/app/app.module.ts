@@ -12,6 +12,9 @@ import { HomepageModule } from './homepage/homepage.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { EtCommonModule } from './et-common/et-common.module';
 import { sample } from 'rxjs';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
 //import { FilterPipe } from './filter.pipe';
 
 @NgModule({
@@ -25,10 +28,11 @@ import { sample } from 'rxjs';
     HomepageModule,
     NgxPaginationModule,
     EtCommonModule,
+    MatDialogModule
    
   
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

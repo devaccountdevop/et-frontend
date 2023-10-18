@@ -14,6 +14,7 @@ import { DashboadComponent } from './homepage/side-bar/dashboad/dashboad.compone
 import { EtCommonModule } from '../et-common/et-common.module';
 import { FilterPipe } from '../pipes/filter.pipe';
 import { AddClientModelComponent } from './add-client-model/add-client-model.component';
+import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
 
 
 
@@ -29,10 +30,13 @@ import { AddClientModelComponent } from './add-client-model/add-client-model.com
     IonicModule,
     FormsModule,
     NgxPaginationModule,
-    
+    MatDialogModule
   
    
    
+  ],
+  providers: [
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}}
   ]
   
 })
