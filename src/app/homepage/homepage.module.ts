@@ -6,7 +6,7 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { SideBarComponent } from './homepage/side-bar/side-bar.component';
-import { TestComponent } from './test/test.component';
+
 import { DashboardBodyComponent } from './dashboard-body/dashboard-body.component';
 import { TileComponent } from './homepage/tile/tile.component';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -20,8 +20,7 @@ import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/d
 
 
 @NgModule({
-  declarations: [HomepageComponent, SideBarComponent, 
-    TestComponent, AddClientModelComponent,
+  declarations: [HomepageComponent, SideBarComponent,  AddClientModelComponent,
     DashboardBodyComponent,
   TileComponent, DashboadComponent, FilterPipe],
   imports: [

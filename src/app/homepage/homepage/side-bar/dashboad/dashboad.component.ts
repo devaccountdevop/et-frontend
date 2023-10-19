@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { TestComponent } from 'src/app/homepage/test/test.component';
 
 @Component({
   selector: 'app-dashboad',
@@ -58,15 +57,6 @@ pageFilterDefault: any= 15;
  optionSelected() {
   
    console.log(this.pageFilterDefault); // This will print the selected option's value
- }
-
- async openModal() {
-   const modal = await this.modalController.create({
-     component: TestComponent,
-     cssClass: 'test.component.scss'
-   });
-   console.log(this.pageFilterDefault);
-   await modal.present();
  }
 
 }

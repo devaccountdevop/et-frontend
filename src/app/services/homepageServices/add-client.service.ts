@@ -22,4 +22,14 @@ export class AddClientService {
     return this.http.get<any>(fullApiUrl);
 
   }
+
+  public updateClient( formData:FormData): Observable<any> {
+    const fullApiUrl = this.apiUrl + "/updateclient";
+    return this.http.put<any>(fullApiUrl, formData);
+  }
+
+  public deleteClient( id:any): Observable<any> {
+    const fullApiUrl = this.apiUrl + "/deleteclient/"+id;
+    return this.http.delete<any>(fullApiUrl);
+  }
 }

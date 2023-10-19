@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { TestComponent } from '../test/test.component';
 import { ModalController } from '@ionic/angular';
 import { ProjectsService } from 'src/app/services/homepageServices/projects.service';
 import { Project } from './projects';
@@ -70,15 +69,6 @@ pageFilterDefault: any= 15;
   optionSelected() {
    
     console.log(this.pageFilterDefault); // This will print the selected option's value
-  }
-
-  async openModal() {
-    const modal = await this.modalController.create({
-      component: TestComponent,
-      cssClass: 'test.component.scss'
-    });
-    console.log(this.pageFilterDefault);
-    await modal.present();
   }
 
   handleCardClick(projectId:number){

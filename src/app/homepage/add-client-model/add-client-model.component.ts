@@ -10,7 +10,7 @@ import { AddClientService } from 'src/app/services/homepageServices/add-client.s
 })
 export class AddClientModelComponent  implements OnInit {
 
- 
+  errormsg: boolean = false;
   clientName: string = '';
   jiraUserName: string = '';
   token: string = '';
@@ -46,9 +46,12 @@ if(this.clientName.length!==0 && this.jiraUserName.length!==0 && this.token.leng
   this.addClientService.saveClient(formData).subscribe((res)=>{
         this.clientList.push(res.data);
         this.clientName = '';
-    this.jiraUserName = '';
-    this.token = '';
+       this.jiraUserName = '';
+       this.token = '';
+       this.errormsg =false;
   });
+}else{
+  this.errormsg =true;
 }
     
   }
@@ -59,9 +62,23 @@ if(this.clientName.length!==0 && this.jiraUserName.length!==0 && this.token.leng
   }
   updateClient(item : any, id:any){
     item.isEditing = false;
-    console.log(id);
-
-  }
+      const formData = new FormData();
+      formData.append('clientName', item.clientName);
+      formData.append('userName', item.jiraUserName);
+      formData.append('token', item.token);
+      formData.append('userId', item.userId);
+      formData.append('id', id);
+    this.addClientService.updateClient(formData).subscribe((res)=>{
+    });
+    }
+    deleteClient(id:any){
+this.addClientService.deleteClient(id).subscribe((res)=>{
+if(res.code==200){
+  this.clientList = this.clientList.filter(item => item.id !== id);
+} 
+});
+    }
+    
   closeDialog(){
    this.dialog.closeAll();
    this.clientName = '';
@@ -69,5 +86,7 @@ if(this.clientName.length!==0 && this.jiraUserName.length!==0 && this.token.leng
     this.token = '';
 
   }
+
+
 
 }
