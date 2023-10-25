@@ -15,7 +15,7 @@
           <ion-icon style="margin-left: 5px" name="chevron-down-outline"></ion-icon></ion-button>
       </ion-buttons>
       <div class="dropdown-content" [ngClass]="{ show: isDropdownOpen }">
-        <a style="cursor: pointer;"  (click)="logout()">Logout</a>
+        <a href="/">Logout</a>
       </div>
     </div>
   </ion-header>
@@ -46,7 +46,7 @@
             Projects
           </ion-col>
         </ion-row>
-        <ion-row style="
+        <!-- <ion-row style="
             display: flex;
             justify-content: center;
             margin-top: -10px;
@@ -78,44 +78,28 @@
             <img src="/assets/images/Settings.png" alt="Your Image" style="margin-bottom: -6px; margin-right: 10px" />
             Setting
           </ion-col>
-        </ion-row>
+        </ion-row> -->
       </ion-col>
       <ion-col size="10"
         style="margin: 0px; height: 100%; color: black; background-color: white;box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);">
         <div class="innerbox">
-          <ion-row class="subheader">
-            <ion-buttons>
-              <button expand="block" (click)="openDialog()" class="button2">
-                Add Client
-              </button>
-              <!-- <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-backdrop="false"
-                        data-target="#myModal">Request Time Off</button> -->
-
-              <p style="margin-left: 280px">Client</p>
-              <select (change)="getProjectByselectedClient()" style="margin-left: 10px; width: 150px"
-                [(ngModel)]="clientId">
-                <option *ngFor="let item of clientList" [value]="item.id">
-                  {{ item.clientName }}
-                </option>
-              </select>
-            </ion-buttons>
-            <button class="syncbtn">
-              Sync
-              <ion-icon style="margin-left: 5px; margin-bottom: -1.7px" name="sync-outline"></ion-icon>
-            </button>
+          <ion-row class="subheader" style="align-items: center;">
+              <span  style="margin-left: 40%; color: rgb(63, 61, 61); "> <b>Projects: {{projectName}}</b></span>
+              <button style="margin-left: 35%;" type="submit" routerLink="/homepage"  class="button2">Back</button>
           </ion-row>
           <ion-row style="height: 35px;">
-            <p style="margin-left: 15px; font-size: small">Show</p>
+            <p style="margin-left: 15px; font-size: small; margin-top: 25px;">Show</p>
             <select (change)="optionSelected()" style="
                 margin-left: 10px;
                 width: 70px;
                 height: 20px;
-                margin-top: 10px;
+                margin-top: 23px;
               " [(ngModel)]="pageFilterDefault">
               <option *ngFor="let item of pageFilter" [value]="item.code">
                 {{ item.name }}
               </option>
             </select>
+
             <p style="
                 margin-left: 15px;
                 font-size: small;
@@ -126,10 +110,13 @@
               Search:
             </p>
 
-            <ion-searchbar [(ngModel)]="searchText" style="width: 300px; "></ion-searchbar>
+            <ion-searchbar [(ngModel)]="searchText" style="width: 300px"></ion-searchbar>
           </ion-row>
-          <span
-            style="margin-left: 45%; margin-bottom: 10px; color: rgba(26, 74, 96, 0.9);"><b>Projects({{projectList.length}})</b></span>
+        <span style="margin-top: -15px; position: absolute; left: 38%;" ><button  class="syncbtn">
+          Sync
+          <ion-icon style="margin-left: 5px; margin-bottom: -1.7px" name="sync-outline"></ion-icon>
+        </button></span>
+         
           <div class="contentlist">
             <ion-grid [fixed]="true">
               <ion-row style="
@@ -140,14 +127,15 @@
                 ">
                 <ng-container
                   *ngFor="
-                    let item of projectList |  filter :searchText | paginate: { itemsPerPage: pageFilterDefault, currentPage: p }  ">
-                  <app-dashboard-body (click)="getSprints(item.name, item.id)" class="bodycontent">
+                    let item of sprintsList |  filter :searchText | paginate: { itemsPerPage: pageFilterDefault, currentPage: p }  ">
+                  <app-dashboard-body  class="bodycontent">
                     <div class="card-header">{{ item.name }}</div>
                     <!-- Additional card content here -->
                   </app-dashboard-body>
                 </ng-container>
               </ion-row>
             </ion-grid>
+
           </div>
           <pagination-controls style="font-size: small; " (pageChange)="p = $event"></pagination-controls>
         </div>

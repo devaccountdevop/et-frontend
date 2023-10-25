@@ -85,3 +85,6 @@
       display: inline-block;
      
  }
+ .alert-wrapper {
+  z-index: 200; /* Set a value higher than the Modal's z-index */
+}

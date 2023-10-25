@@ -11,7 +11,7 @@
       <tr>
         <th style="width: 150px;">Client Name</th>
         <th style="width: 150px;">User Name</th>
-        <th style="width: 150px;">Taken</th>
+        <th style="width: 150px;">Token</th>
       </tr>
       <tr *ngFor="let item of clientList let i = index" [ngClass]="{'editing': item.isEditing}" style="height: 30px;">
         <td style="width: 150px;">
@@ -46,8 +46,8 @@
             style="margin-left: -30px; width: 80%; font-size: medium; color: rgba(26, 74, 96, 0.9); background-color: unset;"
             *ngIf="!item.isEditing" (click)="toggleEdit(item)"><span style="font-size: larger;"
               class="edit">&#9998;</span></button></td>
-        <td style="width: 30px; margin-left: -15px;"><button class="clientbtnadd" (click)="deleteClient(item.id)" ><span>&#9866;</span></button></td>
-        <td style="width: 30px; margin-left: 10px; "><button [disabled]="!item.isEditing" (click)="updateClient(item, item.id)" class="clientbtnadd"
+        <td style="width: 30px; margin-left: -15px;"><button class="clientbtnadd" (click)="confirmAndDeleteClient(item.id)" ><span>&#9866;</span></button></td>
+        <td style="width: 30px; margin-left: 10px; "><button [disabled]="!item.isEditing" (click)="confirmAndUpdateClient(item, item.id)" class="clientbtnadd"
             style="background-color: rgba(26, 74, 96, 0.9);"><span>&#10011;</span></button></td>
       </tr>
 

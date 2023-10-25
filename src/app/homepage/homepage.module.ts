@@ -10,19 +10,21 @@ import { SideBarComponent } from './homepage/side-bar/side-bar.component';
 import { DashboardBodyComponent } from './dashboard-body/dashboard-body.component';
 import { TileComponent } from './homepage/tile/tile.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { DashboadComponent } from './homepage/side-bar/dashboad/dashboad.component';
 import { EtCommonModule } from '../et-common/et-common.module';
 import { FilterPipe } from '../pipes/filter.pipe';
 import { AddClientModelComponent } from './add-client-model/add-client-model.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
+import { ClientDeleteComponent } from './add-client-model/client-delete/client-delete.component';
+import { ClientUpdateComponent } from './add-client-model/client-update/client-update.component';
+import { SprintDashboardComponent } from './sprint-dashboard/sprint-dashboard.component';
 
 
 
 
 @NgModule({
   declarations: [HomepageComponent, SideBarComponent,  AddClientModelComponent,
-    DashboardBodyComponent,
-  TileComponent, DashboadComponent, FilterPipe],
+    DashboardBodyComponent,ClientDeleteComponent,ClientUpdateComponent,
+  TileComponent, SprintDashboardComponent, FilterPipe],
   imports: [
     CommonModule,
     HomepageRoutingModule,
