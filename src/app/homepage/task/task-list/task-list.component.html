@@ -1,21 +1,23 @@
 <ion-app>
   <ion-header>
     <ion-menu-toggle>
-      <ion-button  class="menubutton" fill="clear"><span class="menu">&#9776;</span></ion-button>
+      <ion-button class="menubutton" fill="clear"><span class="menu">&#9776;</span></ion-button>
     </ion-menu-toggle>
-    <ion-button (click)="landingPage()" fill="clear"><ion-icon class="homeicon" name="home-sharp"></ion-icon></ion-button>
+    <ion-button (click)="landingPage()" fill="clear"><ion-icon class="homeicon"
+        name="home-sharp"></ion-icon></ion-button>
     <ion-title>Estimation Tool</ion-title>
     <!-- <ion-button fill="clear">
         <ion-icon class="profileicon" name="person"></ion-icon>
       </ion-button> -->
     <div class="dropdown">
       <ion-buttons>
-        <ion-button  style="color: white; margin-right: 10px; margin-top: 2%;text-transform: capitalize;" (click)="toggleDropdown()" fill="clear">
+        <ion-button style="color: white; margin-right: 10px; margin-top: 2%;text-transform: capitalize;"
+          (click)="toggleDropdown()" fill="clear">
           <ion-icon style="margin-right: 5px" name="person-circle-outline"></ion-icon>Admin
           <ion-icon style="margin-left: 5px" name="chevron-down-outline"></ion-icon></ion-button>
       </ion-buttons>
       <div class="dropdown-content" [ngClass]="{ show: isDropdownOpen }">
-        <a style="cursor: pointer;"  (click)="logout()">Logout</a>
+        <a style="cursor: pointer;" (click)="logout()">Logout</a>
       </div>
     </div>
   </ion-header>
@@ -84,27 +86,23 @@
         style="margin: 0px; height: 100%; color: black; background-color: white;box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);">
         <div class="innerbox">
           <ion-row class="subheader" style="align-items: center;">
-              <span  style="margin-left: 40%; color: rgb(63, 61, 61); "> <b>Projects: {{projectName}}</b></span>
-              <button style="margin-left: 35%;" type="submit" routerLink='/estimation-tool/homepage' class="button2">Back</button>
+            <button class="updatebtn">Update Ai Estimates In Jira</button>
+            <span ><button class="syncbtn">
+                Sync
+                <ion-icon style="margin-left: 5px; margin-bottom: -1.7px" name="sync-outline"></ion-icon>
+              </button></span>
+            <span style="margin-left: 15%; color: rgb(63, 61, 61); "> <b>Dashboard</b></span>
+            <button style="margin-left: 43%;" type="submit" routerLink='/estimation-tool/homepage'
+              class="button2">Back</button>
           </ion-row>
-          <ion-row style="height: 35px;">
-            <p style="margin-left: 15px; font-size: small; margin-top: 25px;">Show</p>
-            <select (change)="optionSelected()" style="
-                margin-left: 10px;
-                width: 70px;
-                height: 20px;
-                margin-top: 23px;
-              " [(ngModel)]="pageFilterDefault">
-              <option *ngFor="let item of pageFilter" [value]="item.code">
-                {{ item.name }}
-              </option>
-            </select>
+          <ion-row  style="height: 35px; margin-top: 5px;">
 
+            <p style="margin-left: 20px;">Sprint1</p>
             <p style="
                 margin-left: 15px;
                 font-size: small;
                 text-align: end;
-                margin-left: 54%;
+                margin-left: 60%;
                 margin-top: 20px;
               ">
               Search:
@@ -112,27 +110,58 @@
 
             <ion-searchbar [(ngModel)]="searchText" style="width: 300px"></ion-searchbar>
           </ion-row>
-        <span style="margin-top: -15px; position: absolute; left: 38%;" ><button  class="syncbtn">
-          Sync
-          <ion-icon style="margin-left: 5px; margin-bottom: -1.7px" name="sync-outline"></ion-icon>
-        </button></span>
-         
+
+
           <div class="contentlist">
             <ion-grid [fixed]="true">
               <ion-row style="
-                  margin-left: 8%;
+                  margin-left: 1.2%;
+                  margin-top: 5px;
                   height: 10%;
                   overflow-x: auto;
                   white-space: nowrap;
                 ">
-                <ng-container
+                <!-- <ng-container
                   *ngFor="
                     let item of sprintsList |  filter :searchText | paginate: { itemsPerPage: pageFilterDefault, currentPage: p }  ">
-                  <app-dashboard-body (click)="getTask(item.id)" class="bodycontent">
+                  <app-dashboard-body class="bodycontent">
                     <div class="card-header">{{ item.name }}</div>
-                    <!-- Additional card content here -->
+                     Additional card content here 
                   </app-dashboard-body>
-                </ng-container>
+                </ng-container> -->
+                <table class="table-bordered">
+                  <col style="width: 60px;" >
+                  <col style="width: 120px;">
+                  <col style="width: 200px;">
+                  <colgroup  span="4"></colgroup>
+                  <col>
+                  <tr style=" background-color: rgba(26, 74, 96, 0.9); height: 20px;padding: 0px;" class="tableheader" >
+                      <th rowspan="2" style="vertical-align : middle;text-align:center;">ID</th>
+                      <th (click)="sortData('title')" rowspan="2" style="vertical-align : middle;text-align:center;">{{ isAscending ? 'Title ▲' : 'Title ▼' }}</th>
+                      <th rowspan="2" style="vertical-align : middle;text-align:center;">Description</th>
+                      <th colspan="3" style="horizontal-align : middle;text-align:center; width: 30%; padding: 4px;">Estimates</th>
+                      <th rowspan="2" style="vertical-align : middle;text-align:center;">3-Point Estimates</th>
+                      <th rowspan="2" style="vertical-align : middle;text-align:center;">Ai Estimates</th>
+                      <th rowspan="2" style="vertical-align : middle;text-align:center;">Actual (HRS)</th>
+                  </tr>
+                  <tr>
+                      <th class="tablesubheader"  scope="col">Low</th>
+                      <th class="tablesubheader"  scope="col">Realistic</th>
+                      <th class="tablesubheader"  scope="col">High</th>
+                  </tr>
+                  <tr *ngFor="
+                  let item of tableData |  tableFilter :searchText | paginate: { itemsPerPage: pageFilterDefault, currentPage: p } | tableShort:'title' "  (click)="openDialog(item.id)" >
+                      <th  style="display: inline-block; width: 60px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{item.id}}</th>
+                      <th> {{item.title}}</th>
+                      <th>{{item.description}}</th>
+                      <th>{{item.lowEstimate}}</th>
+                      <th>{{item.realisticEstimate}}</th>
+                      <th>{{item.highEstimate}}</th>
+                      <th>{{item.threePointEstimate}}</th>
+                      <th>{{item.aiEstimate}}</th>
+                      <th>{{item.actualHrs}}</th>
+                  </tr>
+              </table>
               </ion-row>
             </ion-grid>
 

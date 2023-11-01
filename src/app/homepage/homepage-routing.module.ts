@@ -6,6 +6,7 @@ import { SideBarComponent } from './homepage/side-bar/side-bar.component';
 
 import { AddClientModelComponent } from './add-client-model/add-client-model.component';
 import { SprintDashboardComponent } from './sprint-dashboard/sprint-dashboard.component';
+import { TaskListComponent } from './task/task-list/task-list.component';
 
 const routes: Routes = [
 
@@ -13,7 +14,7 @@ const routes: Routes = [
   { path: 'sidebar', component: SideBarComponent },
   { path: 'addclient', component: AddClientModelComponent },
   { path: 'sprintdashboard', component: SprintDashboardComponent},
-
+  { path: 'tasklist', component: TaskListComponent},
 ];
 
 @NgModule({

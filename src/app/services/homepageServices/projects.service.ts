@@ -13,12 +13,12 @@ export class ProjectsService {
 
   public getProjects(id: any): Observable<any> {
 
-    const headers = new HttpHeaders({
-      'userId': "2"
-      
-    });
-    const fullApiUrl = this.apiUrl + "/getAllProjects";
+    // const headers = new HttpHeaders({
+    //   'userId': "2"
+    //{ headers: headers }
+    // });
+    const fullApiUrl = this.apiUrl + "/getAllProjects/"+id;
 
-    return this.http.get<any>(fullApiUrl, { headers: headers });
+    return this.http.get<any>(fullApiUrl);
   }
 }

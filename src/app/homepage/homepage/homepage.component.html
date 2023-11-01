@@ -10,8 +10,8 @@
       </ion-button> -->
     <div class="dropdown">
       <ion-buttons>
-        <ion-button style="color: white; margin-right: 10px; margin-top: 2%" (click)="toggleDropdown()" fill="clear">
-          <ion-icon style="margin-right: 10px" name="person-circle-outline"></ion-icon>Admin
+        <ion-button  style="color: white; margin-right: 10px; margin-top: 2%;text-transform: capitalize;" (click)="toggleDropdown()" fill="clear">
+          <ion-icon style="margin-right: 5px" name="person-circle-outline"></ion-icon>Admin
           <ion-icon style="margin-left: 5px" name="chevron-down-outline"></ion-icon></ion-button>
       </ion-buttons>
       <div class="dropdown-content" [ngClass]="{ show: isDropdownOpen }">
@@ -46,7 +46,7 @@
             Projects
           </ion-col>
         </ion-row>
-        <ion-row style="
+        <!-- <ion-row style="
             display: flex;
             justify-content: center;
             margin-top: -10px;
@@ -78,7 +78,7 @@
             <img src="/assets/images/Settings.png" alt="Your Image" style="margin-bottom: -6px; margin-right: 10px" />
             Setting
           </ion-col>
-        </ion-row>
+        </ion-row> -->
       </ion-col>
       <ion-col size="10"
         style="margin: 0px; height: 100%; color: black; background-color: white;box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);">

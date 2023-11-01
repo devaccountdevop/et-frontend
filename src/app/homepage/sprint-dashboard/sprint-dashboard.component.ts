@@ -4,7 +4,8 @@ import { ModalController } from '@ionic/angular';
 import { ProjectsService } from 'src/app/services/homepageServices/projects.service';
 import { SprintService } from 'src/app/services/sprint.service';
 import { Project } from '../homepage/projects';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-sprint-dashboard',
@@ -40,6 +41,8 @@ export class SprintDashboardComponent  implements OnInit {
     public dialog: MatDialog,
     private sprintService: SprintService,
     private router: ActivatedRoute,
+    private route: Router,
+    private authService: AuthenticationService
     
   ) {}
 
@@ -82,9 +85,18 @@ export class SprintDashboardComponent  implements OnInit {
   optionSelected() {
     console.log(this.pageFilterDefault); // This will print the selected option's value
   }
-
+  logout() {
+    this.authService.logout();
+    this.route.navigate(["/"]);
+  }
   
-
+  landingPage(){
+    this.route.navigate(['/estimation-tool/homepage']);
+  }
+  getTask(sprintId:any){
+    console.log(sprintId);
+    this.route.navigate(['/estimation-tool/homepage/tasklist']);
+  }
 
 
 }

@@ -30,14 +30,6 @@
           <span  *ngIf="!item.isEditing" 
             style="display: inline-block; width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><ng-container *ngIf="item.isEditing; else displayPassword">{{ item.token }}</ng-container>
             <ng-template #displayPassword>
-              <!-- <span style="font-size: x-large;">&#8901;</span>
-              <span style="font-size: x-large;">&#8901;</span>
-              <span style="font-size: x-large;">&#8901;</span>
-              <span style="font-size: x-large;">&#8901;</span>
-              <span style="font-size: x-large;">&#8901;</span>
-              <span style="font-size: x-large;">&#8901;</span>
-              <span style="font-size: x-large;">&#8901;</span>
-              <span style="font-size: x-large;">&#8901;</span> -->
             ************
             </ng-template></span>
           <input style="width: 80%;" *ngIf="item.isEditing" type="password" [(ngModel)]="item.token" />

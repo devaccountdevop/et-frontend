@@ -17,14 +17,18 @@ import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/d
 import { ClientDeleteComponent } from './add-client-model/client-delete/client-delete.component';
 import { ClientUpdateComponent } from './add-client-model/client-update/client-update.component';
 import { SprintDashboardComponent } from './sprint-dashboard/sprint-dashboard.component';
+import { TaskListComponent } from './task/task-list/task-list.component';
+import { TableFilterPipe } from '../pipes/table-filter.pipe';
+import { TaskModalComponent } from './task/task-list/task-modal/task-modal.component';
+import { TableShortPipe } from '../pipes/table-short.pipe';
 
 
 
 
 @NgModule({
-  declarations: [HomepageComponent, SideBarComponent,  AddClientModelComponent,
+  declarations: [HomepageComponent, SideBarComponent,  AddClientModelComponent, TableFilterPipe, TaskModalComponent,
     DashboardBodyComponent,ClientDeleteComponent,ClientUpdateComponent,
-  TileComponent, SprintDashboardComponent, FilterPipe],
+  TileComponent, SprintDashboardComponent, TaskListComponent, FilterPipe, TableShortPipe],
   imports: [
     CommonModule,
     HomepageRoutingModule,
