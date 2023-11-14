@@ -11,23 +11,28 @@
       </div>
       <div class="right-part">
         <h1 style="text-align: center;">Login</h1>
+        
          <div class="input-box" > 
+      <form  #loginForm="ngForm" (ngSubmit)="login()">
           <ion-item class="input">
-          <ion-input [(ngModel)]="userName"  name="userName" required  placeholder="User Name"></ion-input> 
+          <ion-input [(ngModel)]="userName" name="userName" required placeholder="User Name" (ionFocus)="resetErrorMessage()" ></ion-input>
         </ion-item>
-        <ion-item >
-          <ion-input [(ngModel)]="password" name="password" required  placeholder="Password" ></ion-input> 
+        <ion-item style="margin-bottom: 5px;" >
+          <ion-input [(ngModel)]="password" name="password" required  placeholder="Password" (ionFocus)="resetErrorMessage()" ></ion-input> 
           <a class="type-toggle" (click)="toggleShow()">
             <ion-icon class="show-option" *ngIf="!showPassword" name="eye-off-outline"></ion-icon>
             <ion-icon class="hide-option" *ngIf="showPassword" name="eye-outline"></ion-icon>
          </a>
         </ion-item>
+        <span *ngIf="message  " style="color: red; font-size: x-small;margin-left: 4%;  ">{{message}}</span>
         <ion-row >
           <P class="row" >Forgot Your Password <ion-icon name="lock-closed-outline"></ion-icon></P>
          </ion-row>
-         <button (click)="login()" class="button2">Login</button>
+         <button style="margin-left: 10px;" type="submit"  class="button2">Login</button>
          <p class="signup" >Don't have an account? <a routerLink="/signup">Sign Up</a> </p>
+        </form>
       </div>
+
       </div>
     </div>
     

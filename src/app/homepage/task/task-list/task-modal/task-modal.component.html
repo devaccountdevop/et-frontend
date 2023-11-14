@@ -1,0 +1,97 @@
+<ion-app>
+  <span class="closebtn" ><ion-buttons style="align-items:right">
+      <ion-button style="color: black;" mat-button [mat-dialog-close]="true">
+        <span>&#10006;</span>
+      </ion-button>
+    </ion-buttons></span>
+  <div class="container" >
+      <div style="width: 100%; font-size: 12px; height: auto;">
+        <p class="estimatevalue"><b>ID : {{sharedItem.id}}</b></p>
+        <p class="estimatevalue"><b>Title :</b> {{sharedItem.title}}</p>
+        <p class="estimatevalue"><b>Description :</b> {{sharedItem.description}}</p>
+      </div>
+    <table class="table-bordered" style="margin-top: 5px;">
+      <col>
+      <col>
+      <colgroup span="6"></colgroup>
+      <col>
+      <tr style=" background-color: rgba(26, 74, 96, 0.9); height: 20px;padding: 0px;">
+        <td colspan="2"
+          style="horizontal-align : middle; color: white; width: 20%; padding: 4px;height: 25px;font-size: small;">
+          Estimates</td>
+      </tr>
+      <tr style="padding: 0px;">
+        <td class="tablesubheader" style="width: 45%; padding: 0px;" scope="col">
+          <div style="margin-left: 10px; font-size: small; margin-bottom: 35px;">
+            <p><label for="estimate1">Optimistic Estimates (low):</label>
+              <input type="text" id="estimate1" name="estimate1" style=" width: 50px; margin-left: 25px;"
+                [(ngModel)]="sharedItem.lowEstimate">
+            </p>
+            <p><label for="estimate1">Most Likely (Realistic):</label>
+              <input type="text" id="estimate1" name="estimate1" style="width: 50px; margin-left: 46px;"
+                [(ngModel)]="sharedItem.realisticEstimate">
+            </p>
+            <p><label for="estimate1">Pessimistic Estimates (High)</label>
+              <input type="text" id="estimate1" name="estimate1" style="width: 50px; margin-left: 11px;"
+                [(ngModel)]="sharedItem.highEstimate">
+            </p>
+          </div>
+        </td>
+        <div class="estimateSecCol" style="margin-left: 25%; text-align: left;">
+          <p style="margin-top: 20px;">3 Points Estimates <span
+              style="margin-left: 20px;">{{sharedItem.threePointEstimate}}</span></p>
+          <p style="margin-top: 20px;"> Risk Factor <span style="margin-left: 20px;">{{sharedItem.aiEstimate}}</span></p>
+          <p style="margin-top: 20px;">AI Estimates <span style="margin-left: 20px;">{{sharedItem.aiEstimate}}</span></p>
+        </div>
+      </tr>
+    </table>
+  
+    <div class="dropdown-container" (click)="toggleShowTime()">
+      <div class="actualTime" >
+        <p style="margin-left: 5px; font-size: small;">Actual Time For Task :</p>
+        <span style="font-size: small; margin-right: 5px;color: white;">{{ !showTime ? ' ▲' : ' ▼' }}</span>
+      </div>
+      <div *ngIf="showTime" class="table-container" style="background-color: #e8e7e7; ">
+
+        <table class="timetable" style="border: none; background-color: #e8e7e7; font-size: small; width: 100%;">
+          <tr style="border-bottom: 1px solid #b3b1b1;">
+            <th style="border: none; width: 45%;">DATE:</th>
+            <th style="border: none; width: 33.33%;">USER:</th>
+            <th style="border: none; text-align: center; width: 22.33%;">TIME HRS</th>
+          </tr>
+          <tr style="border: none; margin-top: -5px;">
+            <td style="border: none;">Data 1</td>
+            <td style="border: none;">Data 2</td>
+            <td style="border: none; text-align: center; ">Data 3</td>
+          </tr>
+          <tr style="border: none; margin-top: -5px;">
+            <td style="border: none;"></td>
+            <td style="border: none;"></td>
+            <td style="border: none;text-align: center;"></td>
+          </tr>
+          <tr style="border: none; margin-top: -5px;">
+            <td style="border: none;"></td>
+            <td style="border: none;"></td>
+            <td style="border: none;text-align: center;"></td>
+          </tr>
+        </table>
+
+      </div>
+    </div>
+    <div class="dropdown-container" (click)="toggleShowField()">
+      <div class="actualTime" >
+        <p style="margin-left: 5px; font-size: small;">More Fields :</p>
+        <span style="font-size: small; margin-right: 5px;color: white;">{{ !showField ? ' ▲' : ' ▼' }}</span>
+      </div>
+      <div *ngIf="showField" class="table-container">
+        <table>
+          parveen
+
+        </table>
+      </div>
+    </div>
+    <span>
+      <button (click)="updateData()" class="button2">Update Ai Estimates In Jira <ion-icon name="checkmark-outline"
+          style="font-size: medium;margin-bottom: -2px;"></ion-icon></button></span>
+  </div>
+</ion-app>

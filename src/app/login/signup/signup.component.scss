@@ -1,117 +1,6 @@
-// ion-content {
-//     --background: rgba(26, 74, 96, 0.8999999761581421);
-//   }
-//   .card-container{
-//   //   max-width: 50%;
-//   //   margin-top: 10%;
-//   //   margin-left: 10%;
-//     max-height: 100%;
-//    }
-//    ion-card {
-//     background: linear-gradient(rgba(26,74,96,1), rgba(179,205,205,1));
-//     --color: black;
-//     align-items: center;
-//     height: 77%;
-//     width: 65%;
-//     margin-top: 6%;
-//     margin-left: 18%;
-//     //margin-bottom: 6px;
-//   }
-//   .span{
-//     height: 100%;
-//     width: 50%;
-//     display: inline;
-//   }
-//   .split-container {
-//     display: flex;
-//     flex-direction: row;
-//     height: 100%; /* Set a fixed or relative height for the container */
-//     border-radius: 0px;
-//   }
-  
-//   .top-part {
-//     flex: 1;
-//     /* Adjust styling for the top part as needed */
-//   text-align: center;
-//   margin-top: 25%;
-//   }
-  
-//   .right-part {
-//     flex: 1.6;
-//     background-color: white;
-//     align-items: center;
-//     /* Adjust styling for the bottom part as needed */
-//     border-top-left-radius: 20px; /* Adjust the radius value as needed */
-//     border-bottom-left-radius: 20px; 
-//   }
-  
-//   .input{
-//     margin-top: 0px;
-//   }
-//   .input-box{
-//    padding-left: 7%;
-//     padding-right: 80px;
-//   }
-//   // .ion-card{
-//   //   height: 500px;
-//   // }
-//   .row{
-//     margin-top: 8px;
-//   margin-left: 55%;
-//   }
-  
-//   .button2 {
-//     margin-top: 20px;
-//     margin-left: 3%;
-//     background-color: white;
-//     color: black;
-//     border: 2px solid rgba(26, 74, 96, 0.8999999761581421);
-//     border-radius: 5px;
-//     width: 99%; /* Increase the width as needed */
-//     height: 35px; /* Increase the height as needed */
-//   }
-//   .signup{
-//     margin-left: 10px;
-//   }
-  
-//   .button2:hover {
-//     background-color: rgba(26, 74, 96, 0.8999999761581421);
-//     color: white;
-//   }
-  
-  
-//   .errormassege{
-//     color: red;
-//     display: inline;
-//    font-size: 10px;
-//    margin-left: 4%;
-//   }
-  
-//   @media screen and (min-width: 768px) {
-//     /* Apply styles for screens with a minimum width of 768px (tablet and above) */
-//     ion-card {
-//       width: 65%; /* Reset the width for larger screens */
-//       margin: 6% auto;
-//     }
-  
-//     .split-container {
-//       flex-direction: row; /* Reset to row layout on larger screens */
-//     }
-  
-//     .top-part {
-//       margin-top: 25%;
-//     }
-  
-//     .right-part {
-//       border-top-left-radius: 20px;
-//       border-bottom-left-radius: 20px;
-//     }
-//   }
-
 ion-content {
   --background: rgba(26, 74, 96, 0.8999999761581421);
 }
-
 ion-card {
   background: linear-gradient(rgba(26, 74, 96, 1), rgba(179, 205, 205, 1));
   color: black;
@@ -119,29 +8,25 @@ ion-card {
   //border-radius: 10px;
   //padding: 20px;
   margin: 10px;
-  
+  //height: 80%;
 }
 
 .split-container {
   display: flex;
   flex-direction: column;
   //align-items: center;
-
+  height: 100%;
 }
 
 .top-part {
   text-align: center;
   flex: 1;
- 
-  
 }
-
 .right-part {
   flex: 1.6;
   background-color: white;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
-  
 }
 
 .input-box {
@@ -158,10 +43,10 @@ ion-card {
   width: 100%;
   height: 35px;
 }
-  // .button2:hover {
-  //   background-color: rgba(26, 74, 96, 0.8999999761581421);
-  //   color: white;
-  // }
+// .button2:hover {
+//   background-color: rgba(26, 74, 96, 0.8999999761581421);
+//   color: white;
+// }
 
 .signup {
   text-align: center;
@@ -176,23 +61,22 @@ ion-card {
   text-align: left;
   margin-left: 15px;
 }
-.input{
-       margin-top: 0px;
-    }
+.input {
+  margin-top: 0px;
+}
 
 @media screen and (min-width: 768px) {
   /* Apply styles for screens with a minimum width of 768px (tablets and above) */
   ion-card {
     width: 65%;
     margin: 6% auto;
-     text-align: center;
-  //border-radius: 10px;
- //padding: 20px;
+    text-align: center;
+    //border-radius: 10px;
+    //padding: 20px;
   }
 
   .split-container {
     flex-direction: row;
-    
   }
 
   .top-part {
@@ -202,6 +86,14 @@ ion-card {
   .right-part {
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
-
   }
 }
+// :host {
+//   --toast-background: #ff5733; /* Background color of the toast */
+//   --toast-color: #fff; /* Text color of the toast */
+//   --toast-border-radius: 10px; /* Border radius of the toast */
+// }
+// .toast-container {
+//   background-color: #950b0b;
+// } 
+

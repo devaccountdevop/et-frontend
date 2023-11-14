@@ -1,72 +1,109 @@
-import { Component, OnInit } from '@angular/core';
-import { TestComponent } from '../test/test.component';
-import { ModalController } from '@ionic/angular';
-
+import { Component, OnInit } from "@angular/core";
+import { ProjectsService } from "src/app/services/homepageServices/projects.service";
+import { Project } from "./projects";
+import { MatDialog } from "@angular/material/dialog";
+import { AddClientModelComponent } from "../add-client-model/add-client-model.component";
+import { AddClientService } from "src/app/services/homepageServices/add-client.service";
+import {  Router } from "@angular/router";
+import { AuthenticationService } from "src/app/services/authentication.service";
+import { ImportModalComponent } from "../import-modal/import-modal.component";
 
 @Component({
-  selector: 'app-homepage',
-  templateUrl: './homepage.component.html',
-  styleUrls: ['./homepage.component.scss'],
+  selector: "app-homepage",
+  templateUrl: "./homepage.component.html",
+  styleUrls: ["./homepage.component.scss"],
 })
-export class HomepageComponent  implements OnInit {
-
-  //dataList: Array<any> = [];
-  schedule: { branch: ''; } | undefined;
+export class HomepageComponent implements OnInit {
   pageListNo = 15;
- 
-
+  menuType: string = "reveal";
+  isModalOpen: boolean = false;
+  isDropdownOpen = false;
   // Pagination variables
   p: number = 1;
+  searchText: any;
+  pageFilterDefault: any = 15;
+  clientId: any;
+  projectList: Project[] = [];
 
-
-
-  loadItems() {
-    // Simulated data loading
-    this.names = [
-    
-    ];
-  }
-  dataList = [
-    { code: '1', name: 'M10' },
-    { code: '2', name: ' Clavrit HRMS' },
-    { code: '3', name: 'RspotBot' }
+  clientList: any[] = [];
+  pageFilter = [
+    { code: "15", name: "15" },
+    { code: "30", name: "30" },
+    { code: "45", name: "45" },
   ];
-  pageFilter=[
-  {code: '15', name: '15'},
-  {code: '30', name: '30'},
-  {code: '45', name: '45'},
+  constructor(
+    private projectService: ProjectsService,
+    public dialog: MatDialog,
+    private clientService: AddClientService,
+    private router: Router,
+    private authService: AuthenticationService
+  ) {}
 
-]
-pageFilterDefault: any= 15;
-
-
-  selectedValue: string = 'Select'; 
-  constructor(private modalController: ModalController ) {
-  
-   }
-  menuType: string = 'reveal';
-  isModalOpen : boolean = false;
-  isDropdownOpen = false;
-  names: string[] = ['Project1', 'Project2', 'project3', 'project4', 'project5','Project6', 'Project7', 'project8', 'project9', 'project10','Project11', 'Project12', 'project13', 'project14', 'project15','Project16', 'Project17', 'project18', 'project19', 'project20','Project21', 'Project22', 'project23', 'project24', 'project25','Project1', 'Project2', 'project3', 'project4', 'project5','Project6', 'Project7', 'project8', 'project9', 'project10','Project11', 'Project12', 'project13', 'project14', 'project15','Project16', 'Project17', 'project18', 'project19', 'project20','Project21', 'Project22', 'project23', 'project24', 'project25'];
+  ngOnInit() {
+    this.clientService.getClient().subscribe((res) => {
+      this.clientList = res.data;
+      if (this.clientList.length > 0) {
+        const clienttId = this.clientList[0].id;
+        this.clientId = clienttId;
+        this.projectService.getProjects(this.clientId).subscribe((res) => {
+          if (res.data.length > 0) {
+            this.projectList = res.data;
+          }
+        });
+      }
+    });
+  }
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
-  ngOnInit() {}
-  setOpen(isOpen: boolean) {
-    this.isModalOpen = isOpen;
-    
-  }
   optionSelected() {
-   
     console.log(this.pageFilterDefault); // This will print the selected option's value
   }
+  getProjectByselectedClient() {
+    if (this.clientId !== undefined) {
+      this.projectService.getProjects(this.clientId).subscribe((res) => {
+        this.projectList = res.data;
+      });
+    }
+  }
+  public isDialogVisible: boolean = false;
 
-  async openModal() {
-    const modal = await this.modalController.create({
-      component: TestComponent,
-      cssClass: 'test.component.scss'
+  //modal
+  openDialog(): void {
+    let dialogRef = this.dialog.open(AddClientModelComponent, {
+      width: "700px",
+      height: "300px",
+      // maxWidth: "100%",
+      data: { },
+      disableClose: true,
     });
-    console.log(this.pageFilterDefault);
-    await modal.present();
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log("The dialog was closed");
+    });
+  }
+
+  getSprints(name: any, projectId: number) {
+    this.router.navigate(["estimation-tool/homepage/sprintdashboard"], {
+      queryParams: { projectId: projectId, projectName: name },
+    });
+  }
+  logout() {
+    this.authService.logout();
+    this.router.navigate(["/"]);
+  }
+
+  openImportDialog(): void {
+    let dialogRef = this.dialog.open(ImportModalComponent, {
+      width: "600px",
+      height: "280px",
+      // maxWidth: "100%",
+      data: { },
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log("The dialog was closed");
+    });
   }
 }

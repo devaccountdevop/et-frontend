@@ -100,15 +100,15 @@ box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
  
 }
 .innerbox{
-  width: 98%;
-  height: 96%;
-  margin-left: 1%;
-  margin-top: 1%;
+  width: 99%;
+  height: 99%;
+  margin-left: 5px;
+  margin-top: 3px;
   box-shadow: 0px 4px 11px rgba(0, 0, 0, 0.3);
 }
 .contentlist{
   width: 100%;
-  height: 430px;
+  height: 360px;
   overflow-y: auto; 
 }
 /* Dropdown Button */
@@ -181,60 +181,12 @@ ion-col {
 .subheader{
   box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.2);
   height: 10%;
-  
 }
 pagination-controls {
   position: absolute;
   bottom: 10px; /* Adjust the distance from the bottom as needed */
   right: 10px; /* Adjust the distance from the right as needed */
 }
-.searchbar-input.sc-ion-searchbar-md{
-  height: 20px;
-}
-/* Scoped components require higher specificity to customize */
-ion-searchbar.custom {
-  --background: #19422d;
-  --color: #fff;
-  --placeholder-color: #fff;
-  --icon-color: #fff;
-  --clear-button-color: #fff;
---width: 100px !important;
---hight:10px;
-  --border-radius: 4px;
-}
-.search-container{
-  width: 490px;
-  display: block;
-  margin: 0 auto;
-}
-
-input#search-bar{
-  margin: 0 auto;
-  width: 100%;
-  height: 45px;
-  padding: 0 20px;
-  font-size: 1rem;
-  border: 1px solid #D0CFCE;
-  outline: none;
-  &:focus{
-    border: 1px solid #008ABF;
-    transition: 0.35s ease;
-    color: #008ABF;
-    &::-webkit-input-placeholder{
-      transition: opacity 0.45s ease; 
-  	  opacity: 0;
-     }
-    &::-moz-placeholder {
-      transition: opacity 0.45s ease; 
-  	  opacity: 0;
-     }
-    &:-ms-placeholder {
-     transition: opacity 0.45s ease; 
-  	 opacity: 0;
-     }    
-   }
- }
-
 .search-icon{
   position: relative;
   float: left;
@@ -250,4 +202,3 @@ input#search-bar{
 
 
 
-  

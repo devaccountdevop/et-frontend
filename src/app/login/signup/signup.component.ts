@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 import { SignUp } from 'src/app/models/signUp';
+import { CommanLoaderService } from 'src/app/services/comman-loader.service';
 import { SignUpService } from 'src/app/services/sign-up.service';
 @Component({
   selector: 'app-signup',
@@ -24,16 +26,14 @@ export class SignupComponent  implements OnInit {
   isFormValid: boolean=false;
 
   
-  constructor(private signUpService:SignUpService, private router:Router) { }
+  constructor(private signUpService:SignUpService, private router:Router, private commanService:CommanLoaderService, private toastCtrl : ToastController) { }
   onInputFocus() {
     this.isButtonDisabled = false;
   }
   ngOnInit() {
 
   }
-  login(){
-
-  }
+ 
   updateFormValidity() {
     this.isFormValid = this.signupForm.valid && this.password === this.confirmPassword;
   }
@@ -42,8 +42,11 @@ export class SignupComponent  implements OnInit {
     console.log('Email:', this.email);
   
     if (this.password !== this.confirmPassword) {
-      this.message = "Password and Confirm Password do not match";
-    } else if(this.userName.length==0){this.message="Please Input UserName"}else {
+      this.message = "Password and Confirm Password did not match";
+      this.commanService.presentToast("Password and Confirm Password did not match ", 3000, "toast-error-mess")
+    } else if(this.userName.length==0){
+      
+      this.message="Please Input UserName"}else {
       
       const formData = new FormData();
    
@@ -54,14 +57,14 @@ export class SignupComponent  implements OnInit {
       this.signUpService.signUp(formData).subscribe((res)=>{
         if(res.code==200){
          this.router.navigate(['/']);
+         this.commanService.presentToast("Resignation successful! Continue with login ", 5000 , "toast-succuss-mess")
         }else{
-          alert("somthing went wrong, please try again later")
+          this.commanService.presentToast("email or username is already exist", 3000, "toast-error-mess")
         }
       });
-
-      
     }
   }
+ 
 
   toggleShow(){
     this.showPassword = !this.showPassword;

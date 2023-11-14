@@ -1,0 +1,150 @@
+<ion-app>
+  <ion-header>
+    <ion-menu-toggle>
+      <ion-button  class="menubutton" fill="clear"><span class="menu">&#9776;</span></ion-button>
+    </ion-menu-toggle>
+    <ion-button (click)="landingPage()" fill="clear"><ion-icon class="homeicon" name="home-sharp"></ion-icon></ion-button>
+    <ion-title>Estimation Tool</ion-title>
+    <!-- <ion-button fill="clear">
+        <ion-icon class="profileicon" name="person"></ion-icon>
+      </ion-button> -->
+    <div class="dropdown">
+      <ion-buttons>
+        <ion-button  style="color: white; margin-right: 10px; margin-top: 2%;text-transform: capitalize;" (click)="toggleDropdown()" fill="clear">
+          <ion-icon style="margin-right: 5px" name="person-circle-outline"></ion-icon>Admin
+          <ion-icon style="margin-left: 5px" name="chevron-down-outline"></ion-icon></ion-button>
+      </ion-buttons>
+      <div class="dropdown-content" [ngClass]="{ show: isDropdownOpen }">
+        <a style="cursor: pointer;"  (click)="logout()">Logout</a>
+      </div>
+    </div>
+  </ion-header>
+  <ion-content style="overflow-x: hidden;">
+    <ion-row style="height: 100%;">
+      <ion-col size="2"
+        style="margin: 0px; background-color: white;box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);height: 100%;">
+        <ion-row style="
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+            text-align: left;
+          ">
+          <ion-col style="background-color: white; color: black">
+            <img src="/assets/images/Dashboard.png" alt="Your Image" style="margin-bottom: -6px; margin-right: 10px" />
+            Dashboard
+          </ion-col>
+        </ion-row>
+        <ion-row style="
+            display: flex;
+            justify-content: center;
+            margin-top: -10px;
+            text-align: left;
+          ">
+          <ion-col style="background-color: white; color: black">
+            <img src="/assets/images/journals (1).png" alt="Your Image"
+              style="margin-bottom: -6px; margin-right: 10px; fill: #a1a1a1" />
+            Projects
+          </ion-col>
+        </ion-row>
+        <!-- <ion-row style="
+            display: flex;
+            justify-content: center;
+            margin-top: -10px;
+            text-align: left;
+          ">
+          <ion-col style="background-color: white; color: black">
+            <img src="/assets/images/Vector.png" alt="Your Image" style="margin-bottom: -6px; margin-right: 10px" />
+            User
+          </ion-col>
+        </ion-row>
+        <ion-row style="
+            display: flex;
+            justify-content: center;
+            margin-top: -10px;
+            text-align: left;
+          ">
+          <ion-col style="background-color: white; color: black">
+            <img src="/assets/images/Vector (1).png" alt="Your Image" style="margin-bottom: -6px; margin-right: 10px" />
+            Report
+          </ion-col>
+        </ion-row>
+        <ion-row style="
+            display: flex;
+            justify-content: center;
+            margin-top: -10px;
+            text-align: left;
+          ">
+          <ion-col style="background-color: white; color: black">
+            <img src="/assets/images/Settings.png" alt="Your Image" style="margin-bottom: -6px; margin-right: 10px" />
+            Setting
+          </ion-col>
+        </ion-row> -->
+      </ion-col>
+      <ion-col size="10"
+        style="margin: 0px; height: 100%; color: black; background-color: white;box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);">
+        <div class="innerbox">
+          <ion-row class="subheader" style="align-items: center;">
+              <span  style="margin-left: 40%; color: rgb(63, 61, 61); "> <b>Projects: {{projectName}}</b></span>
+              <button style="margin-left: 35%;"  routerLink='/estimation-tool/homepage' class="button2">Back</button>
+          </ion-row>
+          <ion-row style="height: 35px;">
+            <p style="margin-left: 15px; font-size: small; margin-top: 25px;">Show</p>
+            <select (change)="optionSelected()" style="
+                margin-left: 10px;
+                width: 70px;
+                height: 20px;
+                margin-top: 23px;
+              " [(ngModel)]="pageFilterDefault">
+              <option *ngFor="let item of pageFilter" [value]="item.code">
+                {{ item.name }}
+              </option>
+            </select>
+
+            <p style="
+                margin-left: 15px;
+                font-size: small;
+                text-align: end;
+                margin-left: 54%;
+                margin-top: 20px;
+              ">
+              Search:
+            </p>
+
+            <ion-searchbar [(ngModel)]="searchText" style="width: 300px"></ion-searchbar>
+          </ion-row>
+        <span style="margin-top: -15px; position: absolute; left: 38%;" ><button  class="syncbtn">
+          Sync
+          <ion-icon style="margin-left: 5px; margin-bottom: -1.7px" name="sync-outline"></ion-icon>
+        </button></span>
+         
+          <div class="contentlist">
+            <ion-grid [fixed]="true">
+              <ion-row style="
+                  margin-left: 8%;
+                  height: 10%;
+                  overflow-x: auto;
+                  white-space: nowrap;
+                ">
+                <ng-container
+                *ngFor="
+                let item of (sprintsList | filter: searchText | paginate: { itemsPerPage: pageFilterDefault, currentPage: p }).reverse()
+              ">
+                  <app-dashboard-body (click)="getTask(item)" class="bodycontent">
+                    <div class="card-header">{{ item.name }}</div>
+                    <!-- Additional card content here -->
+                  </app-dashboard-body>
+                </ng-container>
+              </ion-row>
+            </ion-grid>
+
+          </div>
+          <pagination-controls style="font-size: small; " (pageChange)="p = $event"></pagination-controls>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-content>
+
+  <ion-footer>
+    <ion-title style="text-align: end; font-size: medium">Copyright Text</ion-title>
+  </ion-footer>
+</ion-app>

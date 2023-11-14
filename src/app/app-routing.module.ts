@@ -14,7 +14,7 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'homepage',
+    path: 'estimation-tool/homepage',
     loadChildren: () => import('./homepage/homepage.module').then( m => m.HomepageModule)
   },
   {

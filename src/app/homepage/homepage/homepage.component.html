@@ -1,55 +1,3 @@
-<!-- <ion-header >
-  <ion-menu-toggle>
-    <ion-button class="menubutton" fill="clear"><span class="menu">&#9776;</span></ion-button>
-  </ion-menu-toggle>
-  <ion-button fill="clear"><ion-icon class="homeicon" name="home-sharp"></ion-icon></ion-button>
-  <ion-title>Estimation Tool</ion-title>
-  
-</ion-header>
-  <ion-content>
-    <ion-menu [type]="menuType" content-id="main-content" >
-      <ion-content class="ion-padding">
-       <div>
-        <h1>side menu</h1>
-       </div>
-      </ion-content>
-    </ion-menu>
-    <div class="ion-page" id="main-content">
-     
-      <ion-content class="ion-padding">
-     <div class="maincontent">
-    
-        <ion-toolbar>
-          <ion-button expand="block" (click)="setOpen(true)">Open</ion-button>
-          <button expand="block" (click)="setOpen(true)"  class="button2">Add Client</button>
-        </ion-toolbar>
-      <ion-button (click)="openModal()">Open Modal</ion-button>
-
-        <hr style="border-color: black;">
-
-     </div>
-
-      </ion-content>
-    </div>
-  </ion-content>
-  <ion-modal :css-class="[cssClass, 'auto-height']" [isOpen]="isModalOpen" [backdropDismiss]="false">
-    <ng-template class="model">
-      <ion-header class="popupheader">
-          <ion-title style="text-align: center;font-size: medium;">Add Client</ion-title>
-          <ion-buttons style="text-align: right;" >
-            <ion-button (click)="setOpen(false)"><span>&#10006;</span></ion-button>
-          </ion-buttons>
-      </ion-header>
-      <ion-content class="ion-padding custom-modal-content">
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni illum quidem recusandae ducimus quos
-          reprehenderit. Veniam, molestias quos, dolorum consequuntur nisi deserunt omnis id illo sit cum qui. Eaque,
-          dicta.
-        </p>
-      </ion-content>
-    </ng-template>
-  </ion-modal> -->
-
 <ion-app>
   <ion-header>
     <ion-menu-toggle>
@@ -62,18 +10,19 @@
       </ion-button> -->
     <div class="dropdown">
       <ion-buttons>
-        <ion-button style="color: white; margin-right: 10px; margin-top: 2%" (click)="toggleDropdown()" fill="clear">
-          <ion-icon style="margin-right: 10px" name="person-circle-outline"></ion-icon>Admin
+        <ion-button  style="color: white; margin-right: 10px; margin-top: 2%;text-transform: capitalize;" (click)="toggleDropdown()" fill="clear">
+          <ion-icon style="margin-right: 5px" name="person-circle-outline"></ion-icon>Admin
           <ion-icon style="margin-left: 5px" name="chevron-down-outline"></ion-icon></ion-button>
       </ion-buttons>
       <div class="dropdown-content" [ngClass]="{ show: isDropdownOpen }">
-        <a href="/">Logout</a>
+        <a style="cursor: pointer;"  (click)="logout()">Logout</a>
       </div>
     </div>
   </ion-header>
-  <ion-content>
-    <div class="split-container">
-      <div class="top-part">
+  <ion-content style="overflow-x: hidden;">
+    <ion-row style="height: 100%;">
+      <ion-col size="2"
+        style="margin: 0px; background-color: white;box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);height: 100%;">
         <ion-row style="
             display: flex;
             justify-content: center;
@@ -90,14 +39,15 @@
             justify-content: center;
             margin-top: -10px;
             text-align: left;
-          "    >
+          ">
           <ion-col style="background-color: white; color: black">
             <img src="/assets/images/journals (1).png" alt="Your Image"
               style="margin-bottom: -6px; margin-right: 10px; fill: #a1a1a1" />
             Projects
           </ion-col>
         </ion-row>
-        <ion-row style="
+       
+        <!-- <ion-row style="
             display: flex;
             justify-content: center;
             margin-top: -10px;
@@ -129,30 +79,35 @@
             <img src="/assets/images/Settings.png" alt="Your Image" style="margin-bottom: -6px; margin-right: 10px" />
             Setting
           </ion-col>
-        </ion-row>
-      </div>
-      <div class="right-part">
+        </ion-row> -->
+        <button style="position: absolute;top: 92%; left: 11%;" (click)="openImportDialog()" class="button2">Import</button>
+      </ion-col>
+      
+      <ion-col size="10"
+        style="margin: 0px; height: 100%; color: black; background-color: white;box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);">
         <div class="innerbox">
           <ion-row class="subheader">
             <ion-buttons>
-              <button expand="block" (click)="setOpen(true)" class="button2">
+              <button expand="block" (click)="openDialog()" class="button2">
                 Add Client
               </button>
+              <!-- <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-backdrop="false"
+                        data-target="#myModal">Request Time Off</button> -->
 
-              <p style="margin-left: 330px">Client</p>
-              <select style="margin-left: 10px; width: 150px" [(ngModel)]="selectedValue">
-                <option>Select</option>
-                <option *ngFor="let item of dataList" [value]="item.code">
-                  {{ item.name }}
+              <p style="margin-left: 280px">Client</p>
+              <select (change)="getProjectByselectedClient()" style="margin-left: 10px; width: 150px"
+                [(ngModel)]="clientId">
+                <option *ngFor="let item of clientList" [value]="item.id">
+                  {{ item.clientName }}
                 </option>
               </select>
             </ion-buttons>
-            <button  class="syncbtn">
+            <button class="syncbtn">
               Sync
               <ion-icon style="margin-left: 5px; margin-bottom: -1.7px" name="sync-outline"></ion-icon>
             </button>
           </ion-row>
-          <ion-row>
+          <ion-row style="height: 35px;">
             <p style="margin-left: 15px; font-size: small">Show</p>
             <select (change)="optionSelected()" style="
                 margin-left: 10px;
@@ -168,15 +123,16 @@
                 margin-left: 15px;
                 font-size: small;
                 text-align: end;
-                margin-left: 680px;
+                margin-left: 54%;
                 margin-top: 20px;
               ">
               Search:
             </p>
-          
-            <ion-searchbar style="width: 300px"></ion-searchbar>
+
+            <ion-searchbar [(ngModel)]="searchText" style="width: 300px; "></ion-searchbar>
           </ion-row>
-         <span style="position: absolute;left: 53%; margin-top: -20px; color: rgba(26, 74, 96, 0.9);"><b>Projects({{names.length}})</b></span>
+          <span
+            style="margin-left: 45%; margin-bottom: 10px; color: rgba(26, 74, 96, 0.9);"><b>Projects({{projectList.length}})</b></span>
           <div class="contentlist">
             <ion-grid [fixed]="true">
               <ion-row style="
@@ -185,13 +141,11 @@
                   overflow-x: auto;
                   white-space: nowrap;
                 ">
-                <ng-container class="bodycontent" *ngFor="
-                    let name of names
-                      | paginate
-                        : { itemsPerPage: pageFilterDefault, currentPage: p }
-                  ">
-                  <app-dashboard-body class="bodycontent">
-                    <div class="card-header">{{ name }}</div>
+                <ng-container
+                  *ngFor="
+                    let item of projectList |  filter :searchText | paginate: { itemsPerPage: pageFilterDefault, currentPage: p }  ">
+                  <app-dashboard-body (click)="getSprints(item.name, item.id)" class="bodycontent">
+                    <div class="card-header">{{ item.name }}</div>
                     <!-- Additional card content here -->
                   </app-dashboard-body>
                 </ng-container>
@@ -200,26 +154,8 @@
           </div>
           <pagination-controls style="font-size: small; " (pageChange)="p = $event"></pagination-controls>
         </div>
-      </div>
-    </div>
-    <ion-modal [isOpen]="isModalOpen" [backdropDismiss]="false">
-      <ng-template class="model">
-        <ion-header class="popupheader">
-          <ion-title style="text-align: center; font-size: medium">Add Client</ion-title>
-          <ion-buttons style="text-align: right">
-            <ion-button (click)="setOpen(false)"><span>&#10006;</span></ion-button>
-          </ion-buttons>
-        </ion-header>
-        <ion-content class="ion-padding custom-modal-content">
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni illum
-            quidem recusandae ducimus quos reprehenderit. Veniam, molestias
-            quos, dolorum consequuntur nisi deserunt omnis id illo sit cum qui.
-            Eaque, dicta.
-          </p>
-        </ion-content>
-      </ng-template>
-    </ion-modal>
+      </ion-col>
+    </ion-row>
   </ion-content>
 
   <ion-footer>
