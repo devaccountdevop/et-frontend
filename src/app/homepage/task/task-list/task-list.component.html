@@ -86,14 +86,14 @@
         style="margin: 0px; height: 100%; color: black; background-color: white;box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);">
         <div class="innerbox">
           <ion-row class="subheader" style="align-items: center;">
-            <button class="updatebtn">Update Ai Estimates In Jira</button>
+            <button (click)=" updateEstimatesInJira()" class="updatebtn">Update Ai Estimates In Jira</button>
             <span ><button class="syncbtn">
                 Sync
                 <ion-icon style="margin-left: 5px; margin-bottom: -1.7px" name="sync-outline"></ion-icon>
               </button></span>
             <span style="margin-left: 15%; color: rgb(63, 61, 61); "> <b>Dashboard</b></span>
-            <button style="margin-left: 43%;" type="submit" routerLink='/estimation-tool/homepage'
-              class="button2">Back</button>
+            <button style="margin-left: 43%;"  routerLink='/estimation-tool/homepage/sprintdashboard'
+              class="button2" (click)="goBack()" >Back</button>
           </ion-row>
           <ion-row  style="height: 35px; margin-top: 5px;">
 
@@ -115,9 +115,9 @@
           <div class="contentlist">
             <ion-grid [fixed]="true">
               <ion-row style="
-                  margin-left: 1.2%;
+                  margin-left: 0.5%;
                   margin-top: 5px;
-                  height: 10%;
+                  height: 100%;
                   overflow-x: auto;
                   white-space: nowrap;
                 ">
@@ -129,39 +129,47 @@
                      Additional card content here 
                   </app-dashboard-body>
                 </ng-container> -->
-                <table class="table-bordered">
-                  <col style="width: 60px;" >
-                  <col style="width: 120px;">
-                  <col style="width: 200px;">
-                  <colgroup  span="4"></colgroup>
+                <table >
+                  <col style="width: 80px;">
+                  <col style="width: 100px;">
+                  <col style="width: 150px;">
+                  <colgroup span="4"></colgroup>
                   <col>
-                  <tr style=" background-color: rgba(26, 74, 96, 0.9); height: 20px;padding: 0px;" class="tableheader" >
-                      <th rowspan="2" style="vertical-align : middle;text-align:center;">ID</th>
-                      <th (click)="sortData('title')" rowspan="2" style="vertical-align : middle;text-align:center;">{{ isAscending ? 'Title ▲' : 'Title ▼' }}</th>
-                      <th rowspan="2" style="vertical-align : middle;text-align:center;">Description</th>
-                      <th colspan="3" style="horizontal-align : middle;text-align:center; width: 30%; padding: 4px;">Estimates</th>
-                      <th rowspan="2" style="vertical-align : middle;text-align:center;">3-Point Estimates</th>
-                      <th rowspan="2" style="vertical-align : middle;text-align:center;">Ai Estimates</th>
-                      <th rowspan="2" style="vertical-align : middle;text-align:center;">Actual (HRS)</th>
+                  <tr style="background-color: rgba(26, 74, 96, 0.9); height: 20px; padding: 0px;" class="tableheader">
+                    <th rowspan="2" style="vertical-align: middle; text-align:center; word-wrap: break-word;">ID</th>
+                    <th (click)="sortData('title')" rowspan="2" style="vertical-align: middle; text-align:center; word-wrap: break-word;">{{ isAscending ? 'Title ▲' : 'Title ▼' }}</th>
+                    <th rowspan="2" style="vertical-align: middle; text-align:center; word-wrap: break-word;">Description</th>
+                    <th rowspan="2" style=" width: 80px; vertical-align: middle; text-align:center; word-wrap: break-word;">Label</th>
+                    <th colspan="3" style="horizontal-align: middle; text-align:center; width: 22%; padding: 4px; word-wrap: break-word;">Estimates</th>
+                    <th rowspan="2" style="vertical-align: middle; text-align:center;word-wrap: normal ">3-Point Estimates</th>
+                    <th rowspan="2" style=" width: 120px; vertical-align: middle; text-align:center; word-wrap: normal">AI Estimates</th>
+                    <th rowspan="2" style="width: 120px;vertical-align: middle; text-align:center;word-wrap:  normal">Actual(HRS)</th>
                   </tr>
                   <tr>
-                      <th class="tablesubheader"  scope="col">Low</th>
-                      <th class="tablesubheader"  scope="col">Realistic</th>
-                      <th class="tablesubheader"  scope="col">High</th>
+                    <th class="tablesubheader" scope="col">Low</th>
+                    <th class="tablesubheader" style="width: 8%;" scope="col">Realistic</th>
+                    <th class="tablesubheader" scope="col">High</th>
                   </tr>
-                  <tr *ngFor="
-                  let item of tableData |  tableFilter :searchText | paginate: { itemsPerPage: pageFilterDefault, currentPage: p } | tableShort:'title' "  (click)="openDialog(item.id)" >
-                      <th  style="display: inline-block; width: 60px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{item.id}}</th>
-                      <th> {{item.title}}</th>
-                      <th>{{item.description}}</th>
-                      <th>{{item.lowEstimate}}</th>
-                      <th>{{item.realisticEstimate}}</th>
-                      <th>{{item.highEstimate}}</th>
-                      <th>{{item.threePointEstimate}}</th>
-                      <th>{{item.aiEstimate}}</th>
-                      <th>{{item.actualHrs}}</th>
-                  </tr>
-              </table>
+                 <tr *ngFor="let item of tableData | tableFilter: searchText | paginate: { itemsPerPage: pageFilterDefault, currentPage: p }">
+  <ng-container *ngFor="let field of ['id', 'title', 'description', 'labels', 'lowEstimate', 'realisticEstimate', 'highEstimate', 'threePointEstimate', 'aiEstimate', 'actualHrs']">
+    <th [ngClass]="{'editing': isEditing(item, field)}" style="word-wrap: break-word;" [style.padding]="isEditing(item, field) ? '0' : '8px'">
+      <div *ngIf="!isEditing(item, field)" (click)="startEditing(item, field)">{{ item[field] }}</div>
+      <ng-container *ngIf="isEditing(item, field) && editableFields.includes(field)">
+        <input
+          *ngIf="isEditing(item, field)"
+          [(ngModel)]="item[field]"
+          (blur)="stopEditing(item, field)"
+          (keyup.enter)="stopEditing(item, field)"
+          [style.padding]="isEditing(item, field) ? '0' : '8px'"
+          [ngClass]="{'full-width-input': isEditing(item, field)}"
+          style="width: 100%; box-sizing: border-box;"
+        >
+      </ng-container>
+    </th>
+  </ng-container>
+</tr>
+
+                </table>
               </ion-row>
             </ion-grid>
 
@@ -170,6 +178,7 @@
         </div>
       </ion-col>
     </ion-row>
+
   </ion-content>
 
   <ion-footer>

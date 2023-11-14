@@ -6,6 +6,7 @@ import { AddClientModelComponent } from "../add-client-model/add-client-model.co
 import { AddClientService } from "src/app/services/homepageServices/add-client.service";
 import {  Router } from "@angular/router";
 import { AuthenticationService } from "src/app/services/authentication.service";
+import { ImportModalComponent } from "../import-modal/import-modal.component";
 
 @Component({
   selector: "app-homepage",
@@ -90,5 +91,19 @@ export class HomepageComponent implements OnInit {
   logout() {
     this.authService.logout();
     this.router.navigate(["/"]);
+  }
+
+  openImportDialog(): void {
+    let dialogRef = this.dialog.open(ImportModalComponent, {
+      width: "600px",
+      height: "280px",
+      // maxWidth: "100%",
+      data: { },
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log("The dialog was closed");
+    });
   }
 }

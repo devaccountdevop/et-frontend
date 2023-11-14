@@ -93,9 +93,11 @@ export class SprintDashboardComponent  implements OnInit {
   landingPage(){
     this.route.navigate(['/estimation-tool/homepage']);
   }
-  getTask(sprintId:any){
-    console.log(sprintId);
-    this.route.navigate(['/estimation-tool/homepage/tasklist']);
+  getTask(item:any){
+    this.route.navigate(["estimation-tool/homepage/tasklist"], {
+      queryParams: { sprintId:item.id,  sprintName:item.name, projectId: this.projectId, projectName: this.projectName},
+    });
+    
   }
 
 

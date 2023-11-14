@@ -7,3 +7,81 @@
     margin-top: 0px;
     
   }
+  table {
+    font-family: arial;
+    border-collapse: collapse;
+   
+    width: 100%;
+  }
+  
+  td, th {
+    border-right: 1px solid #b3b1b1;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {
+
+    background-color: #e8e7e7;
+    
+  }
+  .timetable{
+    font-family: arial;
+    border-collapse: collapse;
+   border: 0px;
+    width: 100%;
+  }
+  .button2 {
+    margin-top: 15px;
+    margin-left: 37%;
+    background-color: white;
+    color: black;
+    border: 2px solid rgba(26, 74, 96, 0.8999999761581421);
+    border-radius: 5px;
+    width: 31%; /* Increase the width as needed */
+    height: 30px; /* Increase the height as needed */
+  }
+  .closebtn{
+    position: absolute;
+    left: 95.5%; 
+    top: 1px;
+  }
+  .container{
+   height: 99%;
+   width: 98%;
+   padding: 7px;
+   margin-left: 8px;
+   overflow-x: auto;
+    margin-top: 25px;
+   
+  }
+  .estimatevalue{
+    height: auto;
+    margin: 0px; 
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
+  }
+  .estimateSecCol{
+   margin-left: 10px;
+    font-size: small;
+     margin-bottom: 35px;
+     text-align: center;
+  }
+  .actualTime{
+   width: 100%; 
+   background-color: rgba(26, 74, 96, 0.9);
+   color: white;
+  display: flex; 
+  justify-content: space-between;
+   align-items: center;
+    height: 25px;
+     margin-top: 5px;
+  }
+  
+  .button2:hover {
+    background-color: rgba(26, 74, 96, 0.8999999761581421);
+    color: white;
+  }
+  .long-content {
+    height: auto;
+    //min-height: 100px; /* You can adjust this value as needed */
+  }

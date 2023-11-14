@@ -26,10 +26,15 @@ export class CommanLoaderService {
     console.log('onDidDismiss resolved with role', role);
   }
 
-  async presentToast(message: string, time: number) {
+  async presentToast(message: string, time: number, css:any) {
     const toast = await this.toastCtrl.create({
       message: message,
       duration: time,
+      position: 'top',
+     // color: 'secondary',
+      cssClass: css
+      
+      //cssClass: 'signup.component.scss'
     });
     toast.present();
   }

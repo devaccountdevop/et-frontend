@@ -12,9 +12,9 @@ ion-content {
   --color: black;
   align-items: center;
   height: 75%;
-  width: 65%;
+  width: 63.5%;
   margin-top: 6%;
-  margin-left: 18%;
+  margin-left: 17.5%;
   margin-bottom: 8px;
 }
 .span{
@@ -57,7 +57,7 @@ margin-top: 25%;
 // }
 .row{
   margin-top: 15px;
-margin-left: 55%;
+margin-left: 54%;
 }
 
 .button2 {
@@ -74,7 +74,11 @@ margin-left: 55%;
   margin-left: 10px;
 }
 
-.button2:hover {
+// .button2:hover {
+//   background-color: rgba(26, 74, 96, 0.8999999761581421);
+//   color: white;
+// }
+.button2:hover:not([disabled]) {
   background-color: rgba(26, 74, 96, 0.8999999761581421);
   color: white;
 }
@@ -82,3 +86,12 @@ margin-left: 55%;
 
 
 
+.invalid {
+  border-color: red;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}

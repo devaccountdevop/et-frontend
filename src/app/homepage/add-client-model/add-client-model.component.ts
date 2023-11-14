@@ -55,6 +55,7 @@ export class AddClientModelComponent implements OnInit {
         this.clientName = "";
         this.jiraUserName = "";
         this.token = "";
+        
         this.errormsg = false;
       });
     } else {

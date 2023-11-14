@@ -222,19 +222,30 @@ ion-header {
     font-family: arial;
     border-collapse: collapse;
    
-    width: 98.5%;
+      table-layout: fixed;
+
+    width: 99.7%;
   }
   
   td, th {
     border: 1px solid #cfcdcd;
     text-align: left;
     padding: 8px;
+  
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   
   tr:nth-child(even) {
 
     background-color: #f0f0f0;
     
+  }
+  .full-width-input {
+    width: 100%;
+    padding: -8px;
+    box-sizing: border-box;
   }
   .tableheader{
     background-color: rgba(26, 74, 96, 0.9);
@@ -250,6 +261,14 @@ ion-header {
     text-align:center;
     padding: 3px;
   }
+//   .popup {
+//     display: none;
+//     position: absolute;
+//     background-color: #fff;
+//     border: 1px solid #ccc;
+//     padding: 10px;
+//     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+// }
   
   
   
