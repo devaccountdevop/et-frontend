@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { AuthenticationService } from "src/app/services/authentication.service";
+import { CommanLoaderService } from "src/app/services/comman-loader.service";
 import { LoginService } from "src/app/services/login.service";
 
 @Component({
@@ -23,7 +24,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private loginService: LoginService,
     private route: Router,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private commonService: CommanLoaderService
   ) {}
 
   ngOnInit() {
@@ -43,18 +45,21 @@ export class LoginComponent implements OnInit {
       if (res.code === 200) {
         this.route.navigate(["/estimation-tool/homepage"]);
         this.authService.login();
+        this.authService.saveUserDetails(res.data);
         this.userName = "";
         this.password = "";
       } else {
        this.errormsg = true;
-       this.message = "please input correct userName or password";
-        // this.userName = "";
-        // this.password = "";
+       this.message = "Username or password is incorrect";
       }
     });
+    
+  }else if(this.userName.length ==0){
+    this.errormsg = true;
+    this.message = "Please input the username ";
   }else{
     this.errormsg = true;
-    this.message = "username and password is required";
+    this.message = "Please input the password ";
   }
   }
 
@@ -69,5 +74,13 @@ export class LoginComponent implements OnInit {
 
   resetErrorMessage(){
     this.message = "";
+  }
+
+  apicheck(){
+    this.loginService.apicheck().subscribe((res)=>{
+if (res.code==200){
+ this.commonService.presentAlert("alrt", res.data);
+}
+    })
   }
 }

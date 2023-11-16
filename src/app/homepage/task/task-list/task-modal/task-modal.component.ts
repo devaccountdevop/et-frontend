@@ -53,7 +53,7 @@ export class TaskModalComponent  implements OnInit {
   }
 
   updateData(){
-    console.log(this.sharedItem.lowEstimate, this.sharedItem.realisticEstimate, this.sharedItem.highEstimate);
+    
     
   }
   ngOnDestroy() {

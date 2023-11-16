@@ -10,7 +10,6 @@ import { SideBarComponent } from "./homepage/side-bar/side-bar.component";
 import { DashboardBodyComponent } from "./dashboard-body/dashboard-body.component";
 import { TileComponent } from "./homepage/tile/tile.component";
 import { NgxPaginationModule } from "ngx-pagination";
-import { EtCommonModule } from "../et-common/et-common.module";
 import { FilterPipe } from "../pipes/filter.pipe";
 import { AddClientModelComponent } from "./add-client-model/add-client-model.component";
 import {
@@ -25,6 +24,7 @@ import { TableFilterPipe } from "../pipes/table-filter.pipe";
 import { TaskModalComponent } from "./task/task-list/task-modal/task-modal.component";
 import { TableShortPipe } from "../pipes/table-short.pipe";
 import { ImportModalComponent } from "./import-modal/import-modal.component";
+import * as XLSX from 'xlsx';
 
 @NgModule({
   declarations: [
@@ -50,6 +50,7 @@ import { ImportModalComponent } from "./import-modal/import-modal.component";
     FormsModule,
     NgxPaginationModule,
     MatDialogModule,
+    
   ],
   providers: [
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } },

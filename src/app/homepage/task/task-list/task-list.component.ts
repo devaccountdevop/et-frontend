@@ -1,11 +1,7 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ModalController } from "@ionic/angular";
 import { AuthenticationService } from "src/app/services/authentication.service";
-import { ProjectsService } from "src/app/services/homepageServices/projects.service";
-import { SprintService } from "src/app/services/sprint.service";
-import { Project } from "../../homepage/projects";
 import { TaskModalComponent } from "./task-modal/task-modal.component";
 import { TaskService } from "src/app/services/task.service";
 import { CommanLoaderService } from "src/app/services/comman-loader.service";
@@ -194,7 +190,7 @@ export class TaskListComponent implements OnInit {
     this.route.navigate(["/"]);
   }
   landingPage() {
-    this.route.navigate(["/estimation-tool/homepage/sprintdashboard"]);
+    this.route.navigate(["/estimation-tool/homepage"]);
   }
   sortData(column: string) {
     if (this.sortedColumn === column) {
@@ -237,7 +233,10 @@ export class TaskListComponent implements OnInit {
     if (this.editableFields.includes(field)) {
       this.editingItem = item;
       this.editingField = field;
+    }else{
+      this.openDialog(item);
     }
+    
   }
   stopEditing(item: any, field: string): void {
     this.modifyItems.push(item);

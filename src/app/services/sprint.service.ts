@@ -12,7 +12,6 @@ export class SprintService {
 
 
   public getSprints(id: any): Observable<any> {
-
     const fullApiUrl = this.apiUrl + "/getAllSprints/"+id;
     return this.http.get<any>(fullApiUrl );
 

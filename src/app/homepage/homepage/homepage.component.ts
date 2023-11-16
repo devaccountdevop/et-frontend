@@ -40,9 +40,12 @@ export class HomepageComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.clientService.getClient().subscribe((res) => {
+    const UserDetails = this.authService.getUserDetails();
+    console.log(UserDetails?.id);
+    this.clientService.getClientByUserId(UserDetails?.id).subscribe((res) => {
       this.clientList = res.data;
       if (this.clientList.length > 0) {
+       
         const clienttId = this.clientList[0].id;
         this.clientId = clienttId;
         this.projectService.getProjects(this.clientId).subscribe((res) => {

@@ -17,8 +17,8 @@ export class AddClientService {
     return this.http.post<any>(fullApiUrl, formData);
 
   }
-  public getClient( ): Observable<any> {
-    const fullApiUrl = this.apiUrl + "/getclients/2";
+  public getClientByUserId(userId:any ): Observable<any> {
+    const fullApiUrl = this.apiUrl + "/getclients/"+ userId;
     return this.http.get<any>(fullApiUrl);
 
   }

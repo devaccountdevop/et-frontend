@@ -11,6 +11,8 @@ export class AppComponent {
   constructor(public authService:AuthenticationService, private route:Router) {}
 
   ngOnInit() {
+
+
     this.authService.isLoggedIn$.subscribe((res)=>{
       if(res)
       {

@@ -97,12 +97,12 @@
           </ion-row>
           <ion-row  style="height: 35px; margin-top: 5px;">
 
-            <p style="margin-left: 20px;">Sprint1</p>
+            <p style="margin-left: 20px;">{{this.sprintName}}</p>
             <p style="
                 margin-left: 15px;
                 font-size: small;
                 text-align: end;
-                margin-left: 60%;
+                margin-left: 50%;
                 margin-top: 20px;
               ">
               Search:
@@ -150,25 +150,19 @@
                     <th class="tablesubheader" style="width: 8%;" scope="col">Realistic</th>
                     <th class="tablesubheader" scope="col">High</th>
                   </tr>
-                 <tr *ngFor="let item of tableData | tableFilter: searchText | paginate: { itemsPerPage: pageFilterDefault, currentPage: p }">
-  <ng-container *ngFor="let field of ['id', 'title', 'description', 'labels', 'lowEstimate', 'realisticEstimate', 'highEstimate', 'threePointEstimate', 'aiEstimate', 'actualHrs']">
-    <th [ngClass]="{'editing': isEditing(item, field)}" style="word-wrap: break-word;" [style.padding]="isEditing(item, field) ? '0' : '8px'">
-      <div *ngIf="!isEditing(item, field)" (click)="startEditing(item, field)">{{ item[field] }}</div>
-      <ng-container *ngIf="isEditing(item, field) && editableFields.includes(field)">
-        <input
-          *ngIf="isEditing(item, field)"
-          [(ngModel)]="item[field]"
-          (blur)="stopEditing(item, field)"
-          (keyup.enter)="stopEditing(item, field)"
-          [style.padding]="isEditing(item, field) ? '0' : '8px'"
-          [ngClass]="{'full-width-input': isEditing(item, field)}"
-          style="width: 100%; box-sizing: border-box;"
-        >
-      </ng-container>
-    </th>
-  </ng-container>
-</tr>
-
+                  <tr *ngFor="
+                  let item of tableData |  tableFilter :searchText | paginate: { itemsPerPage: pageFilterDefault, currentPage: p } | tableShort:'title' "  (click)="openDialog(item)" >
+                      <th >{{item.id}}</th>
+                      <th> {{item.title}}</th>
+                      <th>{{item.description}}</th>
+                      <th>{{item.labels}}</th>
+                      <th>{{item.lowEstimate}}</th>
+                      <th>{{item.realisticEstimate}}</th>
+                      <th>{{item.highEstimate}}</th>
+                      <th>{{item.threePointEstimate}}</th>
+                      <th>{{item.aiEstimate}}</th>
+                      <th>{{item.actualHrs}}</th>
+                  </tr>
                 </table>
               </ion-row>
             </ion-grid>

@@ -1,4 +1,3 @@
-import { Dialog } from "@angular/cdk/dialog";
 import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { CommanLoaderService } from "src/app/services/comman-loader.service";
@@ -6,6 +5,7 @@ import { AddClientService } from "src/app/services/homepageServices/add-client.s
 import { ClientDeleteComponent } from "./client-delete/client-delete.component";
 import { AlertController } from "@ionic/angular";
 import { ClientUpdateComponent } from "./client-update/client-update.component";
+import { AuthenticationService } from "src/app/services/authentication.service";
 
 @Component({
   selector: "app-add-client-model",
@@ -18,14 +18,18 @@ export class AddClientModelComponent implements OnInit {
   jiraUserName: string = "";
   token: string = "";
   clientList: any[] = [];
+  userId: any;
   constructor(
     private alertController: AlertController,
     private dialog: MatDialog,
     private addClientService: AddClientService,
-    private alertService: CommanLoaderService
+    private authService: AuthenticationService,
+
   ) {}
   ngOnInit(): void {
-    this.addClientService.getClient().subscribe((res) => {
+const UserDetails = this.authService.getUserDetails();
+this.userId = UserDetails?.id;
+    this.addClientService.getClientByUserId(UserDetails?.id).subscribe((res) => {
       this.clientList = res.data;
     });
     this.clientName = "";
@@ -49,7 +53,7 @@ export class AddClientModelComponent implements OnInit {
       formData.append("clientName", this.clientName);
       formData.append("userName", this.jiraUserName);
       formData.append("token", this.token);
-      formData.append("userId", "2");
+      formData.append("userId", this.userId );
       this.addClientService.saveClient(formData).subscribe((res) => {
         this.clientList.push(res.data);
         this.clientName = "";

@@ -26,9 +26,8 @@ export class TaskService {
     return this.http.get<any>(fullApiUrl );
 
   }
-
   updateEstimatesInJira(updateTasks: any):Observable<any> {
-    console.log('Update Tasks:', updateTasks);
+   // console.log('Update Tasks:', updateTasks);
     const fullApiUrl = this.apiUrl + "/saveestimates";
     return this.http.post<any>(fullApiUrl, updateTasks );
 
