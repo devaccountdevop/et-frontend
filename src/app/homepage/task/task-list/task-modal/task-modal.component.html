@@ -84,14 +84,29 @@
         <span style="font-size: small; margin-right: 5px;color: white;">{{ !showField ? ' ▲' : ' ▼' }}</span>
       </div>
       <div *ngIf="showField" class="table-container">
-        <table>
-          parveen
+        <table style="font-size: small; margin-left: 2%;margin-top: 20px;">
+          Labels  : {{sharedItem.labels}}
 
         </table>
       </div>
     </div>
-    <span>
-      <button (click)="updateData()" class="button2">Update Ai Estimates In Jira <ion-icon name="checkmark-outline"
-          style="font-size: medium;margin-bottom: -2px;"></ion-icon></button></span>
+    <div>
+      
+      <span>
+          <button (click)="saveEstimatesInDB()" style="width: 25%; margin-left: 5%;" class="button2">Save & Close</button>
+      </span>
+  
+    
+      <span>
+          <button  class="button2">Fetch AI Estimates</button>
+      </span>
+  
+     
+      <span>
+          <button  class="button2">Update AI Estimates In Jira 
+              <ion-icon name="checkmark-outline" style="font-size: medium; margin-bottom: -2px;"></ion-icon>
+          </button>
+      </span>
+  </div>
   </div>
 </ion-app>

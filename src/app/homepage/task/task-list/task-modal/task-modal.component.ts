@@ -24,7 +24,7 @@ export class TaskModalComponent  implements OnInit {
   constructor( private alertController: AlertController,
     private dialog: MatDialog,
     private addClientService: AddClientService,
-    private alertService: CommanLoaderService,
+    private commonService: CommanLoaderService,
     private taskService: TaskService,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
@@ -52,10 +52,18 @@ export class TaskModalComponent  implements OnInit {
     this.token = "";
   }
 
-  updateData(){
-    console.log(this.sharedItem.lowEstimate, this.sharedItem.realisticEstimate, this.sharedItem.highEstimate);
-    
-  }
+  saveEstimatesInDB() {
+    const requestData = {
+      updateTask: this.sharedItem,
+    };
+
+    this.taskService.saveEstimatesInDB(requestData).subscribe((res) => {
+        if (res.code === 200) {
+           
+        }
+    });
+}
+
   ngOnDestroy() {
     this.taskService.updateItem(this.sharedItem);
     this.dataSubscription?.unsubscribe();
