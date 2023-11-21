@@ -53,7 +53,11 @@ export class SprintDashboardComponent  implements OnInit {
    });
    if(this.projectId !== 0){
       this.sprintService.getSprints(this.projectId).subscribe((res)=>{
-        this.sprintsList = res.data;
+        if(res.code === 200){  
+          this.sprintsList = res.data;
+        }else{
+          this.sprintsList =[];
+        }
       });
    }
 

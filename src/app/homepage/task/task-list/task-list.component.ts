@@ -215,13 +215,21 @@ export class TaskListComponent implements OnInit {
   }
   openDialog(item: any): void {
     this.taskService.setSharedItem(item);
+  
     let dialogRef = this.dialog.open(TaskModalComponent, {
       width: "650px",
       height: "540px",
       data: { item },
-      // disableClose: true,
     });
+  
     dialogRef.afterClosed().subscribe((result) => {
+      // Inside this block, you will get the latest value when the modal is closed
+      const latestValue = this.taskService.sharedItemSubject.getValue();
+      if (latestValue) {
+        this.modifyItems.push(latestValue);
+        console.log(this.modifyItems);
+      }
+      
       console.log("The dialog was closed");
     });
   }

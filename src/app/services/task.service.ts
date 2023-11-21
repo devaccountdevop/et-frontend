@@ -10,7 +10,7 @@ export class TaskService {
 
   apiUrl: string = environment.apiUrl;
   constructor(private http: HttpClient) { }
-  private sharedItemSubject: BehaviorSubject<any> = new BehaviorSubject(null);
+  public sharedItemSubject: BehaviorSubject<any> = new BehaviorSubject(null);
   sharedItem$: Observable<any> = this.sharedItemSubject.asObservable();
 
   setSharedItem(item: any) {
@@ -28,9 +28,16 @@ export class TaskService {
   }
   updateEstimatesInJira(updateTasks: any):Observable<any> {
    // console.log('Update Tasks:', updateTasks);
-    const fullApiUrl = this.apiUrl + "/saveestimates";
+    const fullApiUrl = this.apiUrl + "/updatestimates";
     return this.http.post<any>(fullApiUrl, updateTasks );
 
   }
+
+ saveEstimatesInDB(updateTasks: any):Observable<any> {
+    // console.log('Update Tasks:', updateTasks);
+     const fullApiUrl = this.apiUrl + "/savetaskestimates";
+     return this.http.post<any>(fullApiUrl, updateTasks );
+ 
+   }
   
 }

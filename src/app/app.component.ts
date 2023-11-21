@@ -13,14 +13,14 @@ export class AppComponent {
   ngOnInit() {
 
 
-    this.authService.isLoggedIn$.subscribe((res)=>{
-      if(res)
-      {
-        this.route.navigate(['/estimation-tool/homepage']);
-      }else{
-        this.route.navigate(['/']);
-      }
-    });
+    // this.authService.isLoggedIn$.subscribe((res)=>{
+    //   if(res)
+    //   {
+    //     this.route.navigate(['/estimation-tool/homepage']);
+    //   }else{
+    //     this.route.navigate(['/']);
+    //   }
+    // });
   
     
   }

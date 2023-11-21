@@ -134,6 +134,9 @@
                     <!-- Additional card content here -->
                   </app-dashboard-body>
                 </ng-container>
+                <div style="margin-left: 35%; margin-top: 10%; " *ngIf="this.sprintsList.length ===0">
+                  <h2 >there are no sprint</h2>
+                  </div>
               </ion-row>
             </ion-grid>
 

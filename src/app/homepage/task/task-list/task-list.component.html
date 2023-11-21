@@ -150,7 +150,7 @@
                     <th class="tablesubheader" style="width: 8%;" scope="col">Realistic</th>
                     <th class="tablesubheader" scope="col">High</th>
                   </tr>
-                  <tr *ngFor="
+                  <tr style="cursor: pointer;" *ngFor="
                   let item of tableData |  tableFilter :searchText | paginate: { itemsPerPage: pageFilterDefault, currentPage: p } | tableShort:'title' "  (click)="openDialog(item)" >
                       <th >{{item.id}}</th>
                       <th> {{item.title}}</th>

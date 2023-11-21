@@ -48,7 +48,7 @@ export class ImportModalComponent  implements OnInit {
 
       // Example: Log the data from the first cell
       const cellValue: any = worksheet['B4'].v;
-      console.log('Cell A1 Value:', cellValue);
+      console.log('Cell B4 Value:', cellValue);
     };
 
     reader.readAsBinaryString(file);

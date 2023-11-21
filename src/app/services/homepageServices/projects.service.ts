@@ -12,11 +12,7 @@ export class ProjectsService {
   constructor(private http: HttpClient) { }
 
   public getProjects(id: any): Observable<any> {
-
-    // const headers = new HttpHeaders({
-    //   'userId': "2"
-    //{ headers: headers }
-    // });
+    
     const fullApiUrl = this.apiUrl + "/getAllProjects/"+id;
 
     return this.http.get<any>(fullApiUrl);

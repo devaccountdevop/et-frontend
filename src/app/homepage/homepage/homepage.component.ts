@@ -4,7 +4,7 @@ import { Project } from "./projects";
 import { MatDialog } from "@angular/material/dialog";
 import { AddClientModelComponent } from "../add-client-model/add-client-model.component";
 import { AddClientService } from "src/app/services/homepageServices/add-client.service";
-import {  Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { AuthenticationService } from "src/app/services/authentication.service";
 import { ImportModalComponent } from "../import-modal/import-modal.component";
 
@@ -22,7 +22,7 @@ export class HomepageComponent implements OnInit {
   p: number = 1;
   searchText: any;
   pageFilterDefault: any = 15;
-  clientId: any;
+  clientId: any = "";
   projectList: Project[] = [];
 
   clientList: any[] = [];
@@ -42,17 +42,40 @@ export class HomepageComponent implements OnInit {
   ngOnInit() {
     const UserDetails = this.authService.getUserDetails();
     console.log(UserDetails?.id);
-    this.clientService.getClientByUserId(UserDetails?.id).subscribe((res) => {
-      this.clientList = res.data;
-      if (this.clientList.length > 0) {
-       
-        const clienttId = this.clientList[0].id;
-        this.clientId = clienttId;
-        this.projectService.getProjects(this.clientId).subscribe((res) => {
-          if (res.data.length > 0) {
-            this.projectList = res.data;
-          }
-        });
+
+    this.clientService.clientList$.subscribe((res) => {
+      if (res.length > 0) {
+        const clientId = res[0].id;
+        this.clientId = clientId;
+        this.getProjectList(clientId);
+      } else {
+        this.projectList = [];
+      }
+      this.clientList.length = 0;
+      this.clientList.push(...res);
+    });
+    this.clientService.getClientByUserId(UserDetails?.id).subscribe((clientRes) => {
+      if (this.clientList.length === 0) {
+        this.clientList.length = 0;
+        this.clientList.push(...clientRes.data);
+        if (this.clientList.length > 0) {
+          const clientId = this.clientList[0].id;
+          this.clientId = clientId;
+          this.getProjectList(clientId);
+        } else {
+          this.projectList = [];
+        }
+      }
+    });
+  }
+  
+  private getProjectList(clientId: string): void {
+    this.projectService.getProjects(clientId).subscribe((projectsRes) => {
+      if (projectsRes.data.length > 0) {
+        this.projectList = projectsRes.data;
+      } else {
+        // No projects, clear projectList or perform any other necessary action
+        this.projectList = [];
       }
     });
   }
@@ -65,7 +88,11 @@ export class HomepageComponent implements OnInit {
   getProjectByselectedClient() {
     if (this.clientId !== undefined) {
       this.projectService.getProjects(this.clientId).subscribe((res) => {
+        if(res.code==200){
         this.projectList = res.data;
+        }else{
+          this.projectList = [];
+        }
       });
     }
   }
@@ -77,11 +104,12 @@ export class HomepageComponent implements OnInit {
       width: "700px",
       height: "300px",
       // maxWidth: "100%",
-      data: { },
+      data: {},
       disableClose: true,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
+     
       console.log("The dialog was closed");
     });
   }
@@ -101,7 +129,7 @@ export class HomepageComponent implements OnInit {
       width: "600px",
       height: "280px",
       // maxWidth: "100%",
-      data: { },
+      data: {},
       disableClose: true,
     });
 

@@ -1,5 +1,5 @@
-import { Component, OnInit } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
+import { Component, Inject, OnInit } from "@angular/core";
+import { MAT_DIALOG_DATA, MatDialog } from "@angular/material/dialog";
 import { CommanLoaderService } from "src/app/services/comman-loader.service";
 import { AddClientService } from "src/app/services/homepageServices/add-client.service";
 import { ClientDeleteComponent } from "./client-delete/client-delete.component";
@@ -24,6 +24,7 @@ export class AddClientModelComponent implements OnInit {
     private dialog: MatDialog,
     private addClientService: AddClientService,
     private authService: AuthenticationService,
+    @Inject(MAT_DIALOG_DATA) public data: any
 
   ) {}
   ngOnInit(): void {
@@ -85,6 +86,7 @@ this.userId = UserDetails?.id;
     this.addClientService.deleteClient(id).subscribe((res) => {
       if (res.code == 200) {
         this.clientList = this.clientList.filter((item) => item.id !== id);
+        this.addClientService.updateClientList(this.clientList);
       } else {
         console.log("something went wrong");
       }
@@ -92,10 +94,12 @@ this.userId = UserDetails?.id;
   }
 
   closeDialog() {
+   
     this.dialog.closeAll();
     this.clientName = "";
     this.jiraUserName = "";
     this.token = "";
+  
   }
 
   confirmAndDeleteClient( id: number ): void {
@@ -129,5 +133,13 @@ this.userId = UserDetails?.id;
       });
     }
 
-  }
+    ngOnDestroy() {
+     
+        this.addClientService.updateClientList(this.clientList);
+      }
+      // this.dataSubscription?.unsubscribe();
+    }
+    
+
+  
 
