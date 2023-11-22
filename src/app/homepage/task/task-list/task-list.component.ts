@@ -175,7 +175,6 @@ export class TaskListComponent implements OnInit {
     if (this.sprintId !== 0) {
       this.taskService.getTaskBySprintId(this.sprintId, this.projectId).subscribe((res) => {
         this.tableData = res.data;
-        console.log(this.tableData.length);
       });
     }
   }
@@ -227,7 +226,6 @@ export class TaskListComponent implements OnInit {
       const latestValue = this.taskService.sharedItemSubject.getValue();
       if (latestValue) {
         this.modifyItems.push(latestValue);
-        console.log(this.modifyItems);
       }
       
       console.log("The dialog was closed");

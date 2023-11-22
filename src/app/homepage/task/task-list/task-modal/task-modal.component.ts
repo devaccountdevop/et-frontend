@@ -16,6 +16,7 @@ export class TaskModalComponent  implements OnInit {
   clientName: string = "";
   jiraUserName: string = "";
   token: string = "";
+  message = "";
 
   // sharedItem: any;
   private dataSubscription: Subscription | undefined;
@@ -34,7 +35,7 @@ export class TaskModalComponent  implements OnInit {
       this.sharedItem = item;
     });
   }
-
+  errormsg:boolean = true;
   showField:boolean = false;
   showTime: boolean = false;
 
@@ -44,24 +45,96 @@ export class TaskModalComponent  implements OnInit {
   toggleShowField() {
     this.showField = !this.showField;
   }
+  hidemsg() {
+    this.errormsg= false;
+    this.message="";
+  }
 
   closeDialog() {
     this.dialog.closeAll();
-    this.clientName = "";
-    this.jiraUserName = "";
-    this.token = "";
   }
 
   saveEstimatesInDB() {
+   
+    if(this.sharedItem &&
+    this.sharedItem.lowEstimate !== undefined &&
+    this.sharedItem.highEstimate !== undefined &&
+    this.sharedItem.realisticEstimate !== undefined &&
+    this.sharedItem.id !== undefined
+  )
+{
     const requestData = {
       updateTask: this.sharedItem,
     };
 
     this.taskService.saveEstimatesInDB(requestData).subscribe((res) => {
         if (res.code === 200) {
-           
+          this.dialog.closeAll();
+          this.commonService.presentToast(
+            "Task details are saved successfully",
+            3000,
+            "toast-task-mess"
+          );
         }
     });
+  }else{
+this.message = "input the required fields"   ;
+
+  }
+}
+fetchAiEstimates(){
+
+  if (
+    this.sharedItem &&
+    this.sharedItem.lowEstimate !== undefined &&
+    this.sharedItem.highEstimate !== undefined &&
+    this.sharedItem.realisticEstimate !== undefined &&
+    this.sharedItem.id !== undefined
+  ){
+  const requestData = {
+    value: this.sharedItem,
+  };
+  this.taskService.fetchAiEstimates(requestData).subscribe((res) => {
+      if (res.code === 200) {
+        this.sharedItem.aiEstimate = res.data.aiEstimate;
+       // this.message = "AI Estimates are fetched successfuly..";
+      }
+  });
+  }else{
+
+    this.message = "input the required fields";
+
+}
+
+}
+
+updateAiEstimate(){
+  if (
+    this.sharedItem &&
+    this.sharedItem.lowEstimate !== undefined &&
+    this.sharedItem.highEstimate !== undefined &&
+    this.sharedItem.realisticEstimate !== undefined &&
+    this.sharedItem.id !== undefined&&
+    this.sharedItem.aiEstimate !== undefined
+  ){
+  const requestData = {
+    updateTask: this.sharedItem,
+  };
+  this.taskService.updateEstimatesInJira(requestData).subscribe((res) => {
+      if (res.code === 200) {
+        this.dialog.closeAll();
+          this.commonService.presentToast(
+            "AI Estimate are updated successfully..",
+            3000,
+            "toast-task-mess"
+          );
+      }
+  });
+  }else{
+
+    this.message = "input the required fields";
+
+}
 }
 
   ngOnDestroy() {

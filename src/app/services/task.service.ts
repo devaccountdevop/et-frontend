@@ -39,5 +39,12 @@ export class TaskService {
      return this.http.post<any>(fullApiUrl, updateTasks );
  
    }
+
+   fetchAiEstimates(value: any):Observable<any> {
+    // console.log('Update Tasks:', updateTasks);
+     const fullApiUrl = this.apiUrl + "/aiestimates";
+     return this.http.post<any>(fullApiUrl, value );
+ 
+   }
   
 }
