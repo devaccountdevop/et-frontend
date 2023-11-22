@@ -46,6 +46,13 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.success-bg {
+  background-color: green; /* Set your success background color here */
+}
+
+.error-bg {
+  background-color: red; /* Set your error background color here */
+}
 
   .closebtn{
     position: absolute;

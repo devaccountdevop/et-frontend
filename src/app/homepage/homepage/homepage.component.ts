@@ -7,6 +7,7 @@ import { AddClientService } from "src/app/services/homepageServices/add-client.s
 import { Router } from "@angular/router";
 import { AuthenticationService } from "src/app/services/authentication.service";
 import { ImportModalComponent } from "../import-modal/import-modal.component";
+import { CommanLoaderService } from "src/app/services/comman-loader.service";
 
 @Component({
   selector: "app-homepage",
@@ -36,25 +37,32 @@ export class HomepageComponent implements OnInit {
     public dialog: MatDialog,
     private clientService: AddClientService,
     private router: Router,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private commanService: CommanLoaderService
   ) {}
 
   ngOnInit() {
+    
     const UserDetails = this.authService.getUserDetails();
     console.log(UserDetails?.id);
-
     this.clientService.clientList$.subscribe((res) => {
+      
       if (res.length > 0) {
         const clientId = res[0].id;
         this.clientId = clientId;
         this.getProjectList(clientId);
+        
       } else {
         this.projectList = [];
+      
       }
       this.clientList.length = 0;
       this.clientList.push(...res);
+      
     });
+      
     this.clientService.getClientByUserId(UserDetails?.id).subscribe((clientRes) => {
+      
       if (this.clientList.length === 0) {
         this.clientList.length = 0;
         this.clientList.push(...clientRes.data);
@@ -62,6 +70,7 @@ export class HomepageComponent implements OnInit {
           const clientId = this.clientList[0].id;
           this.clientId = clientId;
           this.getProjectList(clientId);
+
         } else {
           this.projectList = [];
         }
@@ -70,14 +79,19 @@ export class HomepageComponent implements OnInit {
   }
   
   private getProjectList(clientId: string): void {
+   
     this.projectService.getProjects(clientId).subscribe((projectsRes) => {
+     
       if (projectsRes.data.length > 0) {
         this.projectList = projectsRes.data;
+        this.commanService.dismissLoader();
       } else {
         // No projects, clear projectList or perform any other necessary action
         this.projectList = [];
+        this.commanService.dismissLoader();
       }
     });
+    this.commanService.dismissLoader();
   }
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;

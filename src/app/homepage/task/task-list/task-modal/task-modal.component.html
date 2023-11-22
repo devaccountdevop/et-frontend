@@ -5,6 +5,11 @@
       </ion-button>
     </ion-buttons></span>
   <div class="container" >
+    <div *ngIf="message.length !== 0 " style="background-color: red; text-align: center; font-size: medium; color: white;height: 20px;">
+      {{message}}
+      <span (click)="hidemsg()" style="position: absolute; left: 95%;cursor: pointer;">&#10006;</span>
+    </div>
+    
       <div style="width: 100%; font-size: 12px; height: auto;">
         <p class="estimatevalue"><b>ID : {{sharedItem.id}}</b></p>
         <p class="estimatevalue"><b>Title :</b> {{sharedItem.title}}</p>
@@ -40,12 +45,11 @@
         <div class="estimateSecCol" style="margin-left: 25%; text-align: left;">
           <p style="margin-top: 20px;">3 Points Estimates <span
               style="margin-left: 20px;">{{sharedItem.threePointEstimate}}</span></p>
-          <p style="margin-top: 20px;"> Risk Factor <span style="margin-left: 20px;">{{sharedItem.aiEstimate}}</span></p>
+          <p style="margin-top: 20px;"> Risk Factor <span style="margin-left: 20px;">{{sharedItem.riskFactor}}</span></p>
           <p style="margin-top: 20px;">AI Estimates <span style="margin-left: 20px;">{{sharedItem.aiEstimate}}</span></p>
         </div>
       </tr>
     </table>
-  
     <div class="dropdown-container" (click)="toggleShowTime()">
       <div class="actualTime" >
         <p style="margin-left: 5px; font-size: small;">Actual Time For Task :</p>
@@ -98,12 +102,12 @@
   
     
       <span>
-          <button  class="button2">Fetch AI Estimates</button>
+          <button  class="button2" (click)="fetchAiEstimates()">Fetch AI Estimates</button>
       </span>
   
      
       <span>
-          <button  class="button2">Update AI Estimates In Jira 
+          <button  class="button2" (click)="updateAiEstimate()">Update AI Estimates In Jira 
               <ion-icon name="checkmark-outline" style="font-size: medium; margin-bottom: -2px;"></ion-icon>
           </button>
       </span>
