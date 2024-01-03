@@ -52,27 +52,28 @@ export class SprintDashboardComponent  implements OnInit {
       this.projectName= params['projectName'];
    });
    if(this.projectId !== 0){
-      this.sprintService.getSprints(this.projectId).subscribe((res)=>{
-        if(res.code === 200){  
-          this.sprintsList = res.data;
-        }else{
-          this.sprintsList =[];
-        }
-      });
+   this.getSprints(this.projectId)
    }
-
-    // this.clientService.getClient().subscribe((res) => {
-    //   this.clientList = res.data;
-    //   if (this.clientList.length > 0) {
-    //     const clienttId = this.clientList[0].id;
-    //     this.clientId = clienttId;
-    //   }
-    // });
-    // this.projectService.getProjects(this.id).subscribe((res) => {
-    //   if (res.data.length > 0) {
-    //     this.projectList = res.data;
-    //   }
-    //});
+  }
+  getSprints(projectId:any){
+    this.sprintService.getSprints(projectId).subscribe((res)=>{
+      if(res.code === 200){  
+        this.sprintsList = res.data;
+      }else{
+        this.sprintsList =[];
+      }
+    });
+  }
+  syncData(){
+    if(this.projectId){
+      this.getSprints(this.projectId)
+    }else{
+      this.router.queryParams.subscribe(params => {
+        this.projectId = params['projectId'];
+        this.projectName= params['projectName'];
+     });
+     if(this.projectId !== 0)this.getSprints(this.projectId)
+    }
   }
   setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;
@@ -99,7 +100,7 @@ export class SprintDashboardComponent  implements OnInit {
   }
   getTask(item:any){
     this.route.navigate(["estimation-tool/homepage/tasklist"], {
-      queryParams: { sprintId:item.id,  sprintName:item.name, projectId: this.projectId, projectName: this.projectName},
+      queryParams: { sprintId:item.sprintId,  sprintName:item.summary, projectId: this.projectId, projectName: this.projectName},
     });
     
   }

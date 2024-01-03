@@ -1,0 +1,27 @@
+.button2 {
+    margin-top: 15px;
+    margin-left: 2%;
+    background-color: white;
+    color: black;
+    border: 2px solid rgba(26, 74, 96, 0.8999999761581421);
+    border-radius: 5px;
+    width: 31%; /* Increase the width as needed */
+    height: 30px; /* Increase the height as needed */
+    /* Additional styles for better appearance */
+    //display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.menu{
+    cursor: pointer;
+    color: white;
+}
+
+.note_for_forget_passowrd {
+    border-top: 1px solid #00000024;
+    padding: 20px 0 10px;
+    text-align: center;
+    margin: 22px;
+    margin-top: 2  0px;
+}

@@ -36,7 +36,7 @@
             Dashboard
           </ion-col>
         </ion-row>
-        <!-- <ion-row style="
+        <ion-row style="
             display: flex;
             justify-content: center;
             margin-top: -10px;
@@ -47,47 +47,15 @@
               style="margin-bottom: -6px; margin-right: 10px; fill: #a1a1a1" />
             Projects
           </ion-col>
-        </ion-row> -->
-        <!-- <ion-row style="
-            display: flex;
-            justify-content: center;
-            margin-top: -10px;
-            text-align: left;
-          ">
-          <ion-col style="background-color: white; color: black">
-            <img src="/assets/images/Vector.png" alt="Your Image" style="margin-bottom: -6px; margin-right: 10px" />
-            User
-          </ion-col>
         </ion-row>
-        <ion-row style="
-            display: flex;
-            justify-content: center;
-            margin-top: -10px;
-            text-align: left;
-          ">
-          <ion-col style="background-color: white; color: black">
-            <img src="/assets/images/Vector (1).png" alt="Your Image" style="margin-bottom: -6px; margin-right: 10px" />
-            Report
-          </ion-col>
-        </ion-row>
-        <ion-row style="
-            display: flex;
-            justify-content: center;
-            margin-top: -10px;
-            text-align: left;
-          ">
-          <ion-col style="background-color: white; color: black">
-            <img src="/assets/images/Settings.png" alt="Your Image" style="margin-bottom: -6px; margin-right: 10px" />
-            Setting
-          </ion-col>
-        </ion-row> -->
+
       </ion-col>
       <ion-col size="10"
         style="margin: 0px; height: 100%; color: black; background-color: white;box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);">
         <div class="innerbox">
           <ion-row class="subheader" style="align-items: center;">
             <button (click)=" updateEstimatesInJira()" class="updatebtn">Update Ai Estimates In Jira</button>
-            <span ><button class="syncbtn">
+            <span ><button class="syncbtn" (click)="syncData()">
                 Sync
                 <ion-icon style="margin-left: 5px; margin-bottom: -1.7px" name="sync-outline"></ion-icon>
               </button></span>
@@ -121,14 +89,7 @@
                   overflow-x: auto;
                   white-space: nowrap;
                 ">
-                <!-- <ng-container
-                  *ngFor="
-                    let item of sprintsList |  filter :searchText | paginate: { itemsPerPage: pageFilterDefault, currentPage: p }  ">
-                  <app-dashboard-body class="bodycontent">
-                    <div class="card-header">{{ item.name }}</div>
-                     Additional card content here 
-                  </app-dashboard-body>
-                </ng-container> -->
+
                 <table >
                   <col style="width: 80px;">
                   <col style="width: 100px;">
@@ -152,16 +113,16 @@
                   </tr>
                   <tr style="cursor: pointer;" *ngFor="
                   let item of tableData |  tableFilter :searchText | paginate: { itemsPerPage: pageFilterDefault, currentPage: p } | tableShort:'title' "  (click)="openDialog(item)" >
-                      <th >{{item.id}}</th>
-                      <th> {{item.title}}</th>
-                      <th>{{item.description}}</th>
+                      <th >{{item.taskId}}</th>
+                      <th> {{item.summary}}</th>
+                      <th>{{item.taskDescription}}</th>
                       <th>{{item.labels}}</th>
-                      <th>{{item.lowEstimate}}</th>
-                      <th>{{item.realisticEstimate}}</th>
-                      <th>{{item.highEstimate}}</th>
+                      <th>{{item.estimates.low}}</th>
+                      <th>{{item.estimates.realistic}}</th>
+                      <th>{{item.estimates.high}}</th>
                       <th>{{item.threePointEstimate}}</th>
                       <th>{{item.aiEstimate}}</th>
-                      <th>{{item.actualHrs}}</th>
+                      <th>{{item.actual}}</th>
                   </tr>
                 </table>
               </ion-row>

@@ -17,4 +17,8 @@ export class ProjectsService {
 
     return this.http.get<any>(fullApiUrl);
   }
+
+  syncData(userId:any,clientId:any){
+    return this.http.get<any>(this.apiUrl+'/sync'+`/${userId}`+`/${clientId}`);
+  }
 }

@@ -14,10 +14,6 @@ export class AuthenticationService {
     this.isLoggedIn$ = new BehaviorSubject(isLoggedIn);
   }
 
-  login() {
-    localStorage.setItem('loggedIn', 'true');
-    this.isLoggedIn$.next(true);
-  }
 
   logout() {
     localStorage.removeItem('userDetails');
@@ -26,7 +22,8 @@ export class AuthenticationService {
   }
 
   saveUserDetails(user: UserDetails) {
-    
+    localStorage.setItem('loggedIn', 'true');
+    this.isLoggedIn$.next(true);
     // Assuming you want to save user details in localStorage
     localStorage.setItem('userDetails', JSON.stringify(user));
   }

@@ -1,8 +1,13 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
+import {  Router } from "@angular/router";
 import { AuthenticationService } from "src/app/services/authentication.service";
 import { CommanLoaderService } from "src/app/services/comman-loader.service";
 import { LoginService } from "src/app/services/login.service";
+import { TaskService } from "src/app/services/task.service";
+import { ForgotPopupComponent } from "../forgot-popup/forgot-popup.component";
+import { LocalStorage } from "src/app/modals/localStorage";
 
 @Component({
   selector: "app-login",
@@ -11,76 +16,70 @@ import { LoginService } from "src/app/services/login.service";
 })
 export class LoginComponent implements OnInit {
   showPassword: boolean = false;
-  userName: string = "";
-  password: string = "";
-  input: any;
   errormsg: boolean = false;
-  isButtonDisabled: boolean  = false;
-  isFormValid: any;
-  signupForm: any;
-  message : string ="";
-
+  submitted:boolean = false;
+  loginForm!:FormGroup;
   
   constructor(
     private loginService: LoginService,
-    private route: Router,
+    private dialog:MatDialog,
+    private router: Router,
     private authService: AuthenticationService,
-    private commonService: CommanLoaderService
+  private commonService: CommanLoaderService,
+    private formBuilder:FormBuilder,
+    private taskService: TaskService,
   ) {}
 
   ngOnInit() {
-    
+    this.createForm();
   }
-  login() {
-    if (
-      this.userName.length !== 0 &&
-      this.password.length !== 0
-    ) {
 
+  createForm(){
+    this.loginForm = this.formBuilder.group({
+      userName:['',[Validators.required]],
+      password:['',[Validators.required]]
+    })
+  }
+
+  login() {
+    this.submitted = true;
+    if(this.loginForm.invalid) return;
+   console.log(this.loginForm.value.userName,this.loginForm.value.password);
     const formData = new FormData();
-    formData.append("email", this.userName);
-    formData.append("password", this.password);
+    formData.append("email", this.loginForm.value.userName);
+    formData.append("password", this.loginForm.value.password);
 
     this.loginService.login(formData).subscribe((res) => {
       if (res.code === 200) {
-        this.route.navigate(["/estimation-tool/homepage"]);
-        this.authService.login();
         this.authService.saveUserDetails(res.data);
-        this.userName = "";
-        this.password = "";
+        this.router.navigate(["/estimation-tool/homepage"]);
+        this.loginForm.reset();
+        this.submitted = false;
       } else {
-       this.errormsg = true;
-       this.message = "Username or password is incorrect";
+        this.submitted = false;
+        this.commonService.presentToast("Username or password is incorrect", 3000, "toast-error-mess");
       }
     });
-    
-  }else if(this.userName.length ==0){
-    this.errormsg = true;
-    this.message = "Please input the username ";
-  }else{
-    this.errormsg = true;
-    this.message = "Please input the password ";
-  }
   }
 
   toggleShow() {
     this.showPassword = !this.showPassword;
-    this.input.type = this.showPassword ? "text" : "password";
   }
 
-  onInputFocus() {
-    this.isButtonDisabled = false;
-  }
-
-  resetErrorMessage(){
-    this.message = "";
-  }
-
-  apicheck(){
-    this.loginService.apicheck().subscribe((res)=>{
-if (res.code==200){
- this.commonService.presentAlert("alrt", res.data);
+forgotPassword(){
+  let dialogRef = this.dialog.open(ForgotPopupComponent, {
+    width: "500px",
+    height: "350px",
+    // data: { item },
+  });
 }
-    })
+
+resetPassword(){
+  if(!this.loginForm.value.userName.trim()){
+    this.commonService.presentToast("Username is Requried.", 3000, "toast-error-mess");
+    return;
   }
+  localStorage.setItem(LocalStorage.userValue,JSON.stringify(this.loginForm.value.userName))
+  this.router.navigate(['/resetPassword'])
+}
 }

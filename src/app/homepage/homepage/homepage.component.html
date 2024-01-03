@@ -1,7 +1,7 @@
 <ion-app>
   <ion-header>
     <ion-menu-toggle>
-      <ion-button class="menubutton" fill="clear"
+      <ion-button class="mr-n5 mt-2" fill="clear"
         ><span class="menu">&#9776;</span></ion-button
       >
     </ion-menu-toggle>
@@ -9,28 +9,21 @@
       ><ion-icon class="homeicon" name="home-sharp"></ion-icon
     ></ion-button>
     <ion-title>Estimation Tool</ion-title>
-    <!-- <ion-button fill="clear">
-        <ion-icon class="profileicon" name="person"></ion-icon>
-      </ion-button> -->
+
     <div class="dropdown">
       <ion-buttons>
         <ion-button
-          style="
-            color: white;
-            margin-right: 10px;
-            margin-top: 2%;
-            text-transform: capitalize;
-          "
+        class="text-white mr-3 mt-2 text-capitalize"
           (click)="toggleDropdown()"
           fill="clear"
         >
           <ion-icon
-            style="margin-right: 5px"
+          class="mr-2"
             name="person-circle-outline"
           ></ion-icon
           >Admin
           <ion-icon
-            style="margin-left: 5px"
+          class="ml-2"
             name="chevron-down-outline"
           ></ion-icon
         ></ion-button>
@@ -68,7 +61,7 @@
             Dashboard
           </ion-col>
         </ion-row>
-        <!-- <ion-row
+        <ion-row
           style="
             display: flex;
             justify-content: center;
@@ -84,41 +77,7 @@
             />
             Projects
           </ion-col>
-        </ion-row> -->
-
-        <!-- <ion-row style="
-            display: flex;
-            justify-content: center;
-            margin-top: -10px;
-            text-align: left;
-          ">
-          <ion-col style="background-color: white; color: black">
-            <img src="/assets/images/Vector.png" alt="Your Image" style="margin-bottom: -6px; margin-right: 10px" />
-            User
-          </ion-col>
         </ion-row>
-        <ion-row style="
-            display: flex;
-            justify-content: center;
-            margin-top: -10px;
-            text-align: left;
-          ">
-          <ion-col style="background-color: white; color: black">
-            <img src="/assets/images/Vector (1).png" alt="Your Image" style="margin-bottom: -6px; margin-right: 10px" />
-            Report
-          </ion-col>
-        </ion-row>
-        <ion-row style="
-            display: flex;
-            justify-content: center;
-            margin-top: -10px;
-            text-align: left;
-          ">
-          <ion-col style="background-color: white; color: black">
-            <img src="/assets/images/Settings.png" alt="Your Image" style="margin-bottom: -6px; margin-right: 10px" />
-            Setting
-          </ion-col>
-        </ion-row> -->
         <button
           style="position: absolute; top: 92%; left: 11%"
           (click)="openImportDialog()"
@@ -140,18 +99,15 @@
       >
         <div class="innerbox">
           <ion-row class="subheader">
-            <ion-buttons>
+            <ion-buttons class="add_clint_btn">
               <button expand="block" (click)="openDialog()" class="button2">
                 Add Client
               </button>
-              <!-- <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-backdrop="false"
-                        data-target="#myModal">Request Time Off</button> -->
-
-              <p style="margin-left: 280px">Client</p>
+            </ion-buttons>
+            <div class="add_clint">
               <select
                 (change)="getProjectByselectedClient()"
-                style="margin-left: 10px; width: 150px"
-                [(ngModel)]="clientId"
+                [(ngModel)]="clientId" class="client_select"
               >
                 <ng-container
                   *ngIf="clientList.length === 0; else clientOptions"
@@ -166,31 +122,34 @@
                   </option>
                 </ng-template>
               </select>
-            </ion-buttons>
-            <button class="syncbtn">
-              Sync
-              <ion-icon
-                style="margin-left: 5px; margin-bottom: -1.7px"
-                name="sync-outline"
-              ></ion-icon>
-            </button>
+              <button class="syncbtn" (click)="syncData()">
+                Sync
+                <ion-icon
+                  name="sync-outline"
+                ></ion-icon>
+              </button>
+            </div>
+            
           </ion-row>
-          <ion-row style="height: 35px">
-            <p style="margin-left: 15px; font-size: small">Show</p>
-            <select
-              (change)="optionSelected()"
-              style="
-                margin-left: 10px;
-                width: 70px;
-                height: 20px;
-                margin-top: 10px;
-              "
-              [(ngModel)]="pageFilterDefault"
-            >
-              <option *ngFor="let item of pageFilter" [value]="item.code">
-                {{ item.name }}
-              </option>
-            </select>
+          <ion-row class="data_count">
+            <ion-col class="show_count d-flex">
+              <p class="show_txt" style="margin-left: 15px; font-size: small">Show</p>
+              <select
+                (change)="optionSelected()"
+                style="
+                  margin-left: 10px;
+                  width: 70px;
+                  height: 20px;
+                  margin-top: 10px;
+                "
+                [(ngModel)]="pageFilterDefault"
+              >
+                <option *ngFor="let item of pageFilter" [value]="item.code">
+                  {{ item.name }}
+                </option>
+              </select>
+            </ion-col>
+            <ion-col class="search_txt d-flex">
             <p
               style="
                 margin-left: 15px;
@@ -201,12 +160,12 @@
               "
             >
               Search:
-            </p>
-
-            <ion-searchbar
-              [(ngModel)]="searchText"
-              style="width: 300px"
-            ></ion-searchbar>
+              </p>
+              <ion-searchbar
+                [(ngModel)]="searchText"
+                style="width: 300px"
+              ></ion-searchbar>
+            </ion-col>
           </ion-row>
           <span
             style="
@@ -236,15 +195,15 @@
                   "
                 >
                   <app-dashboard-body
-                    (click)="getSprints(item.name, item.id)"
+                    (click)="getSprints(item.projectName, item.projectId)"
                     class="bodycontent"
                   >
-                    <div class="card-header">{{ item.name }}</div>
+                    <div class="card-header">{{ item.projectName }}</div>
                     <!-- Additional card content here -->
                   </app-dashboard-body>
                 </ng-container>
              <div style="margin-left: 35%; margin-top: 10%; " *ngIf="this.projectList.length ===0">
-            <h2 >No projects found</h2>
+            <h2 >there are no projects</h2>
             </div>
               </ion-row>
             </ion-grid>
