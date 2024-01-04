@@ -5,6 +5,7 @@ import { AuthenticationService } from "src/app/services/authentication.service";
 import { TaskModalComponent } from "./task-modal/task-modal.component";
 import { TaskService } from "src/app/services/task.service";
 import { CommanLoaderService } from "src/app/services/comman-loader.service";
+import { ProjectsService } from "src/app/services/homepageServices/projects.service";
 
 @Component({
   selector: "app-task-list",
@@ -20,7 +21,9 @@ export class TaskListComponent implements OnInit {
   menuType: string = "reveal";
   isModalOpen: boolean = false;
   isDropdownOpen = false;
+  showContent = false;
   id: any = 45;
+  clientId:any;
   editableFields = [
     "lowEstimate",
     "realisticEstimate",
@@ -43,113 +46,11 @@ export class TaskListComponent implements OnInit {
     { code: "45", name: "45" },
   ];
   pageFilterDefault: any = 8;
-  clientId: any;
   sortedColumn: string = "title"; // Default sorting column
   isAscending: boolean = true; //
   showPopup: boolean = false;
   tableData: any[] = [
-    // {
-    //   id: 1,
-    //   title: "Task A",
-    //   description: "LoginPage",
-    //   label: "Et-FE-fe",
-    //   lowEstimate: "5d",
-    //   realisticEstimate: "7d",
-    //   highEstimate: "4d",
-    //   threePointEstimate: "3d",
-    //   aiEstimate: "3d",
-    //   actualHrs: "3d",
-    // },
-    // {
-    //   id: 2,
-    //   title: "Task B",
-    //   description: "LoginPage In this article, we will know the HTML Table, various ways to implement it, & will also understand its usage through the examples. HTML Table is an arrangement of data in rows and columns, or possibly in a more complex structure. Tables are widely used in communication, research, and data analysis. Tables are useful for various tasks such as presenting text information and numerical data. It can be used to compare two or more items in the tabular form layout. Tables are used to create database",
-    //   label: "Et-FE-fe",
-    //   lowEstimate: "5d",
-    //   realisticEstimate: "7d",
-    //   highEstimate: "4d",
-    //   threePointEstimate: "3d",
-    //   aiEstimate: "3d",
-    //   actualHrs: "3d",
-    // },
-    // {
-    //   id: 3,
-    //   title: "Mallika",
-    //   description: "LoginPageIn this article, we will know the HTML Table, various ways to implement it, & will also understand its usage through the examples. HTML Table is an arrangement of data in rows and columns, or possibly in a more complex structure. Tables are widely used in communication, research, and data analysis. Tables are useful for various tasks such as presenting text information and numerical data. It can be used to compare two or more items in the tabular form layout. Tables are used to create database",
-    //   label: "Et-FE-fe",
-    //   lowEstimate: "5d",
-    //   realisticEstimate: "7d",
-    //   highEstimate: "4dIn this article, we will know the HTML Table, various ways to implement it, & will also understand its usage through the examples. HTML Table is an arrangement of data in rows and columns, or possibly in a more complex structure. Tables are widely used in communication, research, and data analysis. Tables are useful for various tasks such as presenting text information and numerical data. It can be used to compare two or more items in the tabular form layout. Tables are used to create database",
-    //   threePointEstimate: "3d",
-    //   aiEstimate: "3d",
-    //   actualHrs: "3d",
-    // },
-    // {
-    //   id: 4,
-    //   title: "LoginPageIn this article, we will know the HTML Table, various ways to implement it, & will also understand its usage through the examples. HTML Table is an arrangement of data in rows and columns, or possibly in a more complex structure. Tables are widely used in communication, research, and data analysis. Tables are useful for various tasks such as presenting text information and numerical data. It can be used to compare two or more items in the tabular form layout. Tables are used to create database",
-    //   description: "LoginPageIn this article, we will know the HTML Table, various ways to implement it, & will also understand its usage through the examples. HTML Table is an arrangement of data in rows and columns, or possibly in a more complex structure. Tables are widely used in communication, research, and data analysis. Tables are useful for various tasks such as presenting text information and numerical data. It can be used to compare two or more items in the tabular form layout. Tables are used to create database",
-    //   lowEstimate: "5d",
-    //   realisticEstimate: "7d",
-    //   highEstimate: "4d",
-    //   threePointEstimate: "3d",
-    //   aiEstimate: "3d",
-    //   actualHrs: "3d",
-    // },
-    // {
-    //   id: 5,
-    //   title: "Task CIn this article, we will know the HTML Table, various ways to implement it, & will also understand its usage through the examples. HTML Table is an arrangement of data in rows and columns, or possibly in a more complex structure. Tables are widely used in communication, research, and data analysis. Tables are useful for various tasks such as presenting text information and numerical data. It can be used to compare two or more items in the tabular form layout. Tables are used to create database",
-    //   description: "LoginPage",
-    //   lowEstimate: "5d",
-    //   realisticEstimate: "7d",
-    //   highEstimate: "4d",
-    //   threePointEstimate: "3d",
-    //   aiEstimate: "3d",
-    //   actualHrs: "3d",
-    // },
-    // {
-    //   id: 6,
-    //   title: "Task F",
-    //   description: "LoginPage",
-    //   lowEstimate: "5d",
-    //   realisticEstimate: "7d",
-    //   highEstimate: "4d",
-    //   threePointEstimate: "3d",
-    //   aiEstimate: "3d",
-    //   actualHrs: "3d",
-    // },
-    // {
-    //   id: 7,
-    //   title: "Task G",
-    //   description: "landingPage",
-    //   lowEstimate: "5d",
-    //   realisticEstimate: "7d",
-    //   highEstimate: "4d",
-    //   threePointEstimate: "3d",
-    //   aiEstimate: "1d",
-    //   actualHrs: "3d",
-    // },
-    // {
-    //   id: 8,
-    //   title: "Task H",
-    //   description: "homePage",
-    //   lowEstimate: "5d",
-    //   realisticEstimate: "7d",
-    //   highEstimate: "4d",
-    //   threePointEstimate: "3d",
-    //   aiEstimate: "3d",
-    //   actualHrs: "3d",
-    // },
-    // {
-    //   id: 9,
-    //   title: "Task I",
-    //   description: "signupPage",
-    //   lowEstimate: "5d",
-    //   realisticEstimate: "7d",
-    //   highEstimate: "4d",
-    //   threePointEstimate: "3d",
-    //   aiEstimate: "3d",
-    //   actualHrs: "3d",
-    // },
+ 
   ];
   constructor(
     public dialog: MatDialog,
@@ -157,7 +58,8 @@ export class TaskListComponent implements OnInit {
     private route: Router,
     private authService: AuthenticationService,
     private taskService: TaskService,
-    private commanService: CommanLoaderService
+    private commanService: CommanLoaderService,
+    private projectService:ProjectsService
   ) {
 
     this.router.queryParams.subscribe((params) => {
@@ -171,12 +73,33 @@ export class TaskListComponent implements OnInit {
       this.sprintId = params["sprintId"];
       this.sprintName = params["sprintName"];
       this.projectId = params["projectId"];
+      this.clientId = params["clientId"];
     });
     if (this.sprintId !== 0) {
-      this.taskService.getTaskBySprintId(this.sprintId, this.projectId).subscribe((res) => {
-        this.tableData = res.data;
-      });
+     this.getTaskBySprintId(this.sprintId,this.projectId);
     }
+  }
+  getTaskBySprintId(sprintId:any,projectId:any){
+    this.taskService.getTaskBySprintId(sprintId,projectId).subscribe((res) => {
+      this.tableData = res.data;
+    });
+  }
+  syncData(){
+    let UserDetails = this.authService.getUserDetails();
+    this.projectService.syncData(UserDetails?.id,this.clientId).subscribe((res)=>{
+      if(this.sprintId&&this.projectId){
+        this.getTaskBySprintId(this.sprintId,this.projectId);
+       }else{
+        this.router.queryParams.subscribe((params) => {
+          this.sprintId = params["sprintId"];
+          this.sprintName = params["sprintName"];
+          this.projectId = params["projectId"];
+        });
+        if(this.sprintId&&this.projectId){this.getTaskBySprintId(this.sprintId,this.projectId);}
+       }
+       if(res.code==200){this.commanService.presentToast("Sync is completed", 5000 , "toast-succuss-mess");}
+       else{this.commanService.presentToast(res.data, 5000 , "toast-error-mess");}
+    })
   }
   toggleSortingDirection() {
     this.isAscending = !this.isAscending;
@@ -226,6 +149,7 @@ export class TaskListComponent implements OnInit {
       const latestValue = this.taskService.sharedItemSubject.getValue();
       if (latestValue) {
         this.modifyItems.push(latestValue);
+        console.log(this.modifyItems);
       }
       
       console.log("The dialog was closed");
@@ -277,7 +201,7 @@ export class TaskListComponent implements OnInit {
 
   goBack(): void {
     this.route.navigate(["estimation-tool/homepage/sprintdashboard"], {
-      queryParams: { projectId: this.projectId, projectName: this.projectName },
+      queryParams: { projectId: this.projectId,clientId:this.clientId,projectName: this.projectName },
     });
   }
 }

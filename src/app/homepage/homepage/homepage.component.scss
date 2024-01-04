@@ -1,3 +1,8 @@
+
+.f16{
+  font-size: 16px !important;
+}
+
 ion-header {
     background-color: rgba(26, 74, 96, 0.9);
     height: 7%;
@@ -23,11 +28,8 @@ ion-header {
   margin-left: 10px;
   margin-top: -5px;
  }
- .menubutton{
-  margin-right: -5px;
-  
-  margin-top: 2%;
- }
+
+
  .button2 {
    margin-top: -1.5%;
   margin-left: 20px;
@@ -40,14 +42,12 @@ ion-header {
 }
 .syncbtn {
  text-align: center;
- margin-top: 1.2%;
-  margin-left: 20px;
  background-color: white;
  color: black;
  border: 2px solid rgba(26, 74, 96, 0.8999999761581421);
  border-radius: 5px;
  width: 80px;
- height: 30px;
+ height: 31px;
  font-size: small ; /* Increase the height as needed */
 }
 
@@ -180,7 +180,7 @@ ion-col {
 }
 .subheader{
   box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.2);
-  height: 10%;
+  padding: 10px 0;
 }
 pagination-controls {
   position: absolute;
@@ -196,8 +196,46 @@ pagination-controls {
   //right: -45px;
   margin-left: -11px;
 }
-
-
+.add_clint_btn {
+  max-width: 100%;
+  width: 8%;
+}
+.add_clint {
+  width: 80%;
+  max-width: 100%;
+  text-align: center;
+}
+select.client_select {
+  color: black;
+  border: 2px solid rgba(26, 74, 96, 0.8999999762);
+  border-radius: 5px;
+  width: 145px;
+  height: 30px;
+  font-size: small;
+  margin-right: 10px;
+}
+.data_count {
+  display: flex;
+  justify-content: space-between;
+}
+.data_count ion-col{
+  background-color: #fff;
+}
+.show_count, .search_txt{
+  color: #000;
+}
+p.show_txt {
+  position: relative;
+  top: 10px;
+}
+.show_count select{
+  color: black;
+  border: 2px solid rgba(26, 74, 96, 0.8999999762);
+  border-radius: 5px;
+  width: 145px;
+  height: 30px;
+  font-size: small;
+}
 
 
 

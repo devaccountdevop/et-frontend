@@ -9,6 +9,7 @@ import { AuthenticationService } from "src/app/services/authentication.service";
 import { ImportModalComponent } from "../import-modal/import-modal.component";
 import { CommanLoaderService } from "src/app/services/comman-loader.service";
 
+
 @Component({
   selector: "app-homepage",
   templateUrl: "./homepage.component.html",
@@ -23,9 +24,9 @@ export class HomepageComponent implements OnInit {
   p: number = 1;
   searchText: any;
   pageFilterDefault: any = 15;
-  clientId: any = "";
+  clientId:any;
   projectList: Project[] = [];
-
+  UserDetails:any;
   clientList: any[] = [];
   pageFilter = [
     { code: "15", name: "15" },
@@ -39,38 +40,40 @@ export class HomepageComponent implements OnInit {
     private router: Router,
     private authService: AuthenticationService,
     private commanService: CommanLoaderService
-  ) {}
+  ) {
+    
+  }
 
   ngOnInit() {
-    
-    const UserDetails = this.authService.getUserDetails();
-    console.log(UserDetails?.id);
+     this.UserDetails = this.authService.getUserDetails();
+    console.log(this.UserDetails);
+
     this.clientService.clientList$.subscribe((res) => {
-      
+      console.log(this.clientId,res);
       if (res.length > 0) {
         const clientId = res[0].id;
         this.clientId = clientId;
-        this.getProjectList(clientId);
         
+        this.getProjectList(clientId);
       } else {
         this.projectList = [];
-      
       }
       this.clientList.length = 0;
       this.clientList.push(...res);
-      
     });
-      
-    this.clientService.getClientByUserId(UserDetails?.id).subscribe((clientRes) => {
-      
+    this.getClientByUserId(this.UserDetails?.id)
+
+
+  }
+  getClientByUserId(Userid:any){
+    this.clientService.getClientByUserId(Userid).subscribe((clientRes) => {
       if (this.clientList.length === 0) {
         this.clientList.length = 0;
         this.clientList.push(...clientRes.data);
-        if (this.clientList.length > 0) {
+        if (this.clientList?.length > 0) {
           const clientId = this.clientList[0].id;
           this.clientId = clientId;
           this.getProjectList(clientId);
-
         } else {
           this.projectList = [];
         }
@@ -79,20 +82,25 @@ export class HomepageComponent implements OnInit {
   }
   
   private getProjectList(clientId: string): void {
-   
     this.projectService.getProjects(clientId).subscribe((projectsRes) => {
-     
       if (projectsRes.data.length > 0) {
         this.projectList = projectsRes.data;
-        this.commanService.dismissLoader();
       } else {
         // No projects, clear projectList or perform any other necessary action
         this.projectList = [];
-        this.commanService.dismissLoader();
       }
     });
-    this.commanService.dismissLoader();
   }
+  syncData(){
+    this.projectService.syncData(this.UserDetails?.id,this.clientId).subscribe(res=>{
+     
+        this.getProjectList(this.clientId);
+        this.getClientByUserId(this.UserDetails?.id)
+        if(res.code==200){this.commanService.presentToast("Sync is completed", 5000 , "toast-succuss-mess");}
+        else{this.commanService.presentToast(res.data, 5000 , "toast-error-mess");}
+    })
+  }
+
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
@@ -130,7 +138,7 @@ export class HomepageComponent implements OnInit {
 
   getSprints(name: any, projectId: number) {
     this.router.navigate(["estimation-tool/homepage/sprintdashboard"], {
-      queryParams: { projectId: projectId, projectName: name },
+      queryParams: { projectId: projectId,clientId:this.clientId, projectName: name },
     });
   }
   logout() {

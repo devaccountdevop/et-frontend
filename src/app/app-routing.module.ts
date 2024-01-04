@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login/login.component';
 import { SignupComponent } from './login/signup/signup.component';
+import { protectGuard } from './interceptor/auth.guard';
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
   },
   {
     path: 'estimation-tool/homepage',
+    canMatch:[protectGuard],
     loadChildren: () => import('./homepage/homepage.module').then( m => m.HomepageModule)
   },
   {
@@ -22,8 +24,7 @@ const routes: Routes = [
     redirectTo: '',
     pathMatch: 'full'
   },
-  //{ path: '', component: LoginComponent },
-  //{ path: 'signup', component: SignupComponent },
+  { path: '**',redirectTo: '',pathMatch: 'full' },
 ];
 
 @NgModule({

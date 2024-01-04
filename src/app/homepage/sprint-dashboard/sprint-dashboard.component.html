@@ -34,7 +34,7 @@
             Dashboard
           </ion-col>
         </ion-row>
-        <!-- <ion-row style="
+        <ion-row style="
             display: flex;
             justify-content: center;
             margin-top: -10px;
@@ -45,7 +45,7 @@
               style="margin-bottom: -6px; margin-right: 10px; fill: #a1a1a1" />
             Projects
           </ion-col>
-        </ion-row> -->
+        </ion-row>
         <!-- <ion-row style="
             display: flex;
             justify-content: center;
@@ -112,7 +112,7 @@
 
             <ion-searchbar [(ngModel)]="searchText" style="width: 300px"></ion-searchbar>
           </ion-row>
-        <span style="margin-top: -15px; position: absolute; left: 38%;" ><button  class="syncbtn">
+        <span style="margin-top: -15px; position: absolute; left: 38%;" ><button  class="syncbtn" (click)="syncData()">
           Sync
           <ion-icon style="margin-left: 5px; margin-bottom: -1.7px" name="sync-outline"></ion-icon>
         </button></span>
@@ -130,12 +130,12 @@
                 let item of (sprintsList | filter: searchText | paginate: { itemsPerPage: pageFilterDefault, currentPage: p }).reverse()
               ">
                   <app-dashboard-body (click)="getTask(item)" class="bodycontent">
-                    <div class="card-header">{{ item.name }}</div>
+                    <div class="card-header">{{ item.sprintName }}</div>
                     <!-- Additional card content here -->
                   </app-dashboard-body>
                 </ng-container>
                 <div style="margin-left: 35%; margin-top: 10%; " *ngIf="this.sprintsList.length ===0">
-                  <h2 >No sprints found</h2>
+                  <h2 >there are no sprint</h2>
                   </div>
               </ion-row>
             </ion-grid>

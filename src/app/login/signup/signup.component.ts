@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { ToastController } from "@ionic/angular";
 import { CommanLoaderService } from "src/app/services/comman-loader.service";
@@ -9,77 +10,63 @@ import { SignUpService } from "src/app/services/sign-up.service";
   styleUrls: ["./signup.component.scss"],
 })
 export class SignupComponent implements OnInit {
-  showSubmitButton: boolean = true;
   showPassword: boolean = false;
-  //username : any;
-  password1: any;
-  input: any;
-  userName: string = "";
-  email: string = "";
-  password: string = "";
-  confirmPassword: string = "";
-  signupForm: any;
-  isButtonDisabled: boolean = false;
-  message: any;
-  isFormValid: boolean = false;
+  confirmPassword: boolean = false;
+  signUpForm!:FormGroup;
+  submitted:boolean = false;
 
   constructor(
     private signUpService: SignUpService,
     private router: Router,
     private commanService: CommanLoaderService,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private formBuilder:FormBuilder
   ) {}
-  onInputFocus() {
-    this.isButtonDisabled = false;
-  }
-  ngOnInit() {}
 
-  updateFormValidity() {
-    this.isFormValid =
-      this.signupForm.valid && this.password === this.confirmPassword;
+  createForm(){
+    this.signUpForm = this.formBuilder.group({
+      userName:['',[Validators.required]],
+      email:['',[Validators.required, Validators.email]],
+      password:['',[Validators.required]],
+      confirmPassword:['',[Validators.required]]
+    })
   }
-  signUp() {
-    if (
-      
-      this.email.length === 0 ||
-      this.password.length === 0 ||
-      this.confirmPassword.length === 0
-    ) {
-      this.commanService.presentToast(
-        "Please fill in all fields",
-        3000,
-        "toast-error-mess"
-      );
-    } else if (this.password !== this.confirmPassword) {
-      this.message = "Password and Confirm Password did not match";
-      this.commanService.presentToast(
-        "Password and Confirm Password did not match",
-        3000,
-        "toast-error-mess"
-      );
-    } else if (this.userName.length == 0) {
-      this.message = "Please input the username";
-    }else {
+
+  ngOnInit() {
+    this.createForm();
+    this.signUpForm.get('confirmPassword')?.valueChanges.subscribe((value:any) => {
+      this.matchPassword(value);
+      console.log('Value changed:', value);})
+  }
+  matchPassword(value:any){
+   if(this.signUpForm.value.password === value){
+    this.confirmPassword = false;
+   }else{
+    this.confirmPassword = true;
+   }
+  }
+
+  signUp() { 
+   this.submitted = true;
+   if(this.signUpForm.invalid) return;
       // Rest of the signUp method remains unchanged
       const formData = new FormData();
-      formData.append("email", this.email);
-      formData.append("password", this.password);
-      formData.append("userName", this.userName);
+      formData.append("userName", this.signUpForm.value.userName);
+      formData.append("email", this.signUpForm.value.email);
+      formData.append("password", this.signUpForm.value.password);
   
       this.signUpService.signUp(formData).subscribe((res) => {
         if(res.code==200){
           this.router.navigate(['/']);
-          this.commanService.presentToast("Registration successful! Continue with login ", 5000 , "toast-succuss-mess")
+          this.commanService.presentToast("Resignation successful! Continue with login ", 5000 , "toast-succuss-mess");
          }else{
-           this.commanService.presentToast("email or username is already exist", 3000, "toast-error-mess")
+           this.commanService.presentToast("email or username is already exist", 3000, "toast-error-mess");
          }
       });
-    }
   }
-  
 
   toggleShow() {
     this.showPassword = !this.showPassword;
-    this.input.type = this.showPassword ? "text" : "password1";
   }
+
 }

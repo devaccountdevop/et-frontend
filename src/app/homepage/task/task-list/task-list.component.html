@@ -36,7 +36,7 @@
             Dashboard
           </ion-col>
         </ion-row>
-        <!-- <ion-row style="
+        <ion-row style="
             display: flex;
             justify-content: center;
             margin-top: -10px;
@@ -47,47 +47,15 @@
               style="margin-bottom: -6px; margin-right: 10px; fill: #a1a1a1" />
             Projects
           </ion-col>
-        </ion-row> -->
-        <!-- <ion-row style="
-            display: flex;
-            justify-content: center;
-            margin-top: -10px;
-            text-align: left;
-          ">
-          <ion-col style="background-color: white; color: black">
-            <img src="/assets/images/Vector.png" alt="Your Image" style="margin-bottom: -6px; margin-right: 10px" />
-            User
-          </ion-col>
         </ion-row>
-        <ion-row style="
-            display: flex;
-            justify-content: center;
-            margin-top: -10px;
-            text-align: left;
-          ">
-          <ion-col style="background-color: white; color: black">
-            <img src="/assets/images/Vector (1).png" alt="Your Image" style="margin-bottom: -6px; margin-right: 10px" />
-            Report
-          </ion-col>
-        </ion-row>
-        <ion-row style="
-            display: flex;
-            justify-content: center;
-            margin-top: -10px;
-            text-align: left;
-          ">
-          <ion-col style="background-color: white; color: black">
-            <img src="/assets/images/Settings.png" alt="Your Image" style="margin-bottom: -6px; margin-right: 10px" />
-            Setting
-          </ion-col>
-        </ion-row> -->
+
       </ion-col>
       <ion-col size="10"
         style="margin: 0px; height: 100%; color: black; background-color: white;box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);">
         <div class="innerbox">
           <ion-row class="subheader" style="align-items: center;">
             <button (click)=" updateEstimatesInJira()" class="updatebtn">Update Ai Estimates In Jira</button>
-            <span ><button class="syncbtn">
+            <span ><button class="syncbtn" (click)="syncData()">
                 Sync
                 <ion-icon style="margin-left: 5px; margin-bottom: -1.7px" name="sync-outline"></ion-icon>
               </button></span>
@@ -121,14 +89,7 @@
                   overflow-x: auto;
                   white-space: nowrap;
                 ">
-                <!-- <ng-container
-                  *ngFor="
-                    let item of sprintsList |  filter :searchText | paginate: { itemsPerPage: pageFilterDefault, currentPage: p }  ">
-                  <app-dashboard-body class="bodycontent">
-                    <div class="card-header">{{ item.name }}</div>
-                     Additional card content here 
-                  </app-dashboard-body>
-                </ng-container> -->
+
                 <table >
                   <col style="width: 80px;">
                   <col style="width: 100px;">
@@ -137,7 +98,7 @@
                   <col>
                   <tr style="background-color: rgba(26, 74, 96, 0.9); height: 20px; padding: 0px;" class="tableheader">
                     <th rowspan="2" style="vertical-align: middle; text-align:center; word-wrap: break-word;">ID</th>
-                    <th (click)="sortData('title')" rowspan="2" style="vertical-align: middle; text-align:center; word-wrap: break-word;">{{ isAscending ? 'Title ▲' : 'Title ▼' }}</th>
+                    <th (click)="sortData('summary')" rowspan="2" style="vertical-align: middle; text-align:center; word-wrap: break-word;">{{ isAscending ? 'Title ▲' : 'Title ▼' }}</th>
                     <th rowspan="2" style="vertical-align: middle; text-align:center; word-wrap: break-word;">Description</th>
                     <th rowspan="2" style=" width: 80px; vertical-align: middle; text-align:center; word-wrap: break-word;">Label</th>
                     <th colspan="3" style="horizontal-align: middle; text-align:center; width: 22%; padding: 4px; word-wrap: break-word;">Estimates</th>
@@ -145,23 +106,24 @@
                     <th rowspan="2" style=" width: 120px; vertical-align: middle; text-align:center; word-wrap: normal">AI Estimates</th>
                     <th rowspan="2" style="width: 120px;vertical-align: middle; text-align:center;word-wrap:  normal">Actual(HRS)</th>
                   </tr>
-                  <tr>
+                  <tr> 
                     <th class="tablesubheader" scope="col">Low</th>
                     <th class="tablesubheader" style="width: 8%;" scope="col">Realistic</th>
                     <th class="tablesubheader" scope="col">High</th>
                   </tr>
-                  <tr style="cursor: pointer;" *ngFor="
-                  let item of tableData |  tableFilter :searchText | paginate: { itemsPerPage: pageFilterDefault, currentPage: p } | tableShort:'title' "  (click)="openDialog(item)" >
-                      <th >{{item.id}}</th>
-                      <th> {{item.title}}</th>
-                      <th>{{item.description}}</th>
-                      <th>{{item.labels}}</th>
-                      <th>{{item.lowEstimate}}</th>
-                      <th>{{item.realisticEstimate}}</th>
-                      <th>{{item.highEstimate}}</th>
-                      <th>{{item.threePointEstimate}}</th>
-                      <th>{{item.aiEstimate}}</th>
-                      <th>{{item.actualHrs}}</th>
+                  <tr style="cursor: pointer;"  *ngFor="
+                  let item of tableData |  tableFilter :searchText | paginate: { itemsPerPage: pageFilterDefault, currentPage: p } | tableShort:'summary' " 
+                   (click)="openDialog(item)" (mouseover)="showContent = true" (mouseout)="showContent = false" >
+                      <td >{{item.taskId}}</td>
+                      <td title="{{item.summary}}"> {{item.summary}}</td>
+                      <td  title="{{item.taskDescription}}">{{item.taskDescription}}</td>
+                      <td>{{item.labels}}</td>
+                      <td>{{item.estimates.low}}</td>
+                      <td>{{item.estimates.realistic}}</td>
+                      <td>{{item.estimates.high}}</td>
+                      <td>{{item.threePointEstimate}}</td>
+                      <td>{{item.aiEstimate}}</td>
+                      <td>{{item.actual}}</td>
                   </tr>
                 </table>
               </ion-row>
