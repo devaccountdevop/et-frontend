@@ -5,6 +5,7 @@ import { AuthenticationService } from "src/app/services/authentication.service";
 import { TaskModalComponent } from "./task-modal/task-modal.component";
 import { TaskService } from "src/app/services/task.service";
 import { CommanLoaderService } from "src/app/services/comman-loader.service";
+import { ProjectsService } from "src/app/services/homepageServices/projects.service";
 
 @Component({
   selector: "app-task-list",
@@ -20,7 +21,9 @@ export class TaskListComponent implements OnInit {
   menuType: string = "reveal";
   isModalOpen: boolean = false;
   isDropdownOpen = false;
+  showContent = false;
   id: any = 45;
+  clientId:any;
   editableFields = [
     "lowEstimate",
     "realisticEstimate",
@@ -43,12 +46,11 @@ export class TaskListComponent implements OnInit {
     { code: "45", name: "45" },
   ];
   pageFilterDefault: any = 8;
-  clientId: any;
   sortedColumn: string = "title"; // Default sorting column
   isAscending: boolean = true; //
   showPopup: boolean = false;
   tableData: any[] = [
-
+ 
   ];
   constructor(
     public dialog: MatDialog,
@@ -56,7 +58,8 @@ export class TaskListComponent implements OnInit {
     private route: Router,
     private authService: AuthenticationService,
     private taskService: TaskService,
-    private commanService: CommanLoaderService
+    private commanService: CommanLoaderService,
+    private projectService:ProjectsService
   ) {
 
     this.router.queryParams.subscribe((params) => {
@@ -70,6 +73,7 @@ export class TaskListComponent implements OnInit {
       this.sprintId = params["sprintId"];
       this.sprintName = params["sprintName"];
       this.projectId = params["projectId"];
+      this.clientId = params["clientId"];
     });
     if (this.sprintId !== 0) {
      this.getTaskBySprintId(this.sprintId,this.projectId);
@@ -81,16 +85,21 @@ export class TaskListComponent implements OnInit {
     });
   }
   syncData(){
-   if(this.sprintId&&this.projectId){
-    this.getTaskBySprintId(this.sprintId,this.projectId);
-   }else{
-    this.router.queryParams.subscribe((params) => {
-      this.sprintId = params["sprintId"];
-      this.sprintName = params["sprintName"];
-      this.projectId = params["projectId"];
-    });
-    if(this.sprintId&&this.projectId){this.getTaskBySprintId(this.sprintId,this.projectId);}
-   }
+    let UserDetails = this.authService.getUserDetails();
+    this.projectService.syncData(UserDetails?.id,this.clientId).subscribe((res)=>{
+      if(this.sprintId&&this.projectId){
+        this.getTaskBySprintId(this.sprintId,this.projectId);
+       }else{
+        this.router.queryParams.subscribe((params) => {
+          this.sprintId = params["sprintId"];
+          this.sprintName = params["sprintName"];
+          this.projectId = params["projectId"];
+        });
+        if(this.sprintId&&this.projectId){this.getTaskBySprintId(this.sprintId,this.projectId);}
+       }
+       if(res.code==200){this.commanService.presentToast("Sync is completed", 5000 , "toast-succuss-mess");}
+       else{this.commanService.presentToast(res.data, 5000 , "toast-error-mess");}
+    })
   }
   toggleSortingDirection() {
     this.isAscending = !this.isAscending;
@@ -192,7 +201,7 @@ export class TaskListComponent implements OnInit {
 
   goBack(): void {
     this.route.navigate(["estimation-tool/homepage/sprintdashboard"], {
-      queryParams: { projectId: this.projectId, projectName: this.projectName },
+      queryParams: { projectId: this.projectId,clientId:this.clientId,projectName: this.projectName },
     });
   }
 }

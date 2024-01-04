@@ -6,19 +6,15 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FilterPipe implements PipeTransform {
 
   transform(items: any[], searchTerm: string): any[] {
-    if (!items) {
+    console.log(items,searchTerm);
+    
+    if(items.length === 0){
       return [];
     }
     if (!searchTerm) {
       return items;
     }
-
-    searchTerm = searchTerm.toLowerCase();
-
-    return items.filter((item) => {
-      // Modify this condition as needed for your data structure
-      return item.name.toLowerCase().includes(searchTerm);
-    });
+    return items.filter((search:any)=>(search.projectName || search.sprintName || search.sprintId)?.toLowerCase().indexOf(searchTerm?.toLowerCase()) > -1)
   }
 
 }

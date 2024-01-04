@@ -98,7 +98,7 @@
                   <col>
                   <tr style="background-color: rgba(26, 74, 96, 0.9); height: 20px; padding: 0px;" class="tableheader">
                     <th rowspan="2" style="vertical-align: middle; text-align:center; word-wrap: break-word;">ID</th>
-                    <th (click)="sortData('title')" rowspan="2" style="vertical-align: middle; text-align:center; word-wrap: break-word;">{{ isAscending ? 'Title ▲' : 'Title ▼' }}</th>
+                    <th (click)="sortData('summary')" rowspan="2" style="vertical-align: middle; text-align:center; word-wrap: break-word;">{{ isAscending ? 'Title ▲' : 'Title ▼' }}</th>
                     <th rowspan="2" style="vertical-align: middle; text-align:center; word-wrap: break-word;">Description</th>
                     <th rowspan="2" style=" width: 80px; vertical-align: middle; text-align:center; word-wrap: break-word;">Label</th>
                     <th colspan="3" style="horizontal-align: middle; text-align:center; width: 22%; padding: 4px; word-wrap: break-word;">Estimates</th>
@@ -106,23 +106,24 @@
                     <th rowspan="2" style=" width: 120px; vertical-align: middle; text-align:center; word-wrap: normal">AI Estimates</th>
                     <th rowspan="2" style="width: 120px;vertical-align: middle; text-align:center;word-wrap:  normal">Actual(HRS)</th>
                   </tr>
-                  <tr>
+                  <tr> 
                     <th class="tablesubheader" scope="col">Low</th>
                     <th class="tablesubheader" style="width: 8%;" scope="col">Realistic</th>
                     <th class="tablesubheader" scope="col">High</th>
                   </tr>
-                  <tr style="cursor: pointer;" *ngFor="
-                  let item of tableData |  tableFilter :searchText | paginate: { itemsPerPage: pageFilterDefault, currentPage: p } | tableShort:'title' "  (click)="openDialog(item)" >
-                      <th >{{item.taskId}}</th>
-                      <th> {{item.summary}}</th>
-                      <th>{{item.taskDescription}}</th>
-                      <th>{{item.labels}}</th>
-                      <th>{{item.estimates.low}}</th>
-                      <th>{{item.estimates.realistic}}</th>
-                      <th>{{item.estimates.high}}</th>
-                      <th>{{item.threePointEstimate}}</th>
-                      <th>{{item.aiEstimate}}</th>
-                      <th>{{item.actual}}</th>
+                  <tr style="cursor: pointer;"  *ngFor="
+                  let item of tableData |  tableFilter :searchText | paginate: { itemsPerPage: pageFilterDefault, currentPage: p } | tableShort:'summary' " 
+                   (click)="openDialog(item)" (mouseover)="showContent = true" (mouseout)="showContent = false" >
+                      <td >{{item.taskId}}</td>
+                      <td title="{{item.summary}}"> {{item.summary}}</td>
+                      <td  title="{{item.taskDescription}}">{{item.taskDescription}}</td>
+                      <td>{{item.labels}}</td>
+                      <td>{{item.estimates.low}}</td>
+                      <td>{{item.estimates.realistic}}</td>
+                      <td>{{item.estimates.high}}</td>
+                      <td>{{item.threePointEstimate}}</td>
+                      <td>{{item.aiEstimate}}</td>
+                      <td>{{item.actual}}</td>
                   </tr>
                 </table>
               </ion-row>

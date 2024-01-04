@@ -6,6 +6,7 @@ import { SprintService } from 'src/app/services/sprint.service';
 import { Project } from '../homepage/projects';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { CommanLoaderService } from 'src/app/services/comman-loader.service';
 
 @Component({
   selector: 'app-sprint-dashboard',
@@ -17,6 +18,7 @@ export class SprintDashboardComponent  implements OnInit {
   projectName:any;
   projectId:any;
   pageListNo = 15;
+  clientId: any;
   menuType: string = "reveal";
   isModalOpen: boolean = false;
   isDropdownOpen = false;
@@ -34,27 +36,29 @@ export class SprintDashboardComponent  implements OnInit {
   ];
   pageFilterDefault: any = 15;
 
-  clientId: any;
   constructor(
-    private modalController: ModalController,
+    private commanService: CommanLoaderService,
     private projectService: ProjectsService,
     public dialog: MatDialog,
     private sprintService: SprintService,
     private router: ActivatedRoute,
     private route: Router,
     private authService: AuthenticationService
+
     
   ) {}
 
   ngOnInit() {
     this.router.queryParams.subscribe(params => {
       this.projectId = params['projectId'];
-      this.projectName= params['projectName'];
+      this.projectName = params['projectName'];
+      this.clientId = params['clientId']
    });
    if(this.projectId !== 0){
    this.getSprints(this.projectId)
    }
   }
+
   getSprints(projectId:any){
     this.sprintService.getSprints(projectId).subscribe((res)=>{
       if(res.code === 200){  
@@ -64,7 +68,10 @@ export class SprintDashboardComponent  implements OnInit {
       }
     });
   }
+
   syncData(){
+    let UserDetails = this.authService.getUserDetails();
+   this.projectService.syncData(UserDetails?.id,this.clientId).subscribe((res)=>{
     if(this.projectId){
       this.getSprints(this.projectId)
     }else{
@@ -74,7 +81,12 @@ export class SprintDashboardComponent  implements OnInit {
      });
      if(this.projectId !== 0)this.getSprints(this.projectId)
     }
+    if(res.code==200){this.commanService.presentToast("Sync is completed", 5000 , "toast-succuss-mess");}
+    else{this.commanService.presentToast(res.data, 5000 , "toast-error-mess");}
+   })
+
   }
+
   setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;
   }
@@ -100,7 +112,7 @@ export class SprintDashboardComponent  implements OnInit {
   }
   getTask(item:any){
     this.route.navigate(["estimation-tool/homepage/tasklist"], {
-      queryParams: { sprintId:item.sprintId,  sprintName:item.summary, projectId: this.projectId, projectName: this.projectName},
+      queryParams: { sprintId:item.sprintId,  sprintName:item.summary, projectId: this.projectId,clientId:this.clientId,projectName: this.projectName},
     });
     
   }

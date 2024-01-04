@@ -7,6 +7,8 @@ import { AddClientService } from "src/app/services/homepageServices/add-client.s
 import { Router } from "@angular/router";
 import { AuthenticationService } from "src/app/services/authentication.service";
 import { ImportModalComponent } from "../import-modal/import-modal.component";
+import { CommanLoaderService } from "src/app/services/comman-loader.service";
+
 
 @Component({
   selector: "app-homepage",
@@ -36,19 +38,22 @@ export class HomepageComponent implements OnInit {
     public dialog: MatDialog,
     private clientService: AddClientService,
     private router: Router,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private commanService: CommanLoaderService
   ) {
     
   }
 
   ngOnInit() {
      this.UserDetails = this.authService.getUserDetails();
-    console.log(this.UserDetails?.id);
+    console.log(this.UserDetails);
 
     this.clientService.clientList$.subscribe((res) => {
+      console.log(this.clientId,res);
       if (res.length > 0) {
         const clientId = res[0].id;
         this.clientId = clientId;
+        
         this.getProjectList(clientId);
       } else {
         this.projectList = [];
@@ -88,9 +93,11 @@ export class HomepageComponent implements OnInit {
   }
   syncData(){
     this.projectService.syncData(this.UserDetails?.id,this.clientId).subscribe(res=>{
-      console.log(res);
+     
         this.getProjectList(this.clientId);
         this.getClientByUserId(this.UserDetails?.id)
+        if(res.code==200){this.commanService.presentToast("Sync is completed", 5000 , "toast-succuss-mess");}
+        else{this.commanService.presentToast(res.data, 5000 , "toast-error-mess");}
     })
   }
 
@@ -131,7 +138,7 @@ export class HomepageComponent implements OnInit {
 
   getSprints(name: any, projectId: number) {
     this.router.navigate(["estimation-tool/homepage/sprintdashboard"], {
-      queryParams: { projectId: projectId, projectName: name },
+      queryParams: { projectId: projectId,clientId:this.clientId, projectName: name },
     });
   }
   logout() {
