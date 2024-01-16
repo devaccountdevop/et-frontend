@@ -80,12 +80,15 @@ export class ResetPasswordComponent implements OnInit {
     })
   }
   CreateUserValueForm() {
+    const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{4,15}$/;
+  
     this.userValueForm = this.formBuilder.group({
-      oldPassword: ['', Validators.required],
-      newPassword: ['', Validators.required],
-      confirmPassword: ['', Validators.required]
-    })
+      oldPassword: ['', [Validators.required, Validators.pattern(passwordPattern)]],
+      newPassword: ['', [Validators.required, Validators.pattern(passwordPattern)]],
+      confirmPassword: ['', [Validators.required, Validators.pattern(passwordPattern)]]
+    });
   }
+  
 
   forgotPassword() {
     this.submitted = true;

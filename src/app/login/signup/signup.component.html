@@ -18,6 +18,9 @@
               <div class="text-danger" *ngIf="signUpForm.controls['userName'].errors?.['required'] && submitted">
                 Username is required.
               </div>
+              <div class="text-danger" *ngIf="signUpForm.controls['userName'].hasError('minlength') && submitted">
+                Username must be at least 4 characters long.
+              </div>
               <ion-item class="input">
                 <ion-input name="email" formControlName="email" required email placeholder="Email Address"></ion-input>
                 <span class="asterisk_required_field"></span>
@@ -29,27 +32,30 @@
                 Please enter a valid email.
               </div>
               <ion-item>
-                <ion-input [type]="showPassword ? 'text' : 'password'" name="password" formControlName="password"
+                <ion-input [type]="showPassword ? 'text' : 'password'" minlength="4" maxlength="15" name="password" formControlName="password"
                   required placeholder="Password"></ion-input>
-                  <span class="asterisk_required_field"></span>
-                <!-- <a class="type-toggle">
-                  <ion-icon class="show-option" *ngIf="!showPassword" name="eye-off-outline" (click)="toggleShow()"></ion-icon>
-                  <ion-icon class="hide-option" *ngIf="showPassword" name="eye-outline" (click)="toggleShow()"></ion-icon>
-                </a> -->
+                <span class="asterisk_required_field"></span>
               </ion-item>
               <div class="text-danger" *ngIf="signUpForm.controls['password'].errors?.['required'] && submitted">
                 Password is required.
               </div>
+              <div class="text-danger" *ngIf="signUpForm.controls['password'].hasError('pattern') && submitted">
+                Password must be a combination of alphabets, numbers, and special characters.
+              </div>
+              
               <ion-item>
-                <ion-input formControlName="confirmPassword" name="confirmPassword" type="password" required
+                <ion-input formControlName="confirmPassword" name="confirmPassword" minlength="4" maxlength="15" type="password" required
                   placeholder="Confirm Password"></ion-input>
-                  <span class="asterisk_required_field"></span>
+                <span class="asterisk_required_field"></span>
               </ion-item>
               <div class="text-danger" *ngIf="signUpForm.controls['confirmPassword'].errors?.['required'] && submitted">
                 Confirm password is required.
               </div>
-              <div class="text-danger" *ngIf="confirmPassword">
-                Password and Confirm password are not same.
+              <div class="text-danger" *ngIf="signUpForm.controls['confirmPassword'].hasError('pattern') && submitted">
+                Password must be a combination of alphabets, numbers, and special characters.
+              </div>
+              <div class="text-danger" *ngIf="signUpForm.hasError('passwordMismatch') && submitted">
+                Password and Confirm password do not match.
               </div>
               <button class="ml-10" type="submit" class="button2">Create Account</button>
             </form>

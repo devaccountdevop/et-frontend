@@ -112,9 +112,10 @@
                 <ng-container
                   *ngIf="clientList.length === 0; else clientOptions"
                 >
-                  <option value="" disabled selected>
-                    no client available
+                  <option value="undefined" disabled selected>
+                    No Client Available
                   </option>
+
                 </ng-container>
                 <ng-template #clientOptions>
                   <option *ngFor="let item of clientList" [value]="item.id">
@@ -203,7 +204,7 @@
                   </app-dashboard-body>
                 </ng-container>
              <div style="margin-left: 35%; margin-top: 10%; " *ngIf="this.projectList.length ===0">
-            <h2 >there are no projects</h2>
+            <h2 >There Are No Projects.</h2>
             </div>
               </ion-row>
             </ion-grid>
