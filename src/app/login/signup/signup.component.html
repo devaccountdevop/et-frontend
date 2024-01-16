@@ -11,47 +11,52 @@
             <h3 class="text-left ml-5">Create Account</h3>
             <form class="input-box" [formGroup]="signUpForm" (ngSubmit)="signUp()">
               <ion-item>
-                <ion-input  formControlName="userName" name="userName"  placeholder="User Name"></ion-input>
+                <ion-input formControlName="userName" minlength="4" maxlength="15" name="userName"
+                  placeholder="Username"></ion-input>
+                <span class="asterisk_required_field"></span>
               </ion-item>
               <div class="text-danger" *ngIf="signUpForm.controls['userName'].errors?.['required'] && submitted">
-                UserName is required.
+                Username is required.
               </div>
               <ion-item class="input">
-                <ion-input  name="email" formControlName="email" required email placeholder="Email Address"></ion-input>
-               
+                <ion-input name="email" formControlName="email" required email placeholder="Email Address"></ion-input>
+                <span class="asterisk_required_field"></span>
               </ion-item>
               <div class="text-danger" *ngIf="signUpForm.controls['email'].errors?.['required'] && submitted">
                 Email is required.
               </div>
               <div class="text-danger" *ngIf="signUpForm.controls['email'].errors?.['email'] && submitted">
-               Please enter a valid email.
+                Please enter a valid email.
               </div>
               <ion-item>
-                <ion-input [type]="showPassword ? 'text' : 'password'"  name="password" formControlName="password"  required placeholder="Password"></ion-input>
-                <a class="type-toggle">
+                <ion-input [type]="showPassword ? 'text' : 'password'" name="password" formControlName="password"
+                  required placeholder="Password"></ion-input>
+                  <span class="asterisk_required_field"></span>
+                <!-- <a class="type-toggle">
                   <ion-icon class="show-option" *ngIf="!showPassword" name="eye-off-outline" (click)="toggleShow()"></ion-icon>
                   <ion-icon class="hide-option" *ngIf="showPassword" name="eye-outline" (click)="toggleShow()"></ion-icon>
-                </a>
+                </a> -->
               </ion-item>
               <div class="text-danger" *ngIf="signUpForm.controls['password'].errors?.['required'] && submitted">
                 Password is required.
               </div>
               <ion-item>
-                <ion-input  formControlName="confirmPassword"  name="confirmPassword" type="password" required placeholder="Confirm Password"></ion-input>
+                <ion-input formControlName="confirmPassword" name="confirmPassword" type="password" required
+                  placeholder="Confirm Password"></ion-input>
+                  <span class="asterisk_required_field"></span>
               </ion-item>
               <div class="text-danger" *ngIf="signUpForm.controls['confirmPassword'].errors?.['required'] && submitted">
-                ConfirmPassword is required.
+                Confirm password is required.
               </div>
               <div class="text-danger" *ngIf="confirmPassword">
-                Password and ConfirmPassword is not match.
+                Password and Confirm password are not same.
               </div>
-              <button class="ml-10" type="submit"  class="button2">Create Account</button>
+              <button class="ml-10" type="submit" class="button2">Create Account</button>
             </form>
-            <p  class="signup text-left ml-5">Already have an account? <a routerLink="/">Login</a></p>
+            <p class="signup text-left ml-5">Already have an account? <a routerLink="/">Login</a></p>
           </div>
         </div>
       </ion-card>
     </ion-row>
   </ion-grid>
 </ion-content>
-

@@ -10,6 +10,14 @@ ion-card {
   margin: 10px;
   //height: 80%;
 }
+.asterisk_required_field::after {
+  content: " *";
+  // color: cornflowerblue;
+  color: rgb(149, 52, 56);
+  font-size: 20px;
+  padding: 0 5px 0 0;
+  margin-left: 10px;
+}
 
 .split-container {
   display: flex;
