@@ -9,29 +9,30 @@
         <h1 class="text-center">Login</h1>
         <form [formGroup]="loginForm" (ngSubmit)="login()">
           <ion-item class="input">
-            <ion-input formControlName="userName" name="userName" placeholder="User Name"></ion-input>
+            <ion-input formControlName="userName" name="userName" minlength="4"
+            maxlength="15" placeholder="Username"></ion-input>
           </ion-item>
           <div class="text-danger ml-3" *ngIf="loginForm.controls['userName'].errors?.['required'] && submitted">
-            UserName is required.
+            Username is required.
           </div>
           <ion-item>
             <ion-input [type]="showPassword ? 'text' : 'password'" formControlName="password" name="password"
               placeholder="Password"></ion-input>
-            <a class="type-toggle">
+            <!-- <a class="type-toggle">
               <ion-icon class="show-option" *ngIf="!showPassword" name="eye-off-outline" (click)="toggleShow()"></ion-icon>
               <ion-icon class="hide-option" *ngIf="showPassword" name="eye-outline" (click)="toggleShow()"></ion-icon>
-            </a>
+            </a> -->
           </ion-item>
           <div class="text-danger ml-3" *ngIf="loginForm.controls['password'].errors?.['required'] && submitted">
             Password is required.
           </div>
           <ion-row class="ion-align-items-center">
             <ion-col size="8" class="ion-text-start ion-padding-start">
-              <p (click)="forgotPassword()" class="pointer">Forgot Password <ion-icon name="lock-closed-outline"
-                  (click)="forgotPassword()" class="pointer"></ion-icon></p>
+              <a (click)="forgotPassword()" class="pointer">Forgot Password <ion-icon name="lock-closed-outline"
+                  (click)="forgotPassword()" class="pointer"></ion-icon></a>
             </ion-col>
             <ion-col size="4" class="ion-text-end ion-padding-end">
-              <span><a class="pointer" (click)="resetPassword()">Reset Password</a></span>
+              <span><a  class="pointer" (click)="resetPassword()">Reset Password</a></span>
             </ion-col>
           </ion-row>
          <button   type="submit"  class="button2 ml-10">Login</button>

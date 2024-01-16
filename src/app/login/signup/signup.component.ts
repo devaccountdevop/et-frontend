@@ -58,7 +58,7 @@ export class SignupComponent implements OnInit {
       this.signUpService.signUp(formData).subscribe((res) => {
         if(res.code==200){
           this.router.navigate(['/']);
-          this.commanService.presentToast("Resignation successful! Continue with login ", 5000 , "toast-succuss-mess");
+          this.commanService.presentToast("Registration successful! Continue with login ", 5000 , "toast-succuss-mess");
          }else{
            this.commanService.presentToast("email or username is already exist", 3000, "toast-error-mess");
          }
