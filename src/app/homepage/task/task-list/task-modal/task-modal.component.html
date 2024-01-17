@@ -31,15 +31,15 @@
           <div style="margin-left: 10px; font-size: small; margin-bottom: 35px;">
             <p><label for="estimate1">Optimistic Estimates (low):</label>
               <input type="text" id="estimate1" name="estimate1" style=" width: 50px; margin-left: 25px;"
-                [(ngModel)]="sharedItem.estimates.low">
+                [(ngModel)]="sharedItem.estimates.low" (click)="clearEstimate('low')" >
             </p>
             <p><label for="estimate1">Most Likely (Realistic):</label>
               <input type="text" id="estimate1" name="estimate1" style="width: 50px; margin-left: 46px;"
-                [(ngModel)]="sharedItem.estimates.realistic">
+                [(ngModel)]="sharedItem.estimates.realistic" (click)="clearEstimate('realistic')">
             </p>
             <p><label for="estimate1">Pessimistic Estimates (High)</label>
               <input type="text" id="estimate1" name="estimate1" style="width: 50px; margin-left: 11px;"
-                [(ngModel)]="sharedItem.estimates.high">
+                [(ngModel)]="sharedItem.estimates.high" (click)="clearEstimate('high')">
             </p>
           </div>
         </td>

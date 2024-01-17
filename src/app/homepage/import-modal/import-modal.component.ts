@@ -4,6 +4,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CommanLoaderService } from 'src/app/services/comman-loader.service';
 import { ImportService } from 'src/app/services/import.service';
 import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-import-modal',
@@ -13,6 +14,7 @@ import * as XLSX from 'xlsx';
 export class ImportModalComponent  implements OnInit {
   displayValue :string = 'none';
   UserDetails:any;
+  dragedFile : any;
   constructor(private templateService:ImportService,
     private authService: AuthenticationService, private commanService: CommanLoaderService,
     private dialog: MatDialog) { }
@@ -26,12 +28,33 @@ export class ImportModalComponent  implements OnInit {
 
   handleDrop(event: any) {
     event.preventDefault();
-    this.isDragOver = false;
-    console.log(event);
-    
-    const file = event.dataTransfer.files[0];
-    this.readExcel(file);
-  }
+this.dragedFile = event.dataTransfer.files[0];
+}
+
+sendDragedFile(){
+ // Check if event.dataTransfer and event.dataTransfer.files are defined
+    if (this.dragedFile != null) {
+        const formData = new FormData();
+        formData.append("file", this.dragedFile);
+
+        this.templateService.uploadtempalte(formData, this.UserDetails?.id).subscribe((res) => {
+            if (res.code === 200) {
+                this.close();
+                this.commanService.presentToast("File uploaded successfully. ", 5000, "toast-succuss-mess");
+            } else {
+                this.commanService.presentToast("Invalid file format. Only .xlsx files are allowed.", 3000, "toast-error-mess");
+            }
+        });
+    } else {
+      this.commanService.presentToast("please drag a valid file here", 3000, "toast-error-mess");
+    }
+}
+
+closeDailogbox(){
+  this.close();
+}
+   
+  
 
   handleDragOver(event: any) {
     event.preventDefault();
@@ -41,32 +64,6 @@ export class ImportModalComponent  implements OnInit {
   handleDragLeave(event: any) {
     this.isDragOver = false;
   }
-
-  handleFileInput(event: any) {
-    const file = event.target.files[0];
-    this.isDragOver = false;
-    this.readExcel(file);
-  }
-  readExcel(file: File) {
-    const reader: FileReader = new FileReader();
-
-    reader.onload = (e: any) => {
-      const binaryString: string = e.target.result;
-      const workbook: XLSX.WorkBook = XLSX.read(binaryString, { type: 'binary' });
-
-      // Access the data in the workbook and process it as needed
-      const firstSheetName: string = workbook.SheetNames[0];
-      const worksheet: XLSX.WorkSheet = workbook.Sheets[firstSheetName];
-
-      // Example: Log the data from the first cell
-      const cellValue: any = worksheet['B4'].v;
-     
-    };
-
-    reader.readAsBinaryString(file);
-  }
-
-  // Add other functions as needed
   onFileSelected(event: any) {
  
     console.log(event.target.files[0])
@@ -98,6 +95,13 @@ export class ImportModalComponent  implements OnInit {
   }
   close() {
     this.dialog.closeAll();
+  }
+
+  downloadTemplate1() {
+    this.templateService.downloadTemplate().subscribe((res) => {
+        // Save the file using FileSaver.js
+        saveAs(res, 'template.xlsx');
+      })
   }
 }
 

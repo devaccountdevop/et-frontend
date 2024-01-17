@@ -83,7 +83,7 @@ export class ResetPasswordComponent implements OnInit {
     const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{4,15}$/;
   
     this.userValueForm = this.formBuilder.group({
-      oldPassword: ['', [Validators.required, Validators.pattern(passwordPattern)]],
+      oldPassword: ['', [Validators.required, ]],
       newPassword: ['', [Validators.required, Validators.pattern(passwordPattern)]],
       confirmPassword: ['', [Validators.required, Validators.pattern(passwordPattern)]]
     });
