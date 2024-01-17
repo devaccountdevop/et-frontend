@@ -60,7 +60,7 @@
                 <ion-icon style="margin-left: 5px; margin-bottom: -1.7px" name="sync-outline"></ion-icon>
               </button></span>
             <span style="margin-left: 15%; color: rgb(63, 61, 61); "> <b>Dashboard</b></span>
-            <button style="margin-left: 43%;"  routerLink='/estimation-tool/homepage/sprintdashboard'
+            <button style="margin-left: 38%;"  routerLink='/estimation-tool/homepage/sprintdashboard'
               class="button2" (click)="goBack()" >Back</button>
           </ion-row>
           <ion-row  style="height: 35px; margin-top: 5px;">
@@ -70,13 +70,13 @@
                 margin-left: 15px;
                 font-size: small;
                 text-align: end;
-                margin-left: 50%;
+                margin-left: 68%;
                 margin-top: 20px;
               ">
               Search:
             </p>
 
-            <ion-searchbar [(ngModel)]="searchText" style="width: 300px"></ion-searchbar>
+            <ion-searchbar  [(ngModel)]="searchText" style="width: 250px;"></ion-searchbar>
           </ion-row>
 
 
@@ -123,7 +123,7 @@
                       <td>{{item.estimates.high}}</td>
                       <td>{{item.threePointEstimate}}</td>
                       <td>{{item.aiEstimate}}</td>
-                      <td>{{item.actual}}</td>
+                      <td>{{item.originalEstimate}}</td>
                   </tr>
                 </table>
               </ion-row>

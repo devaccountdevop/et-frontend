@@ -84,9 +84,9 @@ this.message = "input the required fields"   ;
 fetchAiEstimates(){
   if (
     this.sharedItem &&
-    this.sharedItem.estimates.low !== 0 &&
-    this.sharedItem.estimates.high !== 0 &&
-    this.sharedItem.estimates.realistic !== 0
+    this.sharedItem.estimates.low != 0 && this.sharedItem.estimates.low !== "" &&
+    this.sharedItem.estimates.high != 0 && this.sharedItem.estimates.high !== "" &&
+    this.sharedItem.estimates.realistic != 0 && this.sharedItem.estimates.realistic !== ""
   ){
   const requestData = {
     value: this.sharedItem,
@@ -94,7 +94,7 @@ fetchAiEstimates(){
   this.taskService.fetchAiEstimates(requestData).subscribe((res) => {
       if (res.code === 200) {
         this.sharedItem.aiEstimate = res.data.aiEstimate;
-       // this.message = "AI Estimates are fetched successfuly..";
+       
       }
   });
   }else{
@@ -136,5 +136,8 @@ updateAiEstimate(){
   ngOnDestroy() {
     this.taskService.updateItem(this.sharedItem);
     this.dataSubscription?.unsubscribe();
+  }
+  clearEstimate(field: string) {
+    this.sharedItem.estimates[field] = '';
   }
 }

@@ -16,15 +16,11 @@ export class TableFilterPipe implements PipeTransform {
     return items.filter((item) => {
       // Modify this condition based on the properties you want to search
       return (
-        (item.taskId && item.taskId.toString().includes(searchTerm)) ||
+        (item.taskId && item.taskId.toLowerCase().includes(searchTerm)) ||
         (item.summary && item.summary.toLowerCase().includes(searchTerm)) ||
         (item.taskDescription && item.taskDescription.toLowerCase().includes(searchTerm)) ||
-        (item.estimates.low && item.estimates.low.toString().includes(searchTerm)) ||
-        (item.estimates.realistic && item.estimates.realistic.toString().includes(searchTerm)) ||
-        (item.estimates.high&& item.estimates.high.toString().includes(searchTerm)) ||
-        (item.threePointEstimate && item.threePointEstimate.toString().includes(searchTerm)) ||
-        (item.aiEstimate && item.aiEstimate.toString().includes(searchTerm)) ||
-        (item.actual && item.actual.toString().includes(searchTerm))
+        (Array.isArray(item.labels) && item.labels.some((label:any) => typeof label === 'string' && label.toLowerCase().includes(searchTerm)))
+   
       );
     });
   }

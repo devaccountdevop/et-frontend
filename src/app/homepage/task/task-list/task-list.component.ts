@@ -82,6 +82,14 @@ export class TaskListComponent implements OnInit {
   getTaskBySprintId(sprintId:any,projectId:any){
     this.taskService.getTaskBySprintId(sprintId,projectId).subscribe((res) => {
       this.tableData = res.data;
+      // Convert original estimates in the tableData array from seconds to hours
+      this.tableData.forEach((task) => {
+        if (task.originalEstimate) {
+          // Assuming 1 hour = 3600 seconds
+          task.originalEstimate = task.originalEstimate / 3600;
+        }
+      });
+
     });
   }
   syncData(){
