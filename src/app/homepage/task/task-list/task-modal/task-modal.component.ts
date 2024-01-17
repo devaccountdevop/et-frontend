@@ -84,9 +84,9 @@ this.message = "input the required fields"   ;
 fetchAiEstimates(){
   if (
     this.sharedItem &&
-    this.sharedItem.estimates.low != 0 && this.sharedItem.estimates.low !== "" &&
-    this.sharedItem.estimates.high != 0 && this.sharedItem.estimates.high !== "" &&
-    this.sharedItem.estimates.realistic != 0 && this.sharedItem.estimates.realistic !== ""
+    this.sharedItem.estimates.low != 0 && this.sharedItem.estimates.low != "" &&
+    this.sharedItem.estimates.high != 0 && this.sharedItem.estimates.high != "" &&
+    this.sharedItem.estimates.realistic != 0 && this.sharedItem.estimates.realistic != ""
   ){
   const requestData = {
     value: this.sharedItem,
