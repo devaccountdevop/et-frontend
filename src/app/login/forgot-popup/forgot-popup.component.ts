@@ -14,6 +14,8 @@ import { ConfirmationPopupComponent } from '../confirmation-popup/confirmation-p
 })
 export class ForgotPopupComponent implements OnInit {
 
+  errorMessages: string[] = [];
+
   constructor(private alertController: AlertController,
     private dialog: MatDialog,
     private addClientService: AddClientService,
@@ -25,6 +27,9 @@ export class ForgotPopupComponent implements OnInit {
   ngOnInit() {}
 
   resetPassword(email: string) {
+    if (!this.isValidEmail(email)) {
+      return
+    }
     // this.close();
     // this.openConfirmationPopUp(email)
     // return
@@ -40,6 +45,21 @@ export class ForgotPopupComponent implements OnInit {
     })
 
   }
+  isValidEmail(email: string): boolean {
+    this.errorMessages = [];
+  
+    if (!email) {
+      this.errorMessages.push('Email is required.');
+    } else {
+      const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
+      if (!emailPattern.test(email)) {
+        this.errorMessages.push('Please enter a valid email address.');
+      }
+    }
+  
+    return this.errorMessages.length === 0;
+  }
+  
   openConfirmationPopUp(email: any) {
     this.dialog.open(ConfirmationPopupComponent, {
       width: "400px",

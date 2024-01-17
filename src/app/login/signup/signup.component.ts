@@ -23,14 +23,29 @@ export class SignupComponent implements OnInit {
     private formBuilder:FormBuilder
   ) {}
 
-  createForm(){
+  createForm() {
+    const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{4,15}$/;
+  
     this.signUpForm = this.formBuilder.group({
-      userName:['',[Validators.required]],
-      email:['',[Validators.required, Validators.email]],
-      password:['',[Validators.required]],
-      confirmPassword:['',[Validators.required]]
-    })
+      userName: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(passwordPattern) // Adjust the regex as needed
+        ]
+      ],
+      confirmPassword: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(passwordPattern) // Using the same regex pattern as for password
+        ]
+      ]
+    });
   }
+  
 
   ngOnInit() {
     this.createForm();

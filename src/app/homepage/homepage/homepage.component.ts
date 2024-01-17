@@ -7,8 +7,6 @@ import { AddClientService } from "src/app/services/homepageServices/add-client.s
 import { Router } from "@angular/router";
 import { AuthenticationService } from "src/app/services/authentication.service";
 import { ImportModalComponent } from "../import-modal/import-modal.component";
-import { CommanLoaderService } from "src/app/services/comman-loader.service";
-
 
 @Component({
   selector: "app-homepage",
@@ -20,6 +18,7 @@ export class HomepageComponent implements OnInit {
   menuType: string = "reveal";
   isModalOpen: boolean = false;
   isDropdownOpen = false;
+  selectedOption:any;
   // Pagination variables
   p: number = 1;
   searchText: any;
@@ -38,8 +37,7 @@ export class HomepageComponent implements OnInit {
     public dialog: MatDialog,
     private clientService: AddClientService,
     private router: Router,
-    private authService: AuthenticationService,
-    private commanService: CommanLoaderService
+    private authService: AuthenticationService
   ) {
     
   }
@@ -61,8 +59,8 @@ export class HomepageComponent implements OnInit {
       this.clientList.length = 0;
       this.clientList.push(...res);
     });
-    this.getClientByUserId(this.UserDetails?.id)
-
+    this.getClientByUserId(this.UserDetails?.id);
+    
 
   }
   getClientByUserId(Userid:any){
@@ -79,6 +77,7 @@ export class HomepageComponent implements OnInit {
         }
       }
     });
+    console.log(this.clientId)
   }
   
   private getProjectList(clientId: string): void {
@@ -90,14 +89,13 @@ export class HomepageComponent implements OnInit {
         this.projectList = [];
       }
     });
+    console.log(this.clientId)
   }
   syncData(){
     this.projectService.syncData(this.UserDetails?.id,this.clientId).subscribe(res=>{
-     
+      console.log(res);
         this.getProjectList(this.clientId);
         this.getClientByUserId(this.UserDetails?.id)
-        if(res.code==200){this.commanService.presentToast("Sync is completed", 5000 , "toast-succuss-mess");}
-        else{this.commanService.presentToast(res.data, 5000 , "toast-error-mess");}
     })
   }
 
@@ -157,6 +155,7 @@ export class HomepageComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log("The dialog was closed");
+      this.getClientByUserId(this.UserDetails?.id);
     });
   }
 }
