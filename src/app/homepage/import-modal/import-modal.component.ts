@@ -4,7 +4,6 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CommanLoaderService } from 'src/app/services/comman-loader.service';
 import { ImportService } from 'src/app/services/import.service';
 import * as XLSX from 'xlsx';
-import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-import-modal',
@@ -95,13 +94,6 @@ closeDailogbox(){
   }
   close() {
     this.dialog.closeAll();
-  }
-
-  downloadTemplate1() {
-    this.templateService.downloadTemplate().subscribe((res) => {
-        // Save the file using FileSaver.js
-        saveAs(res, 'template.xlsx');
-      })
   }
 }
 

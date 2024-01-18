@@ -10,7 +10,7 @@
       </ion-button> -->
     <div class="dropdown">
       <ion-buttons>
-        <ion-button  style="color: white; margin-right: 10px; margin-top: 2%;text-transform: capitalize;" (click)="toggleDropdown()" fill="clear">
+        <ion-button  style="color: white; margin-right: 10px; margin-top: 3%;text-transform: capitalize;" (click)="toggleDropdown()" fill="clear">
           <ion-icon style="margin-right: 5px" name="person-circle-outline"></ion-icon>Admin
           <ion-icon style="margin-left: 5px" name="chevron-down-outline"></ion-icon></ion-button>
       </ion-buttons>
@@ -84,7 +84,7 @@
         style="margin: 0px; height: 100%; color: black; background-color: white;box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);">
         <div class="innerbox">
           <ion-row class="subheader" style="align-items: center;">
-              <span  style="margin-left: 40%; color: rgb(63, 61, 61); "> <b>Projects: {{projectName}}</b></span>
+              <span  style="margin-left: 40%; color: rgb(63, 61, 61); "> <b>Project: {{projectName}}</b></span>
               <button style="margin-left: 35%;"  routerLink='/estimation-tool/homepage' class="button2">Back</button>
           </ion-row>
           <ion-row style="height: 35px;">
@@ -104,15 +104,27 @@
                 margin-left: 15px;
                 font-size: small;
                 text-align: end;
-                margin-left: 54%;
+                margin-left: 68%;
                 margin-top: 20px;
               ">
               Search:
             </p>
-
-            <ion-searchbar [(ngModel)]="searchText" style="width: 300px"></ion-searchbar>
+            <input style="
+            width: 150px;
+            height: 23px;
+            margin-top: 17px;
+            margin-left: 4px;
+            border: 2px solid rgba(26, 74, 96, 0.8999999762);
+            border-radius: 5px;
+            font-size: 12px;
+          " [(ngModel)]="searchText" type="text" placeholder="sprint_id,sprint_name" />
           </ion-row>
-        <span style="margin-top: -15px; position: absolute; left: 38%;" ><button  class="syncbtn" (click)="syncData()">
+        <span style="
+        display: flex;
+        justify-content: end;
+        margin-right: 10px;
+        margin-top: 5px;
+      " ><button  class="syncbtn" (click)="syncData()">
           Sync
           <ion-icon style="margin-left: 5px; margin-bottom: -1.7px" name="sync-outline"></ion-icon>
         </button></span>
