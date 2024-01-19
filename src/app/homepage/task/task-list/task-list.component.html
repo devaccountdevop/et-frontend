@@ -11,7 +11,7 @@
       </ion-button> -->
     <div class="dropdown">
       <ion-buttons>
-        <ion-button style="color: white; margin-right: 10px; margin-top: 2%;text-transform: capitalize;"
+        <ion-button style="color: white; margin-right: 10px; margin-top: 3%;text-transform: capitalize;"
           (click)="toggleDropdown()" fill="clear">
           <ion-icon style="margin-right: 5px" name="person-circle-outline"></ion-icon>Admin
           <ion-icon style="margin-left: 5px" name="chevron-down-outline"></ion-icon></ion-button>
@@ -60,7 +60,7 @@
                 <ion-icon style="margin-left: 5px; margin-bottom: -1.7px" name="sync-outline"></ion-icon>
               </button></span>
             <span style="margin-left: 15%; color: rgb(63, 61, 61); "> <b>Dashboard</b></span>
-            <button style="margin-left: 38%;"  routerLink='/estimation-tool/homepage/sprintdashboard'
+            <button style="margin-left: 41%;"  routerLink='/estimation-tool/homepage/sprintdashboard'
               class="button2" (click)="goBack()" >Back</button>
           </ion-row>
           <ion-row  style="height: 35px; margin-top: 5px;">
@@ -70,13 +70,20 @@
                 margin-left: 15px;
                 font-size: small;
                 text-align: end;
-                margin-left: 68%;
+                margin-left: 78%;
                 margin-top: 20px;
               ">
               Search:
             </p>
-
-            <ion-searchbar  [(ngModel)]="searchText" style="width: 250px;"></ion-searchbar>
+            <input style="
+            width: 150px;
+            height: 23px;
+            margin-top: 17px;
+            margin-left: 4px;
+            border: 2px solid rgba(26, 74, 96, 0.8999999762);
+            border-radius: 5px;
+            font-size: 12px;
+          " [(ngModel)]="searchText" type="text" placeholder="task_id,task_name" />
           </ion-row>
 
 

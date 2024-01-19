@@ -50,6 +50,15 @@ ion-header {
   height: 30px;
   font-size: small ; /* Increase the height as needed */
   }
+
+  .card-header {
+    padding-top: 19px;
+    padding-bottom: 19px;
+  }
+   
+  .card-header:hover {
+    color: #2980b9;
+  }
   
   // ion-menu{
   //   --width: 200px;

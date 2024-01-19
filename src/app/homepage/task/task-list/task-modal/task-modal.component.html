@@ -55,7 +55,7 @@
     </table>
     <div class="dropdown-container" (click)="toggleShowTime()">
       <div class="actualTime">
-        <p style="margin-left: 5px; font-size: small;">Actual Time For Task :</p>
+        <p style="margin-left: 5px; font-size: small;margin-bottom: 3px;">Actual Time For Task :</p>
         <span style="font-size: small; margin-right: 5px;color: white;">{{ !showTime ? ' ▲' : ' ▼' }}</span>
       </div>
       <div *ngIf="showTime" class="table-container" style="background-color: #e8e7e7; ">
@@ -87,20 +87,19 @@
     </div>
     <div class="dropdown-container" (click)="toggleShowField()">
       <div class="actualTime">
-        <p style="margin-left: 5px; font-size: small;">More Fields :</p>
+        <p style="margin-left: 5px; font-size: small;margin-bottom: 3px;">More Fields :</p>
         <span style="font-size: small; margin-right: 5px;color: white;">{{ !showField ? ' ▲' : ' ▼' }}</span>
       </div>
       <div *ngIf="showField" class="table-container">
         <table style="font-size: small; margin-left: 2%;margin-top: 20px;">
           Labels : {{sharedItem.labels}}
-
         </table>
       </div>
     </div>
     <div>
 
       <span>
-        <button (click)="saveEstimatesInDB()" style="width: 25%; margin-left: 5%;" class="button2">Save & Close</button>
+        <button (click)="saveEstimatesInDB()"  class="button2">Save & Close</button>
       </span>
 
 
