@@ -79,18 +79,19 @@ closeDailogbox(){
     })
   }
   downloadTemplate(){
-  this.templateService.downloadTemplate().subscribe((res)=>{
-    // const blob = new Blob([res]);
-    const url = window.URL.createObjectURL(res);
-            // Create a link and trigger download
-            console.log(url);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'Template.xlsx'; // Specify the file name
-            document.body.appendChild(link);
-            link.click();
+    alert("we are working");
+  // this.templateService.downloadTemplate().subscribe((res)=>{
+  //   // const blob = new Blob([res]);
+  //   const url = window.URL.createObjectURL(res);
+  //           // Create a link and trigger download
+  //           console.log(url);
+  //           const link = document.createElement('a');
+  //           link.href = url;
+  //           link.download = 'Template.xlsx'; // Specify the file name
+  //           document.body.appendChild(link);
+  //           link.click();
     
-  })
+  // })
   }
   close() {
     this.dialog.closeAll();

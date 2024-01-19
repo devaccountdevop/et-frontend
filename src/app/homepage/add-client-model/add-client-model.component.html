@@ -59,11 +59,10 @@
       </tr>
       <tr *ngIf="errormsg " errormsg  style="background-color: white;">
         <td><span *ngIf="clientName == ''" style="color: red; margin-top: 0px; font-size: small;">Please input clientname</span></td>
-        <td><span *ngIf="jiraUserName == ''" style="color: red;font-size: small;">Please input jirausername</span></td>
+        <td><span *ngIf="jiraUserName == ''" style="color: red;font-size: small;">Please input JIRA Username</span></td>
         <td><span *ngIf="token == ''"  style="color: red;font-size: small;">Please input token</span></td>
       </tr>
       
     </table>
   </div>
-
 </mat-dialog-content>
