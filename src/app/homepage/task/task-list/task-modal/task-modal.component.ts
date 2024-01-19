@@ -94,6 +94,9 @@ fetchAiEstimates(){
   this.taskService.fetchAiEstimates(requestData).subscribe((res) => {
       if (res.code === 200) {
         this.sharedItem.aiEstimate = res.data.aiEstimate;
+        this.sharedItem.threePointEstimate = res.data.threePointEstimate;
+        this.sharedItem.riskFactor = res.data.riskFactor;
+        
        
       }
   });
