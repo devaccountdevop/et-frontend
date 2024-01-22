@@ -35,9 +35,12 @@ export class LoginComponent implements OnInit {
   }
 
   createForm(){
+    const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{4,15}$/;
+    
     this.loginForm = this.formBuilder.group({
       userName:['',[Validators.required]],
-      password:['',[Validators.required]]
+      password:['',[Validators.required,
+        Validators.pattern(passwordPattern) ]]// Adjust the regex as needed
     })
   }
 
