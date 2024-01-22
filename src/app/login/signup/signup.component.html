@@ -22,7 +22,7 @@
                 Username must be at least 4 characters long.
               </div>
               <ion-item class="input">
-                <ion-input name="email" formControlName="email" required email placeholder="Email Address"></ion-input>
+                <ion-input name="email" formControlName="email" required email placeholder="Email"></ion-input>
                 <span class="asterisk_required_field"></span>
               </ion-item>
               <div class="text-danger" *ngIf="signUpForm.controls['email'].errors?.['required'] && submitted">
@@ -39,8 +39,11 @@
               <div class="text-danger" *ngIf="signUpForm.controls['password'].errors?.['required'] && submitted">
                 Password is required.
               </div>
-              <div class="text-danger" *ngIf="signUpForm.controls['password'].hasError('pattern') && submitted">
+              <div class="text-danger" *ngIf="signUpForm.controls['password'].hasError('pattern') && submitted && !signUpForm.controls['password'].hasError('minlength')">
                 Password must be a combination of alphabets, numbers, and special characters.
+              </div>
+              <div class="text-danger" *ngIf="signUpForm.controls['password'].hasError('minlength') && submitted">
+                Password must be at least 4 characters long.
               </div>
               
               <ion-item>
@@ -51,11 +54,8 @@
               <div class="text-danger" *ngIf="signUpForm.controls['confirmPassword'].errors?.['required'] && submitted">
                 Confirm password is required.
               </div>
-              <div class="text-danger" *ngIf="signUpForm.controls['confirmPassword'].hasError('pattern') && submitted">
-                Password must be a combination of alphabets, numbers, and special characters.
-              </div>
-              <div class="text-danger" *ngIf="signUpForm.hasError('passwordMismatch') && submitted">
-                Password and Confirm password do not match.
+              <div class="text-danger ml-3" *ngIf="confirmPassword">
+                Password not matched.
               </div>
               <button class="ml-10" type="submit" class="button2">Create Account</button>
             </form>
