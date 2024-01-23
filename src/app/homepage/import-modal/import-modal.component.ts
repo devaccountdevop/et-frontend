@@ -32,7 +32,6 @@ export class ImportModalComponent implements OnInit {
   }
 
   sendDragedFile() {
-    // Check if event.dataTransfer and event.dataTransfer.files are defined
     if (this.dragedFile != null) {
       const formData = new FormData();
       formData.append("file", this.dragedFile);
