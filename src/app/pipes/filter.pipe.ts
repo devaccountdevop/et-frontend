@@ -6,15 +6,28 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FilterPipe implements PipeTransform {
 
   transform(items: any[], searchTerm: string): any[] {
-    console.log(items,searchTerm);
-    
-    if(items.length === 0){
+    console.log(items, searchTerm);
+  
+    if (items.length === 0) {
       return [];
     }
+  
     if (!searchTerm) {
       return items;
     }
-    return items.filter((search:any)=>(search.projectName || search.sprintName || search.sprintId)?.toLowerCase().indexOf(searchTerm?.toLowerCase()) > -1)
+  
+    return items.filter((search: any) => {
+      const projectIdString = search.projectId ? search.projectId.toString() : '';
+      const sprintIdString = search.sprintId ? search.sprintId.toString() : '';
+      const projectName = search.projectName ? search.projectName.toLowerCase() : '';
+      const sprintName = search.sprintName ? search.sprintName.toLowerCase() : '';
+  
+      return (
+        projectIdString.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        projectName.includes(searchTerm.toLowerCase()) ||
+        sprintIdString.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        sprintName.includes(searchTerm.toLowerCase())
+      );
+    });
   }
-
 }
