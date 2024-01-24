@@ -33,14 +33,14 @@ export class SignupComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern(passwordPattern) // Adjust the regex as needed
+          Validators.pattern(passwordPattern) 
         ]
       ],
       confirmPassword: [
         '',
         [
           Validators.required,
-          Validators.pattern(passwordPattern) // Using the same regex pattern as for password
+          Validators.pattern(passwordPattern) 
         ]
       ]
     });
@@ -64,7 +64,8 @@ export class SignupComponent implements OnInit {
   signUp() { 
    this.submitted = true;
    if(this.signUpForm.invalid) return;
-      // Rest of the signUp method remains unchanged
+   if(this.confirmPassword)return;
+      
       const formData = new FormData();
       formData.append("userName", this.signUpForm.value.userName);
       formData.append("email", this.signUpForm.value.email);
