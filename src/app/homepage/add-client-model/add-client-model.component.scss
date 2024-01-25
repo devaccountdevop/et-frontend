@@ -1,92 +1,98 @@
 .custom-dialog-header {
-  
-   color: white;
-   background-color: rgba(26, 74, 96, 0.9);
+  color: white;
+  background-color: rgba(26, 74, 96, 0.9);
 
-   height: 30px;
-   margin-top: 0px;
-   
- }
- .header{
-   position: absolute;
-   top: 5px;
- left: 45%;
+  height: 30px;
+  margin-top: 0px;
+}
+.header {
+  position: absolute;
+  top: 5px;
+  left: 45%;
   text-align: center;
- }
- .closebtn{
-   position: absolute;
-   left: 95%;
-   top: -2px;
-   font-size: large;
- }
- table {
-   border-collapse: collapse;
-   width: 100%;
- }
- 
- th, td {
-   text-align: left;
-   height: 10px;
-   padding: 2px;
-   margin-left: 10px;
- }
- 
+}
+.closebtn {
+  position: absolute;
+  left: 95%;
+  top: -2px;
+  font-size: large;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
 
- 
- tr:nth-child(even) {
-   background-color: #f2f2f2;
- }
- 
- .table {
-   margin-left: 7px;
-   margin-right: 7px;
-   width: 98%;
-   margin-top: 10px;
+th,
+td {
+  text-align: left;
+  height: 10px;
+  padding: 2px;
+  margin-left: 10px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.table {
+  margin-left: 6px;
+  width: 99%;
+  margin-top: 10px;
   //height: 250px;
   //  height: 250px;
- }
- 
- table, th, td {
-   border-collapse: collapse;
-   height: 20px;
- }
- 
- .input {
-   height: 20px;
-   width: 80%;
- }
- .clientbtnremove{
-   font-size: medium;
-   //position: absolute;
-   //left: 89.2%;
-   width: 17px;
-   color: white;
-   background-color: rgba(26, 74, 96, 0.9);
+}
 
- 
- }
- .clientbtnadd{
-   
-   font-size: medium;
-   width: 50%;
-   color: white;
-   background-color: rgba(26, 74, 96, 0.9);
- }
- .addclient{
-   font-size: medium;
-   //position: absolute;
-   margin-left: 50px;
-   //left: 94.5%;
-   width: 50%;
-   color: white;
-   background-color: rgba(26, 74, 96, 0.9);
- }
- .edit
-{
-      transform: scaleX(-1);
-      display: inline-block;
-     
- }
- .alert-wrapper {
+table,
+th,
+td {
+  border-collapse: collapse;
+  height: 20px;
+}
+
+.input {
+  height: 20px;
+  width: 80%;
+}
+
+.d-flex {
+  display: flex;
+  justify-content: end;
+  margin-top: 3px;
+}
+.clientbtnremove {
+  font-size: medium;
+  //position: absolute;
+  //left: 89.2%;
+  // width: 18px;
+  height: 16px;
+  padding-left: 2px;
+  padding-right: 2px;
+  color: white;
+  background-color: rgba(26, 74, 96, 0.9);
+}
+.clientbtnadd {
+  font-size: medium;
+  // width: 70%;
+  margin-left: 10px;
+  padding-left: 2px;
+  margin-right: 6px;
+  padding-right: 2px;
+  color: white;
+  background-color: rgba(26, 74, 96, 0.9);
+}
+.addclient {
+  font-size: medium;
+  //position: absolute;
+  margin-left: 50px;
+  //left: 94.5%;
+  width: 50%;
+  color: white;
+  background-color: rgba(26, 74, 96, 0.9);
+}
+.edit {
+  transform: scaleX(-1);
+  display: inline-block;
+}
+.alert-wrapper {
   z-index: 200; /* Set a value higher than the Modal's z-index */
 }
