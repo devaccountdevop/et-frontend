@@ -29,26 +29,26 @@
       <tr style="padding: 0px;">
         <td class="tablesubheader" style="width: 45%; padding: 0px;" scope="col">
           <div style="margin-left: 10px; font-size: small; margin-bottom: 35px;">
-            <p><label for="estimate1">Optimistic Estimates (low):</label>
-              <input type="text" id="estimate1" name="estimate1" style=" width: 50px; margin-left: 25px;"
+            <p><label for="estimate1">Optimistic Estimates (low)</label>
+              <input type="text" id="estimate1" name="estimate1" placeholder="0" style=" width: 50px; margin-left: 27px;"
                 [(ngModel)]="sharedItem.estimates.low" (click)="clearEstimate('low')" >
             </p>
-            <p><label for="estimate1">Most Likely (Realistic):</label>
-              <input type="text" id="estimate1" name="estimate1" style="width: 50px; margin-left: 46px;"
+            <p><label for="estimate1">Most Likely (Realistic)</label>
+              <input type="text" id="estimate1" name="estimate1" placeholder="0" style="width: 50px; margin-left: 48px;"
                 [(ngModel)]="sharedItem.estimates.realistic" (click)="clearEstimate('realistic')">
             </p>
             <p><label for="estimate1">Pessimistic Estimates (High)</label>
-              <input type="text" id="estimate1" name="estimate1" style="width: 50px; margin-left: 11px;"
+              <input type="text" id="estimate1" name="estimate1" placeholder="0" style="width: 50px; margin-left: 10px;"
                 [(ngModel)]="sharedItem.estimates.high" (click)="clearEstimate('high')">
             </p>
           </div>
         </td>
         <div class="estimateSecCol" style="margin-left: 25%; text-align: left;">
           <p style="margin-top: 20px;">3 Points Estimates <span
-              style="margin-left: 20px;">{{sharedItem.threePointEstimate}}</span></p>
-          <p style="margin-top: 20px;"> Risk Factor <span style="margin-left: 20px;">{{sharedItem.riskFactor}}</span>
+             class="threePointEstimate" >{{sharedItem.threePointEstimate}}</span></p>
+          <p style="margin-top: 20px;"> Risk Factor <span class="riskFactor" >{{sharedItem.riskFactor}}</span>
           </p>
-          <p style="margin-top: 20px;">AI Estimates <span style="margin-left: 20px;">{{sharedItem.aiEstimate}}</span>
+          <p style="margin-top: 20px;">AI Estimates <span class="aiEstimate" >{{sharedItem.aiEstimate}}</span>
           </p>
         </div>
       </tr>
