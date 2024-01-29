@@ -25,6 +25,7 @@ import { TaskModalComponent } from "./task/task-list/task-modal/task-modal.compo
 import { TableShortPipe } from "../pipes/table-short.pipe";
 import { ImportModalComponent } from "./import-modal/import-modal.component";
 import * as XLSX from 'xlsx';
+import { DateFormatPipe } from "../pipes/date-format.pipe";
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import * as XLSX from 'xlsx';
     TaskListComponent,
     FilterPipe,
     TableShortPipe,
-    ImportModalComponent
+    ImportModalComponent,
+    DateFormatPipe
   ],
   imports: [
     CommonModule,
