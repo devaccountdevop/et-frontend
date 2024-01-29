@@ -23,7 +23,7 @@
       <col>
       <tr style=" background-color: rgba(26, 74, 96, 0.9); height: 20px;padding: 0px;">
         <td colspan="2"
-          style="horizontal-align : middle; color: white; width: 20%; padding: 4px;height: 25px;font-size: small;">
+          style="horizontal-align : middle; color: white; width: 20%; padding: 4px;height: 25px;font-size: 14px;">
           Estimates</td>
       </tr>
       <tr style="padding: 0px;">
@@ -53,14 +53,16 @@
         </div>
       </tr>
     </table>
-    <div class="dropdown-container" (click)="toggleShowTime()">
-      <div class="actualTime">
-        <p style="margin-left: 5px; font-size: small;margin-bottom: 3px;">Actual Time For Task :</p>
-        <span style="font-size: small; margin-right: 5px;color: white;">{{ !showTime ? ' ▲' : ' ▼' }}</span>
-      </div>
-      <div *ngIf="showTime" class="table-container" style="background-color: #e8e7e7; ">
 
-        <table class="timetable" style="border: none; background-color: #e8e7e7; font-size: small; width: 100%;">
+    <ion-accordion-group  >
+      <ion-accordion  value="first">
+        <ion-item slot="header" color="white" class="actualtime icon-inner item-native" >
+          <ion-label style="color: white;">Actual Time For Task :</ion-label>
+        </ion-item>
+
+        
+        <div  slot="content">
+          <table class="timetable" style="border: none; background-color: #e8e7e7; font-size: small; width: 100%;">
           <tr style="border-bottom: 1px solid #b3b1b1;">
             <th style="border: none; width: 45%;">DATE:</th>
             <th style="border: none; width: 33.33%;">USER:</th>
@@ -81,21 +83,17 @@
             <td style="border: none;"></td>
             <td style="border: none;text-align: center;"></td>
           </tr>
-        </table>
+        </table></div>
+      </ion-accordion>
 
-      </div>
-    </div>
-    <div class="dropdown-container" (click)="toggleShowField()">
-      <div class="actualTime">
-        <p style="margin-left: 5px; font-size: small;margin-bottom: 3px;">More Fields :</p>
-        <span style="font-size: small; margin-right: 5px;color: white;">{{ !showField ? ' ▲' : ' ▼' }}</span>
-      </div>
-      <div *ngIf="showField" class="table-container">
-        <table style="font-size: small; margin-left: 2%;margin-top: 20px;">
+      <ion-accordion style="margin-top: 5px;"  value="second">
+        <ion-item slot="header" color="white" class="actualtime icon-inner item-native" >
+          <ion-label style="color: white;">More Fields :</ion-label>
+        </ion-item>
+        <div  slot="content"><table style="font-size: small; margin-left: 2%;margin-top: 20px;">
           Labels : {{sharedItem.labels}}
-        </table>
-      </div>
-    </div>
+        </table></div>
+      </ion-accordion></ion-accordion-group>
     <div>
 
       <span>
