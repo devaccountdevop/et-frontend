@@ -5,15 +5,18 @@
       </ion-button>
     </ion-buttons></span>
   <div class="container">
-    <p class="errormsg"
-      *ngIf="(estimatesForm?.get('low')?.hasError('required') || estimatesForm?.get('high')?.hasError('required') || estimatesForm?.get('realistic')?.hasError('required')) && formSubmitted">
-      Please input the required fields</p>
-    <p class="errormsg"
-      *ngIf="(estimatesForm?.get('low')?.hasError('min') || estimatesForm?.get('high')?.hasError('min') || estimatesForm?.get('realistic')?.hasError('min')) && formSubmitted">
-      Value must be greater than 0</p>
+    <p class="errormsg" *ngIf="(estimatesForm.invalid ||
+            estimatesForm.value.low <= 0 ||
+            estimatesForm.value.high <= 0 ||
+            estimatesForm.value.realistic <= 0) &&
+            formSubmitted">
+      Please input the required fields and ensure values are greater than 0
+    </p>
+
     <p *ngIf="showFetchError" class="errormsg">
       Please fetch AI estimate first.
     </p>
+
 
     <div style="width: 100%; font-size: 12px; height: auto;">
       <p class="estimatevalue"><b>ID : {{sharedItem.taskId}}</b></p>
