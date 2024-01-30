@@ -38,7 +38,7 @@ ion-sub-header {
   width: 100px;
   height: 30px; /* Increase the height as needed */
   font-family: Roboto;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 500;
   line-height: 18px;
   letter-spacing: 0em;
@@ -245,4 +245,36 @@ p.show_txt {
 
 .card-header:hover {
   color: #2980b9;
+}
+.label_dropdown{
+  font-family: Roboto;
+font-size: 16px;
+font-weight: 400;
+line-height: 20px;
+letter-spacing: 0px;
+text-align: center;
+margin-right:8px;
+
+}
+.search_label{
+  margin-left: 15px;
+                  font-size: 16px;
+                  text-align: end;
+                  margin-left: 48%;
+                  margin-top: 10px;
+}
+.search-input{
+  width: 150px;
+                  height: 30px;
+                  margin-top: 8px;
+                  margin-left: 4px;
+                  border: 2px solid rgba(26, 74, 96, 0.8999999762);
+                  border-radius: 5px;
+                  font-size: 12px;
+                  font-family: Roboto;
+                  font-size: 12px;
+                  font-weight: 200;
+                  line-height: 20px;
+                  letter-spacing: 0px;
+                  text-align: left;
 }
