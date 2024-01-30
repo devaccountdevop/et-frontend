@@ -25,11 +25,9 @@ export class TaskModalComponent implements OnInit {
   estimatesForm!: FormGroup;
   showFetchError: boolean = false;
   formSubmitted = false;
-
-  // sharedItem: any;
   private dataSubscription: Subscription | undefined;
-
   sharedItem: any = { low: "", realistic: "", high: "" };
+  
   constructor(
     private alertController: AlertController,
     private dialog: MatDialog,
@@ -89,9 +87,7 @@ export class TaskModalComponent implements OnInit {
     this.formSubmitted = true;
     if (!this.estimatesForm.valid) return;
     if (this.sharedItem.aiEstimate == null) {
-      this.showFetchError = true; // Set the error state
-
-      // Automatically hide the error after 5 seconds
+      this.showFetchError = true; 
       setTimeout(() => {
         this.showFetchError = false;
       }, 3000);
