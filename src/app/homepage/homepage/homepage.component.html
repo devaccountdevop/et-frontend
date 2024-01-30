@@ -156,7 +156,10 @@
                 Add Client
               </button>
             </ion-buttons>
+            
+
             <div class="add_clint">
+              <ion-label class="label_dropdown">Client</ion-label>
               <select
                 (change)="getProjectByselectedClient()"
                 [(ngModel)]="clientId"
@@ -177,7 +180,7 @@
               </select>
               <button class="syncbtn" (click)="syncData()">
                 Sync
-                <ion-icon name="sync-outline"></ion-icon>
+                <ion-icon class="sync-icon" name="sync-outline"></ion-icon>
               </button>
             </div>
           </ion-row>
@@ -209,32 +212,12 @@
 
             <ion-col class="search_txt d-flex">
               <p
-                style="
-                  margin-left: 15px;
-                  font-size: small;
-                  text-align: end;
-                  margin-left: 54%;
-                  margin-top: 10px;
-                "
+                class="search_label"
               >
                 Search:
               </p>
               <input
-                style="
-                  width: 150px;
-                  height: 23px;
-                  margin-top: 8px;
-                  margin-left: 4px;
-                  border: 2px solid rgba(26, 74, 96, 0.8999999762);
-                  border-radius: 5px;
-                  font-size: 12px;
-                  font-family: Roboto;
-                  font-size: 12px;
-                  font-weight: 200;
-                  line-height: 20px;
-                  letter-spacing: 0px;
-                  text-align: left;
-                "
+                class="search-input"
                 [(ngModel)]="searchText"
                 type="text"
                 placeholder="project id, project name"
