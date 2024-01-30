@@ -5,11 +5,15 @@
       </ion-button>
     </ion-buttons></span>
   <div class="container">
-    <div *ngIf="message.length !== 0 "
-      style="background-color: red; text-align: center; font-size: medium; color: white;height: 20px;">
-      {{message}}
-      <span (click)="hidemsg()" style="position: absolute; left: 95%;cursor: pointer;">&#10006;</span>
-    </div>
+    <p class="errormsg"
+      *ngIf="(estimatesForm?.get('low')?.hasError('required') || estimatesForm?.get('high')?.hasError('required') || estimatesForm?.get('realistic')?.hasError('required')) && formSubmitted">
+      Please input the required fields</p>
+    <p class="errormsg"
+      *ngIf="(estimatesForm?.get('low')?.hasError('min') || estimatesForm?.get('high')?.hasError('min') || estimatesForm?.get('realistic')?.hasError('min')) && formSubmitted">
+      Value must be greater than 0</p>
+    <p *ngIf="showFetchError" class="errormsg">
+      Please fetch AI estimate first.
+    </p>
 
     <div style="width: 100%; font-size: 12px; height: auto;">
       <p class="estimatevalue"><b>ID : {{sharedItem.taskId}}</b></p>
@@ -28,84 +32,92 @@
       </tr>
       <tr style="padding: 0px;">
         <td class="tablesubheader" style="width: 45%; padding: 0px;" scope="col">
-          <div style="margin-left: 10px; font-size: small; margin-bottom: 35px;">
-            <p><label for="estimate1">Optimistic Estimates (low)</label>
-              <input type="text" id="estimate1" name="estimate1" placeholder="0" style=" width: 50px; margin-left: 27px;"
-                [(ngModel)]="sharedItem.estimates.low" (click)="clearEstimate('low')" >
-            </p>
-            <p><label for="estimate1">Most Likely (Realistic)</label>
-              <input type="text" id="estimate1" name="estimate1" placeholder="0" style="width: 50px; margin-left: 48px;"
-                [(ngModel)]="sharedItem.estimates.realistic" (click)="clearEstimate('realistic')">
-            </p>
-            <p><label for="estimate1">Pessimistic Estimates (High)</label>
-              <input type="text" id="estimate1" name="estimate1" placeholder="0" style="width: 50px; margin-left: 10px;"
-                [(ngModel)]="sharedItem.estimates.high" (click)="clearEstimate('high')">
-            </p>
-          </div>
+          <form [formGroup]="estimatesForm">
+            <div style="margin-left: 10px; font-size: small; margin-bottom: 35px;">
+              <p>
+                <label for="estimate1">Optimistic Estimates (low)</label>
+                <input type="text" id="estimate1" name="estimate1" placeholder="0"
+                  style="width: 50px; margin-left: 27px;" formControlName="low" [(ngModel)]="sharedItem.estimates.low"
+                  (click)="clearEstimate('low')">
+              </p>
+              <p>
+                <label for="estimate1">Most Likely (Realistic)</label>
+                <input type="text" id="estimate1" formControlName="realistic" name="estimate1" placeholder="0"
+                  style="width: 50px; margin-left: 48px;" [(ngModel)]="sharedItem.estimates.realistic"
+                  (click)="clearEstimate('realistic')">
+              </p>
+              <p><label for="estimate1">Pessimistic Estimates (High)</label>
+                <input type="text" id="estimate1" formControlName="high" name="estimate1" placeholder="0"
+                  style="width: 50px; margin-left: 10px;" [(ngModel)]="sharedItem.estimates.high"
+                  (click)="clearEstimate('high')">
+              </p>
+            </div>
+          </form>
         </td>
         <div class="estimateSecCol" style="margin-left: 25%; text-align: left;">
           <p style="margin-top: 20px;">3 Points Estimates <span
-             class="threePointEstimate" >{{sharedItem.threePointEstimate}}</span></p>
-          <p style="margin-top: 20px;"> Risk Factor <span class="riskFactor" >{{sharedItem.riskFactor}}</span>
+              class="threePointEstimate">{{sharedItem.threePointEstimate}}</span></p>
+          <p style="margin-top: 20px;"> Risk Factor <span class="riskFactor">{{sharedItem.riskFactor}}</span>
           </p>
-          <p style="margin-top: 20px;">AI Estimates <span class="aiEstimate" >{{sharedItem.aiEstimate}}</span>
+          <p style="margin-top: 20px;">AI Estimates <span class="aiEstimate">{{sharedItem.aiEstimate}}</span>
           </p>
         </div>
       </tr>
     </table>
 
-    <ion-accordion-group  >
-      <ion-accordion  value="first">
-        <ion-item slot="header" color="white" class="actualtime icon-inner item-native" >
+    <ion-accordion-group>
+      <ion-accordion value="first">
+        <ion-item slot="header" color="white" class="actualtime icon-inner item-native">
           <ion-label style="color: white;">Actual Time For Task :</ion-label>
         </ion-item>
 
-        
-        <div  slot="content">
+
+        <div slot="content">
           <table class="timetable" style="border: none; background-color: #e8e7e7; font-size: small; width: 100%;">
-          <tr style="border-bottom: 1px solid #b3b1b1;">
-            <th style="border: none; width: 45%;">DATE:</th>
-            <th style="border: none; width: 33.33%;">USER:</th>
-            <th style="border: none; text-align: center; width: 22.33%;">TIME HRS</th>
-          </tr>
-          <tr style="border: none; margin-top: -5px;">
-            <td style="border: none;">{{sharedItem.creationDate | dateFormat}}</td>
-            <td style="border: none;">{{sharedItem.assignee}}</td>
-            <td style="border: none; text-align: center; ">{{sharedItem.originalEstimate}}</td>
-          </tr>
-          <tr style="border: none; margin-top: -5px;">
-            <td style="border: none;"></td>
-            <td style="border: none;"></td>
-            <td style="border: none;text-align: center;"></td>
-          </tr>
-          <tr style="border: none; margin-top: -5px;">
-            <td style="border: none;"></td>
-            <td style="border: none;"></td>
-            <td style="border: none;text-align: center;"></td>
-          </tr>
-        </table></div>
+            <tr style="border-bottom: 1px solid #b3b1b1;">
+              <th style="border: none; width: 45%;">DATE:</th>
+              <th style="border: none; width: 33.33%;">USER:</th>
+              <th style="border: none; text-align: center; width: 22.33%;">TIME HRS</th>
+            </tr>
+            <tr style="border: none; margin-top: -5px;">
+              <td style="border: none;">{{sharedItem.creationDate | dateFormat}}</td>
+              <td style="border: none;">{{sharedItem.assignee}}</td>
+              <td style="border: none; text-align: center; ">{{sharedItem.originalEstimate}}</td>
+            </tr>
+            <tr style="border: none; margin-top: -5px;">
+              <td style="border: none;"></td>
+              <td style="border: none;"></td>
+              <td style="border: none;text-align: center;"></td>
+            </tr>
+            <tr style="border: none; margin-top: -5px;">
+              <td style="border: none;"></td>
+              <td style="border: none;"></td>
+              <td style="border: none;text-align: center;"></td>
+            </tr>
+          </table>
+        </div>
       </ion-accordion>
 
-      <ion-accordion style="margin-top: 5px;"  value="second">
-        <ion-item slot="header" color="white" class="actualtime icon-inner item-native" >
+      <ion-accordion style="margin-top: 5px;" value="second">
+        <ion-item slot="header" color="white" class="actualtime icon-inner item-native">
           <ion-label style="color: white;">More Fields :</ion-label>
         </ion-item>
-        <div  slot="content"><table style="font-size: small; margin-left: 2%;margin-top: 20px;">
-          Labels : {{sharedItem.labels}}
-        </table></div>
+        <div slot="content">
+          <table style="font-size: small; margin-left: 2%;margin-top: 20px;">
+            Labels : {{sharedItem.labels}}
+          </table>
+        </div>
       </ion-accordion></ion-accordion-group>
     <div>
 
       <span>
-        <button (click)="saveEstimatesInDB()"  class="button2">Save & Close</button>
+        <button (click)="saveEstimatesInDB()" class="button2">Save & Close</button>
       </span>
 
 
       <span>
         <button class="button2" (click)="fetchAiEstimates()">Fetch AI Estimates</button>
       </span>
-
-
       <span>
         <button class="button2" (click)="updateAiEstimate()">Update AI Estimates In Jira
           <ion-icon name="checkmark-outline" style="font-size: medium; margin-bottom: -2px;"></ion-icon>

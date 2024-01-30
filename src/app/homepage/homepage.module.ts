@@ -4,7 +4,7 @@ import { CommonModule } from "@angular/common";
 import { HomepageRoutingModule } from "./homepage-routing.module";
 import { HomepageComponent } from "./homepage/homepage.component";
 import { IonicModule } from "@ionic/angular";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SideBarComponent } from "./homepage/side-bar/side-bar.component";
 
 import { DashboardBodyComponent } from "./dashboard-body/dashboard-body.component";
@@ -52,6 +52,7 @@ import { DateFormatPipe } from "../pipes/date-format.pipe";
     FormsModule,
     NgxPaginationModule,
     MatDialogModule,
+    ReactiveFormsModule
     
   ],
   providers: [
