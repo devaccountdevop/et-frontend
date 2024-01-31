@@ -30,6 +30,10 @@ export class LoginService {
     const fullApiUrl = this.apiUrl + "/resetpassword";
     return this.http.post<any>(fullApiUrl, form);
   }
+  public checkUserInDB(userName: String):Observable<any>{
+    const fullApiUrl = this.apiUrl + "/checkusername/"+ userName;
+    return this.http.get<any>(fullApiUrl);
+  }
   public apicheck(): Observable<any> {
     const fullApiUrl = this.apiUrl + "/welcome";
     //console.log(form.get('email'));
