@@ -15,6 +15,8 @@ import { ConfirmationPopupComponent } from '../confirmation-popup/confirmation-p
 export class ForgotPopupComponent implements OnInit {
 
   errorMessages: string[] = [];
+  showInvalidError: boolean = false;
+  showError: boolean = false;
 
   constructor(private alertController: AlertController,
     private dialog: MatDialog,
@@ -24,30 +26,38 @@ export class ForgotPopupComponent implements OnInit {
     private loginService: LoginService,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   resetPassword(email: string) {
     if (!this.isValidEmail(email)) {
       return
     }
-    // this.close();
-    // this.openConfirmationPopUp(email)
-    // return
     const formData = new FormData();
     formData.append("email", email);
 
-    this.loginService.forgotPassword(formData).subscribe((res:any) => {
+    this.loginService.forgotPassword(formData).subscribe((res: any) => {
       console.log(res);
-      this.close();
-      this.openConfirmationPopUp(email)
-      if (res.code === 200) { }
-      else { }
+      if (res.code === 200) {
+        this.close();
+        this.openConfirmationPopUp(email)
+      }
+      else {
+        this.showInvalidError = true;
+        setTimeout(() => {
+          this.showInvalidError = false;
+        }, 5000);
+      }
+    }, (error: any) => {
+      this.showError = true;
+      setTimeout(() => {
+        this.showError = false;
+      }, 5000);
     })
 
   }
   isValidEmail(email: string): boolean {
     this.errorMessages = [];
-  
+
     if (!email) {
       this.errorMessages.push('Email is required.');
     } else {
@@ -56,10 +66,10 @@ export class ForgotPopupComponent implements OnInit {
         this.errorMessages.push('Please enter a valid email address.');
       }
     }
-  
+
     return this.errorMessages.length === 0;
   }
-  
+
   openConfirmationPopUp(email: any) {
     this.dialog.open(ConfirmationPopupComponent, {
       width: "400px",
