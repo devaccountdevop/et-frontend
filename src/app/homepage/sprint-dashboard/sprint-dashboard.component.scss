@@ -36,7 +36,7 @@ ion-header {
   border: 2px solid rgba(26, 74, 96, 0.8999999761581421);
   border-radius: 5px;
   width: 100px;
-  height: 30px; /* Increase the height as needed */
+  height: 30px;
   }
   .syncbtn {
   text-align: center;
@@ -48,7 +48,7 @@ ion-header {
   border-radius: 5px;
   width: 80px;
   height: 30px;
-  font-size: small ; /* Increase the height as needed */
+  font-size: small ; 
   }
 
   .card-header {
@@ -59,10 +59,6 @@ ion-header {
   .card-header:hover {
     color: #2980b9;
   }
-  
-  // ion-menu{
-  //   --width: 200px;
-  // }
   .maincontent{
   width: 90%;
   height: 100%;
@@ -73,11 +69,6 @@ ion-header {
   color: white;
   display: flex;
   }
-  /* Add this CSS to your component's CSS or global styles */
-  
-  
-  
-  
   ion-footer{
   background-color: rgba(26, 74, 96, 0.9);
   //height: 7%;
@@ -87,14 +78,13 @@ ion-header {
   .split-container {
   display: flex;
   flex-direction: row;
-  height: 100%; /* Set a fixed or relative height for the container */
+  height: 100%; 
   border-radius: 0px;
   //width: 100%;
   }
   
   .top-part {
   flex: 0.3;
-  /* Adjust styling for the top part as needed */
   text-align: center;
   border-right: 1px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
@@ -103,10 +93,6 @@ ion-header {
   .right-part {
   flex: 1.6;
   align-items: center;
-  
-  
-  /* Adjust styling for the bottom part as needed */
-  
   }
   .innerbox{
   width: 99%;
@@ -121,11 +107,8 @@ ion-header {
   overflow-y: auto; 
   margin-top: 20px;
   }
-  /* Dropdown Button */
+ 
   .dropbtn {
-  // background-color: #3498DB;
-  //color: white;
-  //padding: 16px;
   margin-top: 2%;
   //font-size: 16px;
   margin-right: 22px;
@@ -135,18 +118,15 @@ ion-header {
   
   }
   
-  /* Dropdown button on hover & focus */
   .dropbtn:hover, .dropbtn:focus {
   background-color: #2980B9;
   }
-  
-  /* The container <div> - needed to position the dropdown content */
+
   .dropdown {
   position: relative;
   display: inline-block;
   }
-  
-  /* Dropdown Content (Hidden by Default) */
+ 
   .dropdown-content {
   display: none;
   position: absolute;
@@ -155,8 +135,7 @@ ion-header {
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
   }
-  
-  /* Links inside the dropdown */
+
   .dropdown-content a {
   color: black;
   padding: 12px 16px;
@@ -164,10 +143,8 @@ ion-header {
   display: block;
   }
   
-  /* Change color of dropdown links on hover */
   .dropdown-content a:hover {background-color: #ddd;}
   
-  /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
   .show {display:block;}
   .profileicon{
   color: white;
@@ -183,10 +160,6 @@ ion-header {
   .bodycontent{
   width: 30%;
   cursor: pointer;
-  
-  //cursor: pointer;
-  //overflow-y: auto;
-  
   }
   .subheader{
   box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.2);
@@ -194,8 +167,8 @@ ion-header {
   }
   pagination-controls {
   position: absolute;
-  bottom: 10px; /* Adjust the distance from the bottom as needed */
-  right: 10px; /* Adjust the distance from the right as needed */
+  bottom: 10px; 
+  right: 10px; 
   }
   .search-icon{
   position: relative;
@@ -214,6 +187,41 @@ ion-header {
     border-radius: 5px;
     width: 70px;
     height: 25px;
+  }
+  .gray-bg {
+    background-color: #f0f0f0;
+  }
+  
+  .white-bg {
+    background-color: #ffffff;
+  }
+  ion-card:hover {
+    border: 1px solid #2980b9;
+    font-weight: bold;
+  }
+  .sprintlist-row{
+    margin-top: 15px; 
+    margin-left: 40px;
+    overflow-x: auto;
+  }
+  .sprintlist-col{
+    margin: 0px; 
+    height: 60px; 
+    padding: 0px; 
+    border-radius: 5px; 
+    margin-left: 20px; 
+    margin-bottom: 15px; 
+    cursor: pointer;
+  }
+  .sprintlist-card{
+   height: 100%;
+   width: 100%; 
+   margin: 0px; 
+   padding: 0px; 
+   text-align: center;
+  }
+  .card-content{
+   margin-top: 5px;
   }
   
   

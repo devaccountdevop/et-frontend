@@ -6,9 +6,6 @@ import { HomepageComponent } from "./homepage/homepage.component";
 import { IonicModule } from "@ionic/angular";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SideBarComponent } from "./homepage/side-bar/side-bar.component";
-
-import { DashboardBodyComponent } from "./dashboard-body/dashboard-body.component";
-import { TileComponent } from "./homepage/tile/tile.component";
 import { NgxPaginationModule } from "ngx-pagination";
 import { FilterPipe } from "../pipes/filter.pipe";
 import { AddClientModelComponent } from "./add-client-model/add-client-model.component";
@@ -34,10 +31,8 @@ import { DateFormatPipe } from "../pipes/date-format.pipe";
     AddClientModelComponent,
     TableFilterPipe,
     TaskModalComponent,
-    DashboardBodyComponent,
     ClientDeleteComponent,
     ClientUpdateComponent,
-    TileComponent,
     SprintDashboardComponent,
     TaskListComponent,
     FilterPipe,

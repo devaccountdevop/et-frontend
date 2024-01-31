@@ -1,21 +1,23 @@
 <ion-app>
   <ion-header>
     <ion-menu-toggle>
-      <ion-button  class="menubutton" fill="clear"><span class="menu">&#9776;</span></ion-button>
+      <ion-button class="menubutton" fill="clear"><span class="menu">&#9776;</span></ion-button>
     </ion-menu-toggle>
-    <ion-button (click)="landingPage()" fill="clear"><ion-icon class="homeicon" name="home-sharp"></ion-icon></ion-button>
+    <ion-button (click)="landingPage()" fill="clear"><ion-icon class="homeicon"
+        name="home-sharp"></ion-icon></ion-button>
     <ion-title>Estimation Tool</ion-title>
     <!-- <ion-button fill="clear">
         <ion-icon class="profileicon" name="person"></ion-icon>
       </ion-button> -->
     <div class="dropdown">
       <ion-buttons>
-        <ion-button  style="color: white; margin-right: 10px; margin-top: 3%;text-transform: capitalize;" (click)="toggleDropdown()" fill="clear">
+        <ion-button style="color: white; margin-right: 10px; margin-top: 3%;text-transform: capitalize;"
+          (click)="toggleDropdown()" fill="clear">
           <ion-icon style="margin-right: 5px" name="person-circle-outline"></ion-icon>Admin
           <ion-icon style="margin-left: 5px" name="chevron-down-outline"></ion-icon></ion-button>
       </ion-buttons>
       <div class="dropdown-content" [ngClass]="{ show: isDropdownOpen }">
-        <a style="cursor: pointer;"  (click)="logout()">Logout</a>
+        <a style="cursor: pointer;" (click)="logout()">Logout</a>
       </div>
     </div>
   </ion-header>
@@ -84,8 +86,8 @@
         style="margin: 0px; height: 100%; color: black; background-color: white;box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);">
         <div class="innerbox">
           <ion-row class="subheader" style="align-items: center;">
-              <span  style="margin-left: 40%; color: rgb(63, 61, 61); "> <b>Project: {{projectName}}</b></span>
-              <button style="margin-left: 41%;"  routerLink='/estimation-tool/homepage' class="button2">Back</button>
+            <span style="margin-left: 40%; color: rgb(63, 61, 61); "> <b>Project: {{projectName}}</b></span>
+            <button style="margin-left: 41%;" routerLink='/estimation-tool/homepage' class="button2">Back</button>
           </ion-row>
           <ion-row style="height: 35px;">
             <p style="margin-left: 15px; font-size: small; margin-top: 25px;">Show</p>
@@ -119,37 +121,32 @@
             font-size: 12px;
           " [(ngModel)]="searchText" type="text" placeholder="sprint id,sprint name" />
           </ion-row>
-        <span style="
+          <span style="
         display: flex;
         justify-content: end;
         margin-right: 8px;
         margin-top: 5px;
-      " ><button  class="syncbtn" (click)="syncData()">
-          Sync
-          <ion-icon style="margin-left: 5px; margin-bottom: -1.7px" name="sync-outline"></ion-icon>
-        </button></span>
-         
+      "><button class="syncbtn" (click)="syncData()">
+              Sync
+              <ion-icon style="margin-left: 5px; margin-bottom: -1.7px" name="sync-outline"></ion-icon>
+            </button></span>
+
           <div class="contentlist">
             <ion-grid [fixed]="true">
-              <ion-row style="
-                  margin-left: 8%;
-                  height: 10%;
-                  overflow-x: auto;
-                  white-space: nowrap;
-                ">
-                <ng-container
-                *ngFor="
+              <ion-row class="sprintlist-row">
+                <ng-container *ngFor="
                 let item of (sprintsList | filter: searchText | paginate: { itemsPerPage: pageFilterDefault, currentPage: p }).reverse()
-              ">
-                  <app-dashboard-body (click)="getTask(item)" class="bodycontent">
-                    <div class="card-header">{{ item.sprintName }}</div>
-                    <!-- Additional card content here -->
-                  </app-dashboard-body>
+               let i = index">
+                  <ion-col (click)="getTask(item)" class="sprintlist-col" size="3.5">
+                    <ion-card [ngClass]="{'gray-bg': i % 6 < 3, 'white-bg': i % 6 >= 3}" class="sprintlist-card">
+                      <ion-card-content class="card-content">{{ item.sprintName }}</ion-card-content>
+                    </ion-card>
+                  </ion-col>
                 </ng-container>
-                <div style="margin-left: 35%; margin-top: 10%; " *ngIf="this.sprintsList.length ===0">
-                  <h2 >there are no sprint</h2>
-                  </div>
               </ion-row>
+              <div style="margin-left: 35%; margin-top: 10%; " *ngIf="this.sprintsList.length ===0">
+                <h2>there are no sprint</h2>
+              </div>
             </ion-grid>
 
           </div>
