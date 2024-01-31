@@ -128,7 +128,7 @@ export class ResetPasswordComponent implements OnInit {
         this.commonService.presentToast("Password reset Successfully", 5000, "toast-succuss-mess");
         this.router.navigate(['/'])
       } else {
-        this.commonService.presentToast("Username or password is incorrect", 3000, "toast-error-mess");
+        this.commonService.presentToast("old password is incorrect", 3000, "toast-error-mess");
       }
     })
   }

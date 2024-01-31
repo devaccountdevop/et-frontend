@@ -82,7 +82,14 @@ resetPassword(){
     this.commonService.presentToast("Username is Requried.", 3000, "toast-error-mess");
     return;
   }
+  this.loginService.checkUserInDB(this.loginForm.value.userName).subscribe((res)=>{
+if(res.code == 200){
   localStorage.setItem(LocalStorage.userValue,JSON.stringify(this.loginForm.value.userName))
   this.router.navigate(['/resetPassword'])
+}else{
+  this.commonService.presentToast("user does not exist.", 3000, "toast-error-mess");
+}
+  })
+  
 }
 }
