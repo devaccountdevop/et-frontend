@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { AbstractControl, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { ToastController } from "@ionic/angular";
 import { CommanLoaderService } from "src/app/services/comman-loader.service";
@@ -40,7 +40,8 @@ export class SignupComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern(passwordPattern) 
+          Validators.pattern(passwordPattern),
+          this.matchPassword.bind(this)
         ]
       ]
     });
@@ -53,18 +54,16 @@ export class SignupComponent implements OnInit {
       this.matchPassword(value);
       console.log('Value changed:', value);})
   }
-  matchPassword(value:any){
-   if(this.signUpForm.value.password === value){
-    this.confirmPassword = false;
-   }else{
-    this.confirmPassword = true;
-   }
+  matchPassword(control: AbstractControl): { [key: string]: boolean } | null {
+    const password = this.signUpForm?.get('password')?.value;
+    const confirmPassword = control.value;
+  
+    return password === confirmPassword ? null : { 'passwordMismatch': true };
   }
 
   signUp() { 
    this.submitted = true;
    if(this.signUpForm.invalid) return;
-   if(this.confirmPassword)return;
       
       const formData = new FormData();
       formData.append("userName", this.signUpForm.value.userName);
