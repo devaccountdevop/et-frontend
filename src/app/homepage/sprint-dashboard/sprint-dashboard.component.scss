@@ -1,35 +1,35 @@
 ion-header {
-    background-color: rgba(26, 74, 96, 0.9);
-    height: 7%;
-    color: white;
-    display: flex;
-  }
-  ion-sub-header{
-    background-color: rgba(26, 74, 96, 0.9);
-  }
-  .header-tabs {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .menu{
+  background-color: rgba(26, 74, 96, 0.9);
+  height: 7%;
   color: white;
-  font-size:x-large;
-  }
-  .homeicon{
+  display: flex;
+}
+ion-sub-header {
+  background-color: rgba(26, 74, 96, 0.9);
+}
+.header-tabs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.menu {
+  color: white;
+  font-size: x-large;
+}
+.homeicon {
   color: white;
   font-size: x-large;
   margin-left: 10px;
   margin-top: -5px;
-  }
-  .menubutton{
+}
+.menubutton {
   margin-right: -5px;
-  
+
   margin-top: 2%;
-  }
-  .button2 {
-   margin-top: -1.5%;
+}
+.button2 {
+  margin-top: -1.5%;
   margin-left: 20px;
   background-color: white;
   color: black;
@@ -37,8 +37,9 @@ ion-header {
   border-radius: 5px;
   width: 100px;
   height: 30px;
-  }
-  .syncbtn {
+  font-size: 13px;
+}
+.syncbtn {
   text-align: center;
   margin-top: 1.2%;
   margin-left: 20px;
@@ -48,129 +49,133 @@ ion-header {
   border-radius: 5px;
   width: 80px;
   height: 30px;
-  font-size: small ; 
-  }
+  font-size: 13px;
+}
 
-  .card-header {
-    padding-top: 19px;
-    padding-bottom: 19px;
-  }
-   
-  .card-header:hover {
-    color: #2980b9;
-  }
-  .maincontent{
+.card-header {
+  padding-top: 19px;
+  padding-bottom: 19px;
+}
+
+.card-header:hover {
+  color: #2980b9;
+}
+.maincontent {
   width: 90%;
   height: 100%;
-  }
-  .popupheader{
+}
+.popupheader {
   background-color: rgba(26, 74, 96, 0.9);
   height: 7%;
   color: white;
   display: flex;
-  }
-  ion-footer{
+}
+ion-footer {
   background-color: rgba(26, 74, 96, 0.9);
   //height: 7%;
   color: white;
   display: flex;
-  }
-  .split-container {
+}
+.split-container {
   display: flex;
   flex-direction: row;
-  height: 100%; 
+  height: 100%;
   border-radius: 0px;
   //width: 100%;
-  }
-  
-  .top-part {
+}
+
+.top-part {
   flex: 0.3;
   text-align: center;
   border-right: 1px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  }
-  
-  .right-part {
+}
+
+.right-part {
   flex: 1.6;
   align-items: center;
-  }
-  .innerbox{
+}
+.innerbox {
   width: 99%;
   height: 99%;
   margin-left: 5px;
   margin-top: 3px;
   box-shadow: 0px 4px 11px rgba(0, 0, 0, 0.3);
-  }
-  .contentlist{
+}
+.contentlist {
   width: 100%;
   height: 360px;
-  overflow-y: auto; 
-  margin-top: 20px;
-  }
- 
-  .dropbtn {
+  overflow-y: auto;
+  margin-top: 8px;
+}
+
+.dropbtn {
   margin-top: 2%;
   //font-size: 16px;
   margin-right: 22px;
   border: none;
   cursor: pointer;
   background-color: rgba(26, 74, 96, 0.9);
-  
-  }
-  
-  .dropbtn:hover, .dropbtn:focus {
-  background-color: #2980B9;
-  }
+}
 
-  .dropdown {
+.dropbtn:hover,
+.dropbtn:focus {
+  background-color: #2980b9;
+}
+
+.dropdown {
   position: relative;
   display: inline-block;
-  }
- 
-  .dropdown-content {
+}
+
+.dropdown-content {
   display: none;
   position: absolute;
   background-color: #f1f1f1;
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
-  }
+}
 
-  .dropdown-content a {
+.dropdown-content a {
   color: black;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
-  }
-  
-  .dropdown-content a:hover {background-color: #ddd;}
-  
-  .show {display:block;}
-  .profileicon{
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.show {
+  display: block;
+}
+.profileicon {
   color: white;
   margin-right: 7px;
-  }
-  ion-col {
+}
+ion-col {
   background-color: #8f9594;
   border: solid 1px #fff;
   color: #fff;
   --text-align: center;
   margin: 10px;
-  }
-  .bodycontent{
+}
+.bodycontent {
   width: 30%;
   cursor: pointer;
-  }
-  .subheader{
-  box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.2);
+}
+.subheader {
+  box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.2);
   height: 8%;
-  }
-  pagination-controls {
+}
+pagination-controls {
   position: absolute;
-  bottom: 10px; 
-  right: 10px; 
-  }
-  .search-icon{
+  bottom: 10px;
+  right: 10px;
+}
+.search-icon {
   position: relative;
   float: left;
   width: 75px;
@@ -178,54 +183,48 @@ ion-header {
   top: -62px;
   //right: -45px;
   margin-left: -11px;
-  }
-  .button2 {
-    margin-top: .2%;
-    background-color: white;
-    color: black;
-    border: 2px solid rgba(26, 74, 96, 0.9);
-    border-radius: 5px;
-    width: 70px;
-    height: 25px;
-  }
-  .gray-bg {
-    background-color: #f0f0f0;
-  }
-  
-  .white-bg {
-    background-color: #ffffff;
-  }
-  ion-card:hover {
-    border: 1px solid #2980b9;
-    font-weight: bold;
-  }
-  .sprintlist-row{
-    margin-top: 15px; 
-    margin-left: 40px;
-    overflow-x: auto;
-  }
-  .sprintlist-col{
-    margin: 0px; 
-    height: 60px; 
-    padding: 0px; 
-    border-radius: 5px; 
-    margin-left: 20px; 
-    margin-bottom: 15px; 
-    cursor: pointer;
-  }
-  .sprintlist-card{
-   height: 100%;
-   width: 100%; 
-   margin: 0px; 
-   padding: 0px; 
-   text-align: center;
-  }
-  .card-content{
-   margin-top: 5px;
-  }
-  
-  
-  
-  
-  
-  
+}
+.button2 {
+  margin-top: 0.2%;
+  background-color: white;
+  color: black;
+  border: 2px solid rgba(26, 74, 96, 0.9);
+  border-radius: 5px;
+  width: 70px;
+  height: 25px;
+}
+.gray-bg {
+  background-color: #f0f0f0;
+}
+
+.white-bg {
+  background-color: #ffffff;
+}
+ion-card:hover {
+  border: 1px solid #2980b9;
+  font-weight: bold;
+}
+.sprintlist-row {
+  margin-top: 15px;
+  margin-left: 40px;
+  overflow-x: auto;
+}
+.sprintlist-col {
+  margin: 0px;
+  height: 60px;
+  padding: 0px;
+  border-radius: 5px;
+  margin-left: 20px;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+.sprintlist-card {
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  text-align: center;
+}
+.card-content {
+  margin-top: 5px;
+}

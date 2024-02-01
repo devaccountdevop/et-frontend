@@ -1,51 +1,135 @@
 <ion-app>
   <ion-header>
     <ion-menu-toggle>
-      <ion-button class="menubutton" fill="clear"><span class="menu">&#9776;</span></ion-button>
+      <ion-button class="menubutton" fill="clear"
+        ><span class="menu">&#9776;</span></ion-button
+      >
     </ion-menu-toggle>
-    <ion-button (click)="landingPage()" fill="clear"><ion-icon class="homeicon"
-        name="home-sharp"></ion-icon></ion-button>
-    <ion-title>Estimation Tool</ion-title>
+    <ion-button (click)="landingPage()" fill="clear"
+      ><ion-icon class="homeicon" name="home-sharp"></ion-icon
+    ></ion-button>
+    <ion-title
+      style="
+        font-family: Roboto;
+        font-size: 22px;
+        font-weight: 400;
+        line-height: 26px;
+        letter-spacing: 0em;
+        text-align: left;
+        padding-left: 0px;
+      "
+      >Estimation Tool</ion-title
+    >
     <!-- <ion-button fill="clear">
         <ion-icon class="profileicon" name="person"></ion-icon>
       </ion-button> -->
     <div class="dropdown">
       <ion-buttons>
-        <ion-button style="color: white; margin-right: 10px; margin-top: 3%;text-transform: capitalize;"
-          (click)="toggleDropdown()" fill="clear">
-          <ion-icon style="margin-right: 5px" name="person-circle-outline"></ion-icon>Admin
-          <ion-icon style="margin-left: 5px" name="chevron-down-outline"></ion-icon></ion-button>
+        <ion-button
+          class="text-white mr-3 mt-2 text-capitalize"
+          (click)="toggleDropdown()"
+          fill="clear"
+        >
+          <ion-icon
+            style="width: 22px; height: 22px"
+            class="mr-2"
+            name="person-circle-outline"
+          ></ion-icon>
+          <p
+            style="
+              font-family: Roboto;
+              font-size: 13px;
+              font-weight: 400;
+              line-height: 23px;
+              letter-spacing: 0em;
+              text-align: left;
+              margin-bottom: 0px;
+            "
+          >
+            Admin
+          </p>
+          <ion-icon class="ml-2" name="chevron-down-outline"></ion-icon>
+        </ion-button>
       </ion-buttons>
       <div class="dropdown-content" [ngClass]="{ show: isDropdownOpen }">
-        <a style="cursor: pointer;" (click)="logout()">Logout</a>
+        <a style="cursor: pointer" (click)="logout()">Logout</a>
       </div>
     </div>
   </ion-header>
-  <ion-content style="overflow-x: hidden;">
-    <ion-row style="height: 100%;">
-      <ion-col size="2"
-        style="margin: 0px; background-color: white;box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);height: 100%;">
-        <ion-row style="
+  <ion-content style="overflow-x: hidden">
+    <ion-row style="height: 100%">
+      <ion-col
+        size="2"
+        style="
+          margin: 0px;
+          background-color: white;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+          height: 100%;
+        "
+      >
+        <ion-row
+          style="
             display: flex;
             justify-content: center;
             margin-top: 10px;
             text-align: left;
-          ">
-          <ion-col style="background-color: white; color: black">
-            <img src="/assets/images/Dashboard.png" alt="Your Image" style="margin-bottom: -6px; margin-right: 10px" />
-            Dashboard
+          "
+        >
+          <ion-col style="background-color: white; color: black; display: flex">
+            <img
+              src="/assets/images/Dashboard.png"
+              alt="Your Image"
+              style="width: 25px; height: 25px; margin-right: 10px"
+            />
+            <p
+              style="
+                margin-bottom: 0px;
+                font-family: Roboto;
+                font-size: 18px;
+                font-weight: 500;
+                line-height: 25px;
+                letter-spacing: 0px;
+                text-align: left;
+                color: rgba(26, 74, 96, 1);
+              "
+            >
+              Dashboard
+            </p>
           </ion-col>
         </ion-row>
-        <ion-row style="
+        <ion-row
+          style="
             display: flex;
             justify-content: center;
             margin-top: -10px;
             text-align: left;
-          ">
-          <ion-col style="background-color: white; color: black">
-            <img src="/assets/images/journals (1).png" alt="Your Image"
-              style="margin-bottom: -6px; margin-right: 10px; fill: #a1a1a1" />
-            Projects
+          "
+        >
+          <ion-col style="background-color: white; color: black; display: flex">
+            <img
+              src="/assets/images/journals (1).png"
+              alt="Your Image"
+              style="
+                width: 25px;
+                height: 25px;
+                margin-right: 10px;
+                fill: #a1a1a1;
+              "
+            />
+            <p
+              style="
+                margin-bottom: 0px;
+                font-family: Roboto;
+                font-size: 18px;
+                font-weight: 300;
+                line-height: 25px;
+                letter-spacing: 0px;
+                text-align: left;
+                color: rgba(0, 0, 0, 1);
+              "
+            >
+              Projects
+            </p>
           </ion-col>
         </ion-row>
         <!-- <ion-row style="
@@ -82,81 +166,172 @@
           </ion-col>
         </ion-row> -->
       </ion-col>
-      <ion-col size="10"
-        style="margin: 0px; height: 100%; color: black; background-color: white;box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);">
+      <ion-col
+        size="10"
+        style="
+          margin: 0px;
+          height: 100%;
+          color: black;
+          background-color: white;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        "
+      >
         <div class="innerbox">
-          <ion-row class="subheader" style="align-items: center;">
-            <span style="margin-left: 40%; color: rgb(63, 61, 61); "> <b>Project: {{projectName}}</b></span>
-            <button style="margin-left: 41%;" routerLink='/estimation-tool/homepage' class="button2">Back</button>
+          <ion-row
+            class="subheader"
+            style="align-items: center; margin-bottom: 10px"
+          >
+            <ion-col
+              size="6"
+              style="
+                background-color: white;
+                border-radius: 0%;
+                margin: 0%;
+                display: flex;
+                justify-content: end;
+              "
+            >
+              <span style="color: rgb(63, 61, 61)">
+                <b>Project: {{ projectName }}</b></span
+              ></ion-col
+            >
+            <ion-col
+              size="6"
+              style="
+                background-color: white;
+                border-radius: 0%;
+                margin: 0%;
+                display: flex;
+                justify-content: end;
+              "
+            >
+              <button routerLink="/estimation-tool/homepage" class="button2">
+                Back
+              </button></ion-col
+            >
           </ion-row>
-          <ion-row style="height: 35px;">
-            <p style="margin-left: 15px; font-size: small; margin-top: 25px;">Show</p>
-            <select (change)="optionSelected()" style="
-                margin-left: 10px;
-                width: 70px;
-                height: 20px;
-                margin-top: 23px;
-              " [(ngModel)]="pageFilterDefault">
-              <option *ngFor="let item of pageFilter" [value]="item.code">
-                {{ item.name }}
-              </option>
-            </select>
-
-            <p style="
-                margin-left: 15px;
-                font-size: small;
-                text-align: end;
-                margin-left: 68%;
-                margin-top: 20px;
-              ">
-              Search:
-            </p>
-            <input style="
-            width: 150px;
-            height: 23px;
-            margin-top: 17px;
-            margin-left: 4px;
-            border: 2px solid rgba(26, 74, 96, 0.8999999762);
-            border-radius: 5px;
-            font-size: 12px;
-          " [(ngModel)]="searchText" type="text" placeholder="sprint id,sprint name" />
+          <ion-row style="display: flex">
+            <ion-col
+              size="6"
+              style="
+                background-color: white;
+                border-radius: 0%;
+                margin: 0%;
+                display: flex;
+                justify-content: start;
+              "
+            >
+              <p style="font-size: small; color: black">Show</p>
+              <select
+                (change)="optionSelected()"
+                style="
+                  width: 70px;
+                  height: 20px;
+                  color: black;
+                  margin-left: 3px;
+                "
+                [(ngModel)]="pageFilterDefault"
+              >
+                <option *ngFor="let item of pageFilter" [value]="item.code">
+                  {{ item.name }}
+                </option>
+              </select>
+            </ion-col>
+            <ion-col
+              size="6"
+              style="
+                background-color: white;
+                border-radius: 0%;
+                margin: 0%;
+                display: flex;
+                justify-content: end;
+              "
+              ><p
+                style="
+                  font-size: small;
+                  text-align: end;
+                  color: black;
+                  padding-top: 2px;
+                  margin-right: 3px;
+                "
+              >
+                Search:
+              </p>
+              <input
+                style="
+                  width: 150px;
+                  height: 23px;
+                  border: 2px solid rgba(26, 74, 96, 0.8999999762);
+                  border-radius: 5px;
+                  font-size: 12px;
+                "
+                [(ngModel)]="searchText"
+                type="text"
+                placeholder="sprint_id,sprint_name"
+            /></ion-col>
           </ion-row>
-          <span style="
-        display: flex;
-        justify-content: end;
-        margin-right: 8px;
-        margin-top: 5px;
-      "><button class="syncbtn" (click)="syncData()">
+          <span style="display: flex; justify-content: end; margin-right: 10px"
+            ><button class="syncbtn" (click)="syncData()">
               Sync
-              <ion-icon style="margin-left: 5px; margin-bottom: -1.7px" name="sync-outline"></ion-icon>
-            </button></span>
+              <ion-icon
+                style="margin-left: 5px; margin-bottom: -1.7px"
+                name="sync-outline"
+              ></ion-icon></button
+          ></span>
 
           <div class="contentlist">
             <ion-grid [fixed]="true">
               <ion-row class="sprintlist-row">
-                <ng-container *ngFor="
-                let item of (sprintsList | filter: searchText | paginate: { itemsPerPage: pageFilterDefault, currentPage: p }).reverse()
-               let i = index">
-                  <ion-col (click)="getTask(item)" class="sprintlist-col" size="3.5">
-                    <ion-card [ngClass]="{'gray-bg': i % 6 < 3, 'white-bg': i % 6 >= 3}" class="sprintlist-card">
-                      <ion-card-content class="card-content">{{ item.sprintName }}</ion-card-content>
+                <ng-container
+                  *ngFor="
+                    let item of (
+                      sprintsList
+                      | filter : searchText
+                      | paginate
+                        : { itemsPerPage: pageFilterDefault, currentPage: p }
+                    ).reverse();
+                    let i = index
+                  "
+                >
+                  <ion-col
+                    (click)="getTask(item)"
+                    class="sprintlist-col"
+                    size="3.5"
+                  >
+                    <ion-card
+                      [ngClass]="{
+                        'gray-bg': i % 6 < 3,
+                        'white-bg': i % 6 >= 3
+                      }"
+                      class="sprintlist-card"
+                    >
+                      <ion-card-content class="card-content">{{
+                        item.sprintName
+                      }}</ion-card-content>
                     </ion-card>
                   </ion-col>
                 </ng-container>
               </ion-row>
-              <div style="margin-left: 35%; margin-top: 10%; " *ngIf="this.sprintsList.length ===0">
+              <div
+                style="margin-left: 35%; margin-top: 10%"
+                *ngIf="this.sprintsList.length === 0"
+              >
                 <h2>there are no sprint</h2>
               </div>
             </ion-grid>
-
           </div>
-          <pagination-controls style="font-size: small; " (pageChange)="p = $event"></pagination-controls>
+          <pagination-controls
+            style="font-size: small"
+            (pageChange)="p = $event"
+          ></pagination-controls>
         </div>
       </ion-col>
     </ion-row>
   </ion-content>
 
   <ion-footer>
-    <ion-title style="text-align: end; font-size: medium">Copyright Text</ion-title>
+    <ion-title style="text-align: end; font-size: medium"
+      >Copyright Text</ion-title
+    >
   </ion-footer>
 </ion-app>
