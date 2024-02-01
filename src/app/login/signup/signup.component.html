@@ -46,7 +46,7 @@
                 Password must be at least 4 characters long.
               </div>
               
-              <ion-item>
+              <ion-item >
                 <ion-input formControlName="confirmPassword" name="confirmPassword" minlength="4" maxlength="15" type="password" required
                   placeholder="Confirm Password"></ion-input>
                 <span class="asterisk_required_field"></span>
@@ -54,7 +54,7 @@
               <div class="text-danger" *ngIf="signUpForm.controls['confirmPassword'].errors?.['required'] && submitted">
                 Confirm password is required.
               </div>
-              <div class="text-danger ml-3" *ngIf="confirmPassword">
+              <div class="text-danger ml-3" *ngIf="signUpForm.get('confirmPassword')?.hasError('passwordMismatch') && signUpForm.get('confirmPassword')?.touched">
                 Password not matched.
               </div>
               <button class="ml-10" type="submit" class="button2">Create Account</button>
