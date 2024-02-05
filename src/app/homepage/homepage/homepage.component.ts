@@ -7,6 +7,7 @@ import { AddClientService } from "src/app/services/homepageServices/add-client.s
 import { Router } from "@angular/router";
 import { AuthenticationService } from "src/app/services/authentication.service";
 import { ImportModalComponent } from "../import-modal/import-modal.component";
+import { CommanLoaderService } from "src/app/services/comman-loader.service";
 
 @Component({
   selector: "app-homepage",
@@ -37,7 +38,8 @@ export class HomepageComponent implements OnInit {
     public dialog: MatDialog,
     private clientService: AddClientService,
     private router: Router,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private commonService: CommanLoaderService
   ) {
     
   }
@@ -93,9 +95,13 @@ export class HomepageComponent implements OnInit {
   }
   syncData(){
     this.projectService.syncData(this.UserDetails?.id,this.clientId).subscribe(res=>{
-      console.log(res);
+      if(res.code == 200){
         this.getProjectList(this.clientId);
         this.getClientByUserId(this.UserDetails?.id)
+        this.commonService.presentToast("Syncing is completed", 3000, "toast-succuss-mess");
+      }else if(res.code == 401){
+        this.commonService.presentToast(res.message, 3000, "toast-error-mess");
+      }
     })
   }
 
