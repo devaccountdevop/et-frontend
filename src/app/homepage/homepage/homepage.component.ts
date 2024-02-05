@@ -33,6 +33,7 @@ export class HomepageComponent implements OnInit {
     { code: "30", name: "30" },
     { code: "45", name: "45" },
   ];
+  updatedProject: any[] = [];
   constructor(
     private projectService: ProjectsService,
     public dialog: MatDialog,
@@ -98,7 +99,21 @@ export class HomepageComponent implements OnInit {
       if(res.code == 200){
         this.getProjectList(this.clientId);
         this.getClientByUserId(this.UserDetails?.id)
-        this.commonService.presentToast("Syncing is completed", 3000, "toast-succuss-mess");
+        if(res.data !== null){
+          
+        this.updatedProject= res.data;
+        console.log("Updated Projects:", this.updatedProject);
+        for (let i = 0; i < this.updatedProject.length; i++) {
+          // Using a closure to capture the correct 'i' value in each iteration
+          ( (index) => {
+              setTimeout(() => {
+                  var project = this.updatedProject[index].projectName;
+                  this.commonService.presentToast("'" + project + "'" + " project name has been changed after sync", 3000, "toast-succuss-mess");
+              }, i * 3000); // Adjust the delay as needed (e.g., 1000 milliseconds = 1 second)
+          })(i);
+      }
+        }else{this.commonService.presentToast("Syncing is completed", 3000, "toast-succuss-mess");}
+        
       }else if(res.code == 401){
         this.commonService.presentToast(res.message, 3000, "toast-error-mess");
       }
