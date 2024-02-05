@@ -10,6 +10,8 @@ import { LocalStorage } from 'src/app/modals/localStorage';
   styleUrls: ['./reset-password.component.scss'],
 })
 export class ResetPasswordComponent implements OnInit {
+  showPassword: boolean = false;
+  showConfirmPassword: boolean = false;
   submitted: boolean = false;
   resetForm!: FormGroup;
   userValueForm!: FormGroup;
@@ -131,5 +133,11 @@ export class ResetPasswordComponent implements OnInit {
         this.commonService.presentToast("old password is incorrect", 3000, "toast-error-mess");
       }
     })
+  }
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
+  }
+  toggleShowConfirmPassword() {
+    this.showConfirmPassword = !this.showConfirmPassword;
   }
 }
