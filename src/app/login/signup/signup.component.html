@@ -34,6 +34,10 @@
               <ion-item>
                 <ion-input [type]="showPassword ? 'text' : 'password'" minlength="4" maxlength="15" name="password" formControlName="password"
                   required placeholder="Password"></ion-input>
+                  <a class="type-toggle">
+                    <ion-icon class="show-option" *ngIf="!showPassword" name="eye-off-outline" (click)="toggleShowPassword()"></ion-icon>
+                    <ion-icon class="hide-option" *ngIf="showPassword" name="eye-outline" (click)="toggleShowPassword()"></ion-icon>
+                  </a>
                 <span class="asterisk_required_field"></span>
               </ion-item>
               <div class="text-danger" *ngIf="signUpForm.controls['password'].errors?.['required'] && submitted">
@@ -47,8 +51,12 @@
               </div>
               
               <ion-item >
-                <ion-input formControlName="confirmPassword" name="confirmPassword" minlength="4" maxlength="15" type="password" required
+                <ion-input [type]="showConfirmPassword ? 'text' : 'password'" formControlName="confirmPassword" name="confirmPassword" minlength="4" maxlength="15" type="password" required
                   placeholder="Confirm Password"></ion-input>
+                  <a class="type-toggle">
+                    <ion-icon class="show-option" *ngIf="!showConfirmPassword" name="eye-off-outline" (click)="toggleShowConfirmPassword()"></ion-icon>
+                    <ion-icon class="hide-option" *ngIf="showConfirmPassword" name="eye-outline" (click)="toggleShowConfirmPassword()"></ion-icon>
+                  </a>
                 <span class="asterisk_required_field"></span>
               </ion-item>
               <div class="text-danger" *ngIf="signUpForm.controls['confirmPassword'].errors?.['required'] && submitted">

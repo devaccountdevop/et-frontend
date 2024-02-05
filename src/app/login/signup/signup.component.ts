@@ -11,6 +11,7 @@ import { SignUpService } from "src/app/services/sign-up.service";
 })
 export class SignupComponent implements OnInit {
   showPassword: boolean = false;
+  showConfirmPassword: boolean = false;
   confirmPassword: boolean = false;
   signUpForm!:FormGroup;
   submitted:boolean = false;
@@ -80,8 +81,13 @@ export class SignupComponent implements OnInit {
       });
   }
 
-  toggleShow() {
+  toggleShowPassword() {
     this.showPassword = !this.showPassword;
   }
+  toggleShowConfirmPassword() {
+    this.showConfirmPassword = !this.showConfirmPassword;
+  }
+
+  
 
 }
