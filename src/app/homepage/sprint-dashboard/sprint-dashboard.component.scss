@@ -39,9 +39,22 @@ ion-sub-header {
   height: 30px;
   font-size: 13px;
 }
+.SearchBar {
+  padding-right: 32px;
+}
+
+.show_count select {
+  color: black;
+  border: 2px solid rgba(26, 74, 96, 0.8999999762);
+  border-radius: 5px;
+  width: 145px;
+  height: 30px;
+  font-size: 12px;
+}
+
 .syncbtn {
   text-align: center;
-  margin-top: 1.2%;
+  margin-top: 3px;
   margin-left: 20px;
   background-color: white;
   color: rgba(26, 74, 96, 0.9) !important;
@@ -206,7 +219,8 @@ ion-card:hover {
 }
 .sprintlist-row {
   margin-top: 15px;
-  margin-left: 40px;
+  margin-left: 10px;
+  margin-right: 10px;
   overflow-x: auto;
 }
 .sprintlist-col {

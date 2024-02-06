@@ -182,7 +182,7 @@
             style="align-items: center; margin-bottom: 10px"
           >
             <ion-col
-              size="6"
+              size="7"
               style="
                 background-color: white;
                 border-radius: 0%;
@@ -196,7 +196,7 @@
               ></ion-col
             >
             <ion-col
-              size="6"
+              size="5"
               style="
                 background-color: white;
                 border-radius: 0%;
@@ -210,8 +210,17 @@
               </button></ion-col
             >
           </ion-row>
-          <ion-row style="display: flex">
+          <ion-row
+            style="
+              display: flex;
+              height: 40px;
+              margin-top: 10px;
+              margin-left: 10px;
+              margin-bottom: 6px;
+            "
+          >
             <ion-col
+              class="show_count d-flex"
               size="6"
               style="
                 background-color: white;
@@ -219,6 +228,7 @@
                 margin: 0%;
                 display: flex;
                 justify-content: start;
+                padding-left: 19px;
               "
             >
               <p style="font-size: small; color: black">Show</p>
@@ -229,6 +239,7 @@
                   height: 20px;
                   color: black;
                   margin-left: 3px;
+                  font-size: 13px;
                 "
                 [(ngModel)]="pageFilterDefault"
               >
@@ -236,9 +247,15 @@
                   {{ item.name }}
                 </option>
               </select>
+              <span>
+                <p style="margin-left: 5px; font-size: 13px; color: black">
+                  entries
+                </p>
+              </span>
             </ion-col>
             <ion-col
               size="6"
+              class="SearchBar"
               style="
                 background-color: white;
                 border-radius: 0%;
@@ -270,7 +287,14 @@
                 placeholder="sprint_id,sprint_name"
             /></ion-col>
           </ion-row>
-          <span style="display: flex; justify-content: end; margin-right: 10px"
+          <span
+            style="
+              display: flex;
+              justify-content: end;
+              margin-right: 10px;
+
+              padding-right: 24px;
+            "
             ><button class="syncbtn" (click)="syncData()">
               Sync
               <ion-icon
@@ -296,7 +320,7 @@
                   <ion-col
                     (click)="getTask(item)"
                     class="sprintlist-col"
-                    size="3.5"
+                    size="3.7"
                   >
                     <ion-card
                       [ngClass]="{

@@ -207,13 +207,15 @@
               </span>
             </ion-col>
 
-            <ion-col class="search_txt d-flex">
+            <ion-col
+              class="search_txt d-flex"
+              style="justify-content: end; padding-right: 14px"
+            >
               <p
                 style="
                   margin-left: 15px;
                   font-size: small;
                   text-align: end;
-                  margin-left: 54%;
                   margin-top: 10px;
                 "
               >
@@ -243,7 +245,7 @@
           </ion-row>
           <span
             style="
-              margin-left: 45%;
+              margin-left: 48%;
               margin-bottom: 10px;
               color: rgba(26, 74, 96, 0.9);
             "
@@ -264,7 +266,7 @@
                   <ion-col
                     (click)="getSprints(item.projectName, item.projectId)"
                     class="projectlist-col"
-                    size="3.5"
+                    size="3.7"
                   >
                     <ion-card
                       [ngClass]="{
