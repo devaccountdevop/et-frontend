@@ -19,14 +19,14 @@ export class HomepageComponent implements OnInit {
   menuType: string = "reveal";
   isModalOpen: boolean = false;
   isDropdownOpen = false;
-  selectedOption:any;
+  selectedOption: any;
   // Pagination variables
   p: number = 1;
   searchText: any;
   pageFilterDefault: any = 15;
-  clientId:any;
+  clientId: any;
   projectList: Project[] = [];
-  UserDetails:any;
+  UserDetails: any;
   clientList: any[] = [];
   pageFilter = [
     { code: "15", name: "15" },
@@ -41,20 +41,16 @@ export class HomepageComponent implements OnInit {
     private router: Router,
     private authService: AuthenticationService,
     private commonService: CommanLoaderService
-  ) {
-    
-  }
+  ) {}
 
   ngOnInit() {
-     this.UserDetails = this.authService.getUserDetails();
-    console.log(this.UserDetails);
+    this.UserDetails = this.authService.getUserDetails();
 
     this.clientService.clientList$.subscribe((res) => {
-      console.log(this.clientId,res);
       if (res.length > 0) {
         const clientId = res[0].id;
         this.clientId = clientId;
-        
+
         this.getProjectList(clientId);
       } else {
         this.projectList = [];
@@ -63,10 +59,8 @@ export class HomepageComponent implements OnInit {
       this.clientList.push(...res);
     });
     this.getClientByUserId(this.UserDetails?.id);
-    
-
   }
-  getClientByUserId(Userid:any){
+  getClientByUserId(Userid: any) {
     this.clientService.getClientByUserId(Userid).subscribe((clientRes) => {
       if (this.clientList.length === 0) {
         this.clientList.length = 0;
@@ -80,58 +74,74 @@ export class HomepageComponent implements OnInit {
         }
       }
     });
-    console.log(this.clientId)
+    console.log(this.clientId);
   }
-  
+
   private getProjectList(clientId: string): void {
     this.projectService.getProjects(clientId).subscribe((projectsRes) => {
       if (projectsRes.data.length > 0) {
         this.projectList = projectsRes.data;
       } else {
-        // No projects, clear projectList or perform any other necessary action
         this.projectList = [];
       }
     });
-    console.log(this.clientId)
+    console.log(this.clientId);
   }
-  syncData(){
-    this.projectService.syncData(this.UserDetails?.id,this.clientId).subscribe(res=>{
-      if(res.code == 200){
-        this.getProjectList(this.clientId);
-        this.getClientByUserId(this.UserDetails?.id)
-        if(res.data !== null){
-          
-        this.updatedProject= res.data;
-        console.log("Updated Projects:", this.updatedProject);
-        for (let i = 0; i < this.updatedProject.length; i++) {
-          // Using a closure to capture the correct 'i' value in each iteration
-          ( (index) => {
-              setTimeout(() => {
-                  var project = this.updatedProject[index].projectName;
-                  this.commonService.presentToast("'" + project + "'" + " project name has been changed after sync", 3000, "toast-succuss-mess");
-              }, i * 3000); // Adjust the delay as needed (e.g., 1000 milliseconds = 1 second)
-          })(i);
-      }
-        }else{this.commonService.presentToast("Syncing is completed", 3000, "toast-succuss-mess");}
-        
-      }else if(res.code == 401){
-        this.commonService.presentToast(res.message, 3000, "toast-error-mess");
-      }
-    })
+  syncData() {
+    this.projectService
+      .syncData(this.UserDetails?.id, this.clientId)
+      .subscribe((res) => {
+        if (res.code == 200) {
+          this.getProjectList(this.clientId);
+          this.getClientByUserId(this.UserDetails?.id);
+          if (res.data !== null) {
+            this.updatedProject = res.data;
+            let projectIds = this.updatedProject
+              .map((project) => project.projectId)
+              .join(", ");
+            let projectname = this.updatedProject
+              .map((project) => project.projectName)
+              .join(", ");
+
+            let message = "";
+            if (this.updatedProject.length === 1) {
+              message =
+                "Project " + "'" + projectname + "'" + " name has been changed";
+            } else {
+              message = "Projects " + projectIds + " have been changed";
+            }
+
+            this.commonService.presentToast(
+              message,
+              5000,
+              "toast-succuss-mess"
+            );
+          } else {
+            this.commonService.presentToast(
+              "Syncing is completed",
+              3000,
+              "toast-success-mess"
+            );
+          }
+        } else if (res.code == 401) {
+          this.commonService.presentToast(
+            res.message,
+            3000,
+            "toast-error-mess"
+          );
+        }
+      });
   }
 
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
-  optionSelected() {
-    console.log(this.pageFilterDefault); // This will print the selected option's value
-  }
   getProjectByselectedClient() {
     if (this.clientId !== undefined) {
       this.projectService.getProjects(this.clientId).subscribe((res) => {
-        if(res.code==200){
-        this.projectList = res.data;
-        }else{
+        if (res.code == 200) {
+          this.projectList = res.data;
+        } else {
           this.projectList = [];
         }
       });
@@ -150,14 +160,17 @@ export class HomepageComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-     
       console.log("The dialog was closed");
     });
   }
 
   getSprints(name: any, projectId: number) {
     this.router.navigate(["estimation-tool/homepage/sprintdashboard"], {
-      queryParams: { projectId: projectId,clientId:this.clientId, projectName: name },
+      queryParams: {
+        projectId: projectId,
+        clientId: this.clientId,
+        projectName: name,
+      },
     });
   }
   logout() {
