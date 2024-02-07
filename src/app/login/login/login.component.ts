@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   errormsg: boolean = false;
   submitted:boolean = false;
   loginForm!:FormGroup;
-  
+  showEyeIcon = false;
   constructor(
     private loginService: LoginService,
     private dialog:MatDialog,
@@ -91,5 +91,11 @@ if(res.code == 200){
 }
   })
   
+}
+
+
+
+toggleShowEye() {
+  this.showEyeIcon = !this.showEyeIcon;
 }
 }

@@ -12,6 +12,8 @@ import { SignUpService } from "src/app/services/sign-up.service";
 export class SignupComponent implements OnInit {
   showPassword: boolean = false;
   showConfirmPassword: boolean = false;
+  showEyeIcon:boolean = false;
+  showConfirmEyeIcon:boolean=false;
   confirmPassword: boolean = false;
   signUpForm!:FormGroup;
   submitted:boolean = false;

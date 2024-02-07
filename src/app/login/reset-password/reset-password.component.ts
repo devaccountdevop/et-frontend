@@ -12,6 +12,8 @@ import { LocalStorage } from 'src/app/modals/localStorage';
 export class ResetPasswordComponent implements OnInit {
   showPassword: boolean = false;
   showConfirmPassword: boolean = false;
+  showEyeIcon:boolean = false;
+  showConfirmEyeIcon:boolean=false;
   submitted: boolean = false;
   resetForm!: FormGroup;
   userValueForm!: FormGroup;
@@ -76,9 +78,10 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   createForm() {
+    const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{4,15}$/;
     this.resetForm = this.formBuilder.group({
-      newPassword: ['', Validators.required],
-      confirmPassword: ['', Validators.required]
+      newPassword: ['', [Validators.required, Validators.pattern(passwordPattern)]],
+      confirmPassword: ['', [Validators.required]]
     })
   }
   CreateUserValueForm() {
