@@ -20,10 +20,10 @@
           </div>
           <ion-item>
             <ion-input [type]="showPassword ? 'text' : 'password'" minlength="4" maxlength="15" formControlName="password" name="password"
-              placeholder="Password"></ion-input>
+              placeholder="Password" (ionFocus)="showEyeIcon = true" (ionBlur)="showEyeIcon = false" ></ion-input>
             <a class="type-toggle">
-              <ion-icon class="show-option" *ngIf="!showPassword" name="eye-off-outline" (click)="toggleShow()"></ion-icon>
-              <ion-icon class="hide-option" *ngIf="showPassword" name="eye-outline" (click)="toggleShow()"></ion-icon>
+              <ion-icon class="show-option" *ngIf="!showPassword && showEyeIcon " name="eye-off-outline" (click)="toggleShow()"></ion-icon>
+              <ion-icon class="hide-option" *ngIf="showPassword && showEyeIcon" name="eye-outline" (click)="toggleShow()"></ion-icon>
             </a>
           </ion-item>
           <div class="text-danger ml-3" *ngIf="loginForm.controls['password'].errors?.['required'] && submitted">
