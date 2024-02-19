@@ -1,0 +1,18 @@
+<ion-app>
+  <span class="closebtn">
+    <ion-buttons style="align-items:end">
+      <ion-button style="color: black; align-items: end; " mat-button [mat-dialog-close]="true">
+        <span>&#10006;</span>
+      </ion-button>
+    </ion-buttons>
+  </span>
+  <div style="width: 98;height: 98%;">
+    <canvas baseChart 
+            [datasets]="barChartData" 
+            [labels]="barChartLabels" 
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            chartType="bar">
+    </canvas>
+  </div> 
+</ion-app>

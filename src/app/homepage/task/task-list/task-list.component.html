@@ -1,15 +1,11 @@
 <ion-app>
   <ion-header>
-    <ion-menu-toggle>
-      <ion-button class="menubutton" fill="clear"
-        ><span class="menu">&#9776;</span></ion-button
-      >
+    <!-- <ion-menu-toggle>
+      <ion-button class="menubutton" fill="clear"><span class="menu">&#9776;</span></ion-button>
     </ion-menu-toggle>
-    <ion-button (click)="landingPage()" fill="clear"
-      ><ion-icon class="homeicon" name="home-sharp"></ion-icon
-    ></ion-button>
-    <ion-title
-      style="
+    <ion-button (click)="landingPage()" fill="clear"><ion-icon class="homeicon"
+        name="home-sharp"></ion-icon></ion-button>
+    <ion-title style="
         font-family: Roboto;
         font-size: 22px;
         font-weight: 400;
@@ -17,26 +13,13 @@
         letter-spacing: 0em;
         text-align: left;
         padding-left: 0px;
-      "
-      >Estimation Tool</ion-title
-    >
-    <!-- <ion-button fill="clear">
-        <ion-icon class="profileicon" name="person"></ion-icon>
-      </ion-button> -->
+      ">Estimation Tool</ion-title>
+ 
     <div class="dropdown">
       <ion-buttons>
-        <ion-button
-          class="text-white mr-3 mt-2 text-capitalize"
-          (click)="toggleDropdown()"
-          fill="clear"
-        >
-          <ion-icon
-            style="width: 22px; height: 22px"
-            class="mr-2"
-            name="person-circle-outline"
-          ></ion-icon>
-          <p
-            style="
+        <ion-button class="text-white mr-3 mt-2 text-capitalize" (click)="toggleDropdown()" fill="clear">
+          <ion-icon style="width: 22px; height: 22px" class="mr-2" name="person-circle-outline"></ion-icon>
+          <p style="
               font-family: Roboto;
               font-size: 13px;
               font-weight: 400;
@@ -44,8 +27,7 @@
               letter-spacing: 0em;
               text-align: left;
               margin-bottom: 0px;
-            "
-          >
+            ">
             Admin
           </p>
           <ion-icon class="ml-2" name="chevron-down-outline"></ion-icon>
@@ -54,35 +36,27 @@
       <div class="dropdown-content" [ngClass]="{ show: isDropdownOpen }">
         <a style="cursor: pointer" (click)="logout()">Logout</a>
       </div>
-    </div>
+    </div> -->
+    <app-header></app-header>
   </ion-header>
   <ion-content style="overflow-x: hidden">
     <ion-row style="height: 100%">
-      <ion-col
-        size="2"
-        style="
+      <ion-col size="2" style="
           margin: 0px;
           background-color: white;
           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
           height: 100%;
-        "
-      >
-        <ion-row
-          style="
+        ">
+        <ion-row style="
             display: flex;
             justify-content: center;
             margin-top: 10px;
             text-align: left;
-          "
-        >
+          ">
           <ion-col style="background-color: white; color: black; display: flex">
-            <img
-              src="/assets/images/Dashboard.png"
-              alt="Your Image"
-              style="width: 25px; height: 25px; margin-right: 10px"
-            />
-            <p
-              style="
+            <img src="/assets/images/Dashboard.png" alt="Your Image"
+              style="width: 25px; height: 25px; margin-right: 10px" />
+            <p style="
                 margin-bottom: 0px;
                 font-family: Roboto;
                 font-size: 18px;
@@ -91,33 +65,25 @@
                 letter-spacing: 0px;
                 text-align: left;
                 color: rgba(26, 74, 96, 1);
-              "
-            >
+              ">
               Dashboard
             </p>
           </ion-col>
         </ion-row>
-        <ion-row
-          style="
+        <ion-row style="
             display: flex;
             justify-content: center;
             margin-top: -10px;
             text-align: left;
-          "
-        >
+          ">
           <ion-col style="background-color: white; color: black; display: flex">
-            <img
-              src="/assets/images/journals (1).png"
-              alt="Your Image"
-              style="
+            <img src="/assets/images/journals (1).png" alt="Your Image" style="
                 width: 25px;
                 height: 25px;
                 margin-right: 10px;
                 fill: #a1a1a1;
-              "
-            />
-            <p
-              style="
+              " />
+            <p style="
                 margin-bottom: 0px;
                 font-family: Roboto;
                 font-size: 18px;
@@ -126,238 +92,172 @@
                 letter-spacing: 0px;
                 text-align: left;
                 color: rgba(0, 0, 0, 1);
-              "
-            >
+              ">
               Projects
             </p>
           </ion-col>
         </ion-row>
       </ion-col>
-      <ion-col
-        size="10"
-        style="
+      <ion-col size="10" style="
           margin: 0px;
           height: 100%;
           color: black;
           background-color: white;
           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        "
-      >
+        ">
         <div class="innerbox">
-          <ion-row
-            class="subheader"
-            style="align-items: center; margin-bottom: 20px"
-          >
-            <ion-col
-              size="6"
-              style="background-color: white; border: 0%; margin: 0%"
-            >
+          <ion-row class="subheader" style="align-items: center; margin-bottom: 20px">
+            <ion-col size="6" style="background-color: white; border: 0%; margin: 0%">
               <button (click)="updateEstimatesInJira()" class="updatebtn">
                 Update Ai Estimates In Jira
-                <ion-icon
-                  name="checkmark-outline"
-                  style="font-size: medium; margin-bottom: -2px"
-                ></ion-icon>
+                <ion-icon name="checkmark-outline" style="font-size: medium; margin-bottom: -2px"></ion-icon>
               </button>
 
-              <span
-                ><button class="syncbtn" (click)="syncData()">
+              <span><button class="syncbtn" (click)="syncData()">
                   Sync
-                  <ion-icon
-                    style="margin-left: 5px; margin-bottom: -1.7px"
-                    name="sync-outline"
-                  ></ion-icon></button
-              ></span>
+                  <ion-icon style="margin-left: 5px; margin-bottom: -1.7px"
+                    name="sync-outline"></ion-icon></button></span>
             </ion-col>
-            <ion-col
-              size="2"
-              style="background-color: white; border: 0%; margin: 0%"
-            >
-              <span
-                style="
+            <ion-col size="2" style="background-color: white; border: 0%; margin: 0%">
+              <span style="
                   background-color: white;
                   border: 0%;
                   margin: 0%;
                   color: rgb(63, 61, 61);
-                "
-              >
-                <b>Dashboard</b></span
-              ></ion-col
-            >
-            <ion-col
-              size="4"
-              style="
+                ">
+                <b>Dashboard</b></span></ion-col>
+            <ion-col size="4" style="
                 background-color: white;
                 border: 0%;
                 margin: 0%;
                 display: flex;
                 justify-content: end;
-              "
-            >
-              <button
-                routerLink="/estimation-tool/homepage/sprintdashboard"
-                class="button2"
-                (click)="goBack()"
-              >
+              ">
+              <button routerLink="/estimation-tool/homepage/sprintdashboard" class="button2" (click)="goBack()">
                 Back
               </button>
             </ion-col>
           </ion-row>
           <ion-row>
-            <ion-col
-              size="6"
-              style="background-color: white; border: 0%; margin: 0%"
-            ></ion-col>
-            <ion-col
-              size="6"
-              style="
+            <ion-col size="6" style="background-color: white; border: 0%; margin: 0%"></ion-col>
+            <ion-col size="6" style="
                 background-color: white;
                 border: 0%;
                 margin: 0%;
                 display: flex;
                 justify-content: end;
                 color: black;
-              "
-            >
+              ">
               <p style="margin-bottom: 0px">{{ this.sprintName }}</p>
-              <p
-                style="
+              <p style="
                   font-size: small;
                   text-align: start;
                   color: black;
                   margin-bottom: 0px;
                   padding-top: 2px;
                   margin-right: 3px;
-                "
-              >
+                ">
                 Search:
               </p>
-              <input
-                style="
+              <input style="
                   width: 150px;
                   height: 23px;
                   border: 2px solid rgba(26, 74, 96, 0.8999999762);
                   border-radius: 5px;
                   font-size: 12px;
-                "
-                [(ngModel)]="searchText"
-                type="text"
-                placeholder="task id, task name"
-              />
+                " [(ngModel)]="searchText" type="text" placeholder="task id, task name" />
             </ion-col>
           </ion-row>
 
           <div class="contentlist">
             <ion-grid [fixed]="true">
-              <ion-row
-                style="
+              <ion-row style="
                   margin-left: 0.5%;
                   margin-top: 5px;
                   height: 100%;
                   overflow-x: auto;
                   white-space: nowrap;
-                "
-              >
+                ">
                 <table>
-                  <col style="width: 80px" />
+                  <col style="width: 70px" />
                   <col style="width: 100px" />
                   <col style="width: 150px" />
                   <colgroup span="4"></colgroup>
                   <col />
-                  <tr
-                    style="
+                  <tr style="
                       background-color: rgba(26, 74, 96, 0.9);
                       height: 20px;
                       padding: 0px;
-                    "
-                    class="tableheader"
-                  >
-                    <th
-                      rowspan="2"
-                      style="
+                    " class="tableheader">
+                    <th rowspan="2" style="
                         vertical-align: middle;
                         text-align: center;
                         word-wrap: break-word;
-                      "
-                    >
+                       
+                      ">
                       ID
                     </th>
-                    <th
-                      (click)="sortData('summary')"
-                      rowspan="2"
-                      style="
+                    <th (click)="sortData('summary')" rowspan="2" style="
                         vertical-align: middle;
                         text-align: center;
                         word-wrap: break-word;
-                      "
-                    >
+                      ">
                       {{ isAscending ? "Title ▲" : "Title ▼" }}
                     </th>
-                    <th
-                      rowspan="2"
-                      style="
+                    <th rowspan="2" style="
                         vertical-align: middle;
                         text-align: center;
                         word-wrap: break-word;
-                      "
-                    >
+                      ">
                       Description
                     </th>
-                    <th
-                      rowspan="2"
-                      style="
+                    <th rowspan="2" style="
                         width: 80px;
                         vertical-align: middle;
                         text-align: center;
                         word-wrap: break-word;
-                      "
-                    >
+                      ">
                       Label
                     </th>
-                    <th
-                      colspan="3"
-                      style="
+                    <th colspan="3" style="
                         horizontal-align: middle;
                         text-align: center;
                         width: 22%;
                         padding: 4px;
                         word-wrap: break-word;
-                      "
-                    >
+                      ">
                       Estimates
                     </th>
-                    <th
-                      rowspan="2"
-                      style="
+                    <th rowspan="2" style="
                         vertical-align: middle;
                         text-align: center;
                         word-wrap: normal;
-                      "
-                    >
+                      ">
                       3-Point Estimates
                     </th>
-                    <th
-                      rowspan="2"
-                      style="
+                    <th rowspan="2" style="
                         width: 120px;
                         vertical-align: middle;
                         text-align: center;
                         word-wrap: normal;
-                      "
-                    >
+                      ">
                       AI Estimates
                     </th>
-                    <th
-                      rowspan="2"
-                      style="
+                    <th rowspan="2" style="
                         width: 120px;
                         vertical-align: middle;
                         text-align: center;
                         word-wrap: normal;
-                      "
-                    >
+                      ">
                       Actual(HRS)
                     </th>
+                    <th rowspan="2" style="
+                    width: 50px;
+                    vertical-align: middle;
+                    text-align: center;
+                    word-wrap: normal;
+                  ">
+                  Info </th>
                   </tr>
                   <tr>
                     <th class="tablesubheader" scope="col">Low</th>
@@ -366,48 +266,44 @@
                     </th>
                     <th class="tablesubheader" scope="col">High</th>
                   </tr>
-                  <tr
-                    style="cursor: pointer"
-                    *ngFor="
+                  <tr style="cursor: pointer" *ngFor="
                       let item of tableData
                         | tableFilter : searchText
                         | paginate
                           : { itemsPerPage: pageFilterDefault, currentPage: p }
                         | tableShort : 'summary'
-                    "
-                    (click)="openDialog(item)"
-                    (mouseover)="showContent = true"
-                    (mouseout)="showContent = false"
-                  >
-                    <td>{{ item.taskId }}</td>
-                    <td title="{{ item.summary }}">{{ item.summary }}</td>
-                    <td title="{{ item.taskDescription }}">
+                    "  (mouseover)="showContent = true" (mouseout)="showContent = false">
+                    <td (click)="openDialog(item)" >{{ item.taskId }}</td>
+                    <td (click)="openDialog(item)"  title="{{ item.summary }}">{{ item.summary }}</td>
+                    <td (click)="openDialog(item)" title="{{ item.taskDescription }}">
                       {{ item.taskDescription }}
                     </td>
-                    <td>{{ item.labels }}</td>
+                    <td (click)="openDialog(item)" >{{ item.labels }}</td>
                     <td>{{ item.estimates.low }}</td>
                     <td>{{ item.estimates.realistic }}</td>
                     <td>{{ item.estimates.high }}</td>
                     <td>{{ item.threePointEstimate }}</td>
                     <td>{{ item.aiEstimate }}</td>
                     <td>{{ item.originalEstimate }}</td>
+                    <td (click)="openGraphPopup(item)" >
+                      <mat-icon [ngClass]="getIconColor(item.originalEstimate, item.aiEstimate)">
+                        {{ getIconColor(item.originalEstimate, item.aiEstimate) === 'error' ? 'error' :
+                           getIconColor(item.originalEstimate, item.aiEstimate) === 'warning' ? 'warning' :
+                           'check_circle' }}
+                      </mat-icon>
+                    </td>
                   </tr>
                 </table>
               </ion-row>
             </ion-grid>
           </div>
-          <pagination-controls
-            style="font-size: small"
-            (pageChange)="p = $event"
-          ></pagination-controls>
+          <pagination-controls style="font-size: small" (pageChange)="p = $event"></pagination-controls>
         </div>
       </ion-col>
     </ion-row>
   </ion-content>
 
   <ion-footer>
-    <ion-title style="text-align: end; font-size: medium"
-      >Copyright Text</ion-title
-    >
+    <ion-title style="text-align: end; font-size: medium">Copyright Text</ion-title>
   </ion-footer>
 </ion-app>

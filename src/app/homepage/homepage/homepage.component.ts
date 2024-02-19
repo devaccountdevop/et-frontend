@@ -192,4 +192,9 @@ export class HomepageComponent implements OnInit {
       this.getClientByUserId(this.UserDetails?.id);
     });
   }
+  iconList = ['check_circle', 'error', 'warning'];
+
+getIcon(index: number): string {
+  return this.iconList[index % this.iconList.length];
+}
 }

@@ -14,7 +14,6 @@ import { CommanLoaderService } from 'src/app/services/comman-loader.service';
   styleUrls: ['./sprint-dashboard.component.scss'],
 })
 export class SprintDashboardComponent  implements OnInit {
-  
   projectName:any;
   projectId:any;
   pageListNo = 15;
@@ -116,6 +115,21 @@ export class SprintDashboardComponent  implements OnInit {
     });
     
   }
+   checkNumber(number: number): string {
+    if (number % 2 === 0) {
+        return "green"; // Even number
+    } else if (number % 3 === 0) {
+        return "blue"; // Divisible by 3
+    } else {
+        return "red"; // Odd number
+    }
+    
+}
+iconList = ['check_circle', 'error', 'warning'];
+
+getIcon(index: number): string {
+  return this.iconList[index % this.iconList.length];
+}
 
 
 }

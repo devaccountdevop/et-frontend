@@ -1,14 +1,15 @@
 <ion-app>
   <ion-header>
-    <ion-menu-toggle>
+    
+    <!-- <ion-menu-toggle>
       <ion-button class="mr-n5 mt-2" fill="clear"
         ><span class="menu">&#9776;</span></ion-button
       >
-    </ion-menu-toggle>
-    <ion-button fill="clear"
+    </ion-menu-toggle> -->
+    <!-- <ion-button fill="clear"
       ><ion-icon class="homeicon" name="home-sharp"></ion-icon
-    ></ion-button>
-    <ion-title
+    ></ion-button> -->
+    <!-- <ion-title
       style="
         font-family: Roboto;
         font-size: 22px;
@@ -19,9 +20,9 @@
         padding-left: 0px;
       "
       >Estimation Tool</ion-title
-    >
+    > -->
 
-    <div class="dropdown">
+    <!-- <div class="dropdown">
       <ion-buttons>
         <ion-button
           class="text-white mr-3 mt-2 text-capitalize"
@@ -52,9 +53,19 @@
       <div class="dropdown-content" [ngClass]="{ show: isDropdownOpen }">
         <a style="cursor: pointer" (click)="logout()">Logout</a>
       </div>
-    </div>
+    </div> -->
+    <app-header></app-header>
   </ion-header>
+  
   <ion-content style="overflow-x: hidden">
+
+   
+    <div class="ion-page" id="main-content">
+      
+      
+    </div>
+    <app-side-bar></app-side-bar>
+   
     <ion-row style="height: 100%">
       <ion-col
         size="2"
@@ -95,6 +106,7 @@
             </p>
           </ion-col>
         </ion-row>
+        
         <ion-row
           style="
             display: flex;
@@ -276,7 +288,8 @@
                     >
                       <ion-card-content class="card-content">{{
                         item.projectName
-                      }}</ion-card-content>
+                      }}  <mat-icon class="check-icon" [ngClass]="{ 'error': getIcon(i) === 'error', 'warning': getIcon(i) === 'warning','check_circle': getIcon(i) === 'check_circle' }">{{ getIcon(i) }}</mat-icon></ion-card-content>
+                      
                     </ion-card>
                   </ion-col>
                 </ng-container>

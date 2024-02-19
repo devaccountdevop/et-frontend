@@ -1,8 +1,8 @@
 ion-header {
   background-color: rgba(26, 74, 96, 0.9);
   height: 7%;
-  color: white;
-  display: flex;
+  // color: white;
+  // display: flex;
 }
 ion-sub-header {
   background-color: rgba(26, 74, 96, 0.9);
@@ -271,3 +271,17 @@ tr:nth-child(even) {
 //     padding: 10px;
 //     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 // }
+
+.error {
+  color: red;
+}
+
+.warning {
+  color:rgb(255, 119, 0);
+}
+
+.success {
+  color: green;
+}
+
+

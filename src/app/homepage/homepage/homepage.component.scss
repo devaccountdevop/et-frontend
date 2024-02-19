@@ -4,9 +4,10 @@
 ion-header {
   background-color: rgba(26, 74, 96, 0.9);
   height: 7%;
-  color: white;
-  display: flex;
+ // color: white;
+  //display: flex;
 }
+
 ion-sub-header {
   background-color: rgba(26, 74, 96, 0.9);
 }
@@ -313,4 +314,32 @@ ion-card:hover {
 
 .card-content {
   margin-top: 5px;
+}
+.check-icon {
+  position: absolute; 
+  top: -2px; 
+  right: 0; 
+  color: red;
+  margin: 5px; 
+}
+.error {
+  position: absolute; 
+  top: -2px; 
+  right: 0; 
+  color: red;
+  margin: 5px; 
+}
+.warning {
+  position: absolute; 
+  top: -2px; 
+  right: 0; 
+  color: orange;
+  margin: 5px; 
+}
+.check_circle {
+  position: absolute; 
+  top: -2px; 
+  right: 0; 
+  color: green;
+  margin: 5px; 
 }

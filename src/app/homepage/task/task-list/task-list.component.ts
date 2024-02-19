@@ -6,6 +6,7 @@ import { TaskModalComponent } from "./task-modal/task-modal.component";
 import { TaskService } from "src/app/services/task.service";
 import { CommanLoaderService } from "src/app/services/comman-loader.service";
 import { ProjectsService } from "src/app/services/homepageServices/projects.service";
+import { TaskGraphComponent } from "../task-graph/task-graph.component";
 
 @Component({
   selector: "app-task-list",
@@ -210,6 +211,29 @@ export class TaskListComponent implements OnInit {
   goBack(): void {
     this.route.navigate(["estimation-tool/homepage/sprintdashboard"], {
       queryParams: { projectId: this.projectId,clientId:this.clientId,projectName: this.projectName },
+    });
+  }
+
+  getIconColor(originalEstimate: number, aiEstimate: number): string {
+    const differencePercentage = (originalEstimate - aiEstimate) / aiEstimate * 100;
+    
+    if (differencePercentage > 10) {
+      return 'error';
+    } else if (differencePercentage >= 0 && differencePercentage <= 10) {
+      return 'warning';
+    } else {
+      return 'success';
+    }
+  }
+  openGraphPopup(item:any){
+    this.taskService.setSharedItem(item);
+    let dialogRef = this.dialog.open(TaskGraphComponent, {
+      width: "600px",
+      height: "300px",
+      data: { item },
+    });
+    dialogRef.afterClosed().subscribe((result) => { 
+      console.log("The dialog was closed");
     });
   }
 }

@@ -1,6 +1,6 @@
 <ion-app>
   <ion-header>
-    <ion-menu-toggle>
+    <!-- <ion-menu-toggle>
       <ion-button class="menubutton" fill="clear"
         ><span class="menu">&#9776;</span></ion-button
       >
@@ -20,9 +20,7 @@
       "
       >Estimation Tool</ion-title
     >
-    <!-- <ion-button fill="clear">
-        <ion-icon class="profileicon" name="person"></ion-icon>
-      </ion-button> -->
+  
     <div class="dropdown">
       <ion-buttons>
         <ion-button
@@ -54,7 +52,8 @@
       <div class="dropdown-content" [ngClass]="{ show: isDropdownOpen }">
         <a style="cursor: pointer" (click)="logout()">Logout</a>
       </div>
-    </div>
+    </div> -->
+    <app-header></app-header>
   </ion-header>
   <ion-content style="overflow-x: hidden">
     <ion-row style="height: 100%">
@@ -333,7 +332,12 @@
                     >
                       <ion-card-content class="card-content">{{
                         item.sprintName
-                      }}</ion-card-content>
+                      }} 
+                     <mat-icon class="check-icon" [ngClass]="{ 'error': getIcon(i) === 'error', 'warning': getIcon(i) === 'warning','check_circle': getIcon(i) === 'check_circle' }">{{ getIcon(i) }}</mat-icon>
+
+
+                     
+ </ion-card-content>
                     </ion-card>
                   </ion-col>
                 </ng-container>

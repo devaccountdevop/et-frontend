@@ -23,7 +23,10 @@ import { TableShortPipe } from "../pipes/table-short.pipe";
 import { ImportModalComponent } from "./import-modal/import-modal.component";
 import * as XLSX from 'xlsx';
 import { DateFormatPipe } from "../pipes/date-format.pipe";
-
+import { HeaderComponent } from "./header/header.component";
+import {MatIconModule} from '@angular/material/icon'
+import { TaskGraphComponent } from "./task/task-graph/task-graph.component";
+import { NgChartsModule } from 'ng2-charts';
 @NgModule({
   declarations: [
     HomepageComponent,
@@ -38,7 +41,9 @@ import { DateFormatPipe } from "../pipes/date-format.pipe";
     FilterPipe,
     TableShortPipe,
     ImportModalComponent,
-    DateFormatPipe
+    DateFormatPipe,
+    HeaderComponent,
+    TaskGraphComponent
   ],
   imports: [
     CommonModule,
@@ -47,7 +52,9 @@ import { DateFormatPipe } from "../pipes/date-format.pipe";
     FormsModule,
     NgxPaginationModule,
     MatDialogModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatIconModule,
+    NgChartsModule
     
   ],
   providers: [
