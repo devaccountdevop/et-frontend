@@ -1,6 +1,6 @@
 ion-header {
     background-color: rgba(26, 74, 96, 0.9);
-    height: 7%;
+    height: 45px;
     color: white;
     display: flex;
   }
@@ -20,7 +20,7 @@ ion-header {
   .homeicon {
     color: white;
     font-size: x-large;
-    margin-left: 10px;
+    margin-left: -10px;
     margin-top: -5px;
   }
   .dropbtn {
@@ -99,6 +99,26 @@ ion-header {
   .dropdown {
     order: 2;
   }
+}
+
+.main{
+ color: white;
+}
+.profile{
+  width: 22px; 
+  height: 22px;
+}
+.username{
+  font-family: Roboto;
+  font-size: 13px; 
+  font-weight: 400; 
+  line-height: 23px; 
+  letter-spacing: 0em; 
+  text-align: left; 
+  margin-bottom: 0px;
+}
+.logout-btn{
+  cursor: pointer;
 }
 
   

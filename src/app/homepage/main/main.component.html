@@ -1,0 +1,44 @@
+<ion-app>
+  <ion-header>
+    <app-header></app-header>
+  </ion-header>
+
+  <ion-content>
+    <mat-sidenav-container>
+      <mat-sidenav class="sidebar" #drawer mode="side" [opened]="isOpen">
+        <ion-content class="ion-padding">
+          <ion-menu-toggle class="right-toggle">
+            <span class="closebtn">
+              <ion-buttons>
+                <ion-button><span>&#10006;</span></ion-button>
+              </ion-buttons>
+            </span>
+          </ion-menu-toggle>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="0.5"></ion-col>
+              <ion-col class="dashboard-col" routerLink="/estimation-tool/dashboard" [routerLinkActive]="['active-link', 'image-color']">
+                <img src="/assets/images/Dashboard.png" alt="Your Image" class="dashboard-icon" /> Dashboard</ion-col>
+            </ion-row>
+            <ion-row class="project-row">
+              <ion-col size="0.5"></ion-col>
+              <ion-col class="project-col" routerLink="/estimation-tool/homepage" [routerLinkActive]="['active-link', 'image-color']"> <img
+                  src="/assets/images/journals (1).png" alt="Your Image" class="project-icon" />Projects</ion-col>
+            </ion-row>
+
+          </ion-grid>
+          <button class="button2" (click)="openImportDialog()">
+            Import
+          </button>
+        </ion-content>
+      </mat-sidenav>
+
+      <mat-sidenav-content>
+        <router-outlet></router-outlet>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </ion-content>
+  <ion-footer>
+    <ion-title class="footer">Copyright Text</ion-title>
+  </ion-footer>
+</ion-app>

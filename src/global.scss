@@ -64,4 +64,16 @@ ion-toast.toast-succuss-mess {
    --max-width: 63.5% !important;/* Adjust the desired maximum width */
     //height: 30px; /* Adjust the desired height */
   }
+  .matdialog {
+    margin-left: 1em;
+    margin-top: 13em;
   
+}
+ion-popover {
+  //--backdrop-opacity: 0.6;
+  --box-shadow: 0 10px 17px 0 rgba(0, 0, 0, 0.6);
+  --color: white;
+  --width: 450px;
+    margin-left: -80px;
+  --height: 225px;
+}

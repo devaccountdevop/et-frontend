@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthenticationService } from "src/app/services/authentication.service";
 import { TaskModalComponent } from "./task-modal/task-modal.component";
@@ -7,6 +7,7 @@ import { TaskService } from "src/app/services/task.service";
 import { CommanLoaderService } from "src/app/services/comman-loader.service";
 import { ProjectsService } from "src/app/services/homepageServices/projects.service";
 import { TaskGraphComponent } from "../task-graph/task-graph.component";
+import { PopoverController } from "@ionic/angular";
 
 @Component({
   selector: "app-task-list",
@@ -38,17 +39,19 @@ export class TaskListComponent implements OnInit {
   p: number = 1;
   searchText: any;
   selectedItem: any;
-  editingItem: any = null; // Track the currently editing item
-  editingField: string = ""; // Track the field being edited
+  editingItem: any = null;
+  editingField: string = ""; 
   modifyItems: any[] = [];
   pageFilter = [
-    { code: "15", name: "15" },
+    { code: "6", name: "6" },
+    { code: "12", name: "12" },
+    { code: "18", name: "18" },
+    { code: "24", name: "24" },
     { code: "30", name: "30" },
-    { code: "45", name: "45" },
   ];
-  pageFilterDefault: any = 8;
-  sortedColumn: string = "title"; // Default sorting column
-  isAscending: boolean = true; //
+  pageFilterDefault: any = 6;
+  sortedColumn: string = "title"; 
+  isAscending: boolean = true;
   showPopup: boolean = false;
   tableData: any[] = [
  
@@ -60,7 +63,9 @@ export class TaskListComponent implements OnInit {
     private authService: AuthenticationService,
     private taskService: TaskService,
     private commanService: CommanLoaderService,
-    private projectService:ProjectsService
+    private projectService:ProjectsService,
+    private popover: PopoverController
+    
   ) {
 
     this.router.queryParams.subscribe((params) => {
@@ -121,7 +126,7 @@ export class TaskListComponent implements OnInit {
     this.route.navigate(["/"]);
   }
   landingPage() {
-    this.route.navigate(["/estimation-tool/homepage"]);
+    this.route.navigate(["/estimation-tool/"]);
   }
   sortData(column: string) {
     if (this.sortedColumn === column) {
@@ -209,7 +214,7 @@ export class TaskListComponent implements OnInit {
   }
 
   goBack(): void {
-    this.route.navigate(["estimation-tool/homepage/sprintdashboard"], {
+    this.route.navigate(["estimation-tool/sprintdashboard"], {
       queryParams: { projectId: this.projectId,clientId:this.clientId,projectName: this.projectName },
     });
   }
@@ -225,15 +230,38 @@ export class TaskListComponent implements OnInit {
       return 'success';
     }
   }
-  openGraphPopup(item:any){
+
+openGraphPopup(event: MouseEvent, item: any) {
     this.taskService.setSharedItem(item);
+    const offsetX = 470; 
+    const offsetY = 250; 
+    
+    const clientX = event.clientX;
+    const clientY = event.clientY;
+    const viewportHeight = window.innerHeight;
+    
+    let positionTop = clientY;
+    if (clientY + offsetY > viewportHeight) {
+      
+      positionTop = viewportHeight - offsetY;
+    }
+  
     let dialogRef = this.dialog.open(TaskGraphComponent, {
-      width: "600px",
-      height: "300px",
+      width: "450px",
+      height: "225px",
       data: { item },
+      hasBackdrop: false,
+      position: { left: (clientX - offsetX) + 'px', top: positionTop + 'px' },
     });
     dialogRef.afterClosed().subscribe((result) => { 
-      console.log("The dialog was closed");
+     
     });
   }
+  
+closePopup(){
+  //this.popover.dismiss();
+  this.dialog.closeAll();
+
+}
+ 
 }

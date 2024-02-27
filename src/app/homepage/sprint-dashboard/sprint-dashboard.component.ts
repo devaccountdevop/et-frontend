@@ -7,6 +7,7 @@ import { Project } from '../homepage/projects';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CommanLoaderService } from 'src/app/services/comman-loader.service';
+import { TaskGraphComponent } from '../task/task-graph/task-graph.component';
 
 @Component({
   selector: 'app-sprint-dashboard',
@@ -107,10 +108,10 @@ export class SprintDashboardComponent  implements OnInit {
   }
   
   landingPage(){
-    this.route.navigate(['/estimation-tool/homepage']);
+    this.route.navigate(['/estimation-tool']);
   }
   getTask(item:any){
-    this.route.navigate(["estimation-tool/homepage/tasklist"], {
+    this.route.navigate(["estimation-tool/tasklist"], {
       queryParams: { sprintId:item.sprintId,  sprintName:item.summary, projectId: this.projectId,clientId:this.clientId,projectName: this.projectName},
     });
     
@@ -130,6 +131,62 @@ iconList = ['check_circle', 'error', 'warning'];
 getIcon(index: number): string {
   return this.iconList[index % this.iconList.length];
 }
+
+// async openGraphPopup( item: any) {
+//   this.taskService.setSharedItem(item);
+//   const modal = await this.popover.create({
+//     component: TaskBarGraphComponent,
+//     event: event,
+//    showBackdrop:false,
+//   });
+//   await modal.present();
+//   await modal.onDidDismiss();
+//   console.log("The modal was dismissed");
+   //}
+ 
+   openGraphPopup(event: MouseEvent, item: any) {
+     this.sprintService.setSharedItem(item);
+     const offsetX = 470; 
+     const offsetY = 250; 
+     
+     const clientX = event.clientX;
+     const clientY = event.clientY;
+     const viewportHeight = window.innerHeight;
+     
+     let positionTop = clientY;
+     if (clientY + offsetY > viewportHeight) {
+       
+       positionTop = viewportHeight - offsetY;
+     }
+   
+     let dialogRef = this.dialog.open(TaskGraphComponent, {
+       width: "450px",
+       height: "225px",
+       data: { item },
+       hasBackdrop: false,
+       position: { left: (clientX - offsetX) + 'px', top: positionTop + 'px' },
+     });
+     dialogRef.afterClosed().subscribe((result) => { 
+      
+     });
+   }
+   getIconColor(originalEstimate: number, aiEstimate: number): string {
+    const differencePercentage = (originalEstimate - aiEstimate) / aiEstimate * 100;
+    
+    if (differencePercentage > 10) {
+      return 'error';
+    } else if (differencePercentage >= 0 && differencePercentage <= 10) {
+      return 'warning';
+    } else {
+      return 'success';
+    }
+  }
+   
+ closePopup(){
+   //this.popover.dismiss();
+   this.dialog.closeAll();
+ 
+ }
 
 
 }

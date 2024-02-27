@@ -27,6 +27,9 @@ import { HeaderComponent } from "./header/header.component";
 import {MatIconModule} from '@angular/material/icon'
 import { TaskGraphComponent } from "./task/task-graph/task-graph.component";
 import { NgChartsModule } from 'ng2-charts';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { MainComponent } from "./main/main.component";
+
 @NgModule({
   declarations: [
     HomepageComponent,
@@ -43,7 +46,8 @@ import { NgChartsModule } from 'ng2-charts';
     ImportModalComponent,
     DateFormatPipe,
     HeaderComponent,
-    TaskGraphComponent
+    TaskGraphComponent,
+    MainComponent
   ],
   imports: [
     CommonModule,
@@ -54,8 +58,27 @@ import { NgChartsModule } from 'ng2-charts';
     MatDialogModule,
     ReactiveFormsModule,
     MatIconModule,
-    NgChartsModule
+    NgChartsModule,
+    MatSidenavModule
     
+  ],
+  exports:[
+    HomepageComponent,
+    SideBarComponent,
+    AddClientModelComponent,
+    TableFilterPipe,
+    TaskModalComponent,
+    ClientDeleteComponent,
+    ClientUpdateComponent,
+    SprintDashboardComponent,
+    TaskListComponent,
+    FilterPipe,
+    TableShortPipe,
+    ImportModalComponent,
+    DateFormatPipe,
+    HeaderComponent,
+    TaskGraphComponent,
+    MainComponent
   ],
   providers: [
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } },

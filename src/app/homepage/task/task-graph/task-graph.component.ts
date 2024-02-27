@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SprintService } from 'src/app/services/sprint.service';
 import { TaskService } from 'src/app/services/task.service';
 
 @Component({
@@ -11,11 +12,13 @@ export class TaskGraphComponent implements OnInit {
   barChartData: any[] = [];
   barChartLabels: any[] = [];
 
-  constructor(private taskService: TaskService) { }
+  constructor(private sprintService: SprintService
+    ) { }
 
   ngOnInit() {
-    this.taskService.sharedItem$.subscribe((res) => {
+    this.sprintService.sharedItem$.subscribe((res) => {
       this.taskData = res;
+      console.log(res);
       this.updateChart();
     });
   }
@@ -23,11 +26,11 @@ export class TaskGraphComponent implements OnInit {
   updateChart() {
     // Update chart data and labels based on taskData
     this.barChartData = [
-      { data: [this.taskData.aiEstimate], label: 'AI estimate', backgroundColor: 'yellow' },
-      { data: [this.taskData.originalEstimate], label: 'Original estimate', backgroundColor: 'black' },
+      { data: [this.taskData.sumOfAiEstimate], label: 'AI estimate', backgroundColor: 'yellow' },
+      { data: [this.taskData.sumOfOriginalEstimate], label: 'Original estimate', backgroundColor: 'black' },
     ];
 
-    this.barChartLabels = [this.taskData.taskId];
+    this.barChartLabels = ["Sprint id:"+this.taskData.sprintId];
   }
 
   public barChartOptions = {

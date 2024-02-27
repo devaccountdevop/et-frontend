@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './login/login/login.component';
-import { SignupComponent } from './login/signup/signup.component';
 import { protectGuard } from './interceptor/auth.guard';
 
 const routes: Routes = [
@@ -15,7 +13,7 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'estimation-tool/homepage',
+    path: 'estimation-tool',
     canMatch:[protectGuard],
     loadChildren: () => import('./homepage/homepage.module').then( m => m.HomepageModule)
   },

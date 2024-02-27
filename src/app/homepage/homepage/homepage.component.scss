@@ -3,7 +3,7 @@
 }
 ion-header {
   background-color: rgba(26, 74, 96, 0.9);
-  height: 7%;
+  height: 45px;
  // color: white;
   //display: flex;
 }
@@ -342,4 +342,19 @@ ion-card:hover {
   right: 0; 
   color: green;
   margin: 5px; 
+}
+.sidebar{
+  margin-left: -50px;
+}
+
+ion-col.menu-open {
+margin-left: 220px;
+}
+.main-col{    
+  margin: 0px;
+   height: 100%;
+   color: black;
+   background-color: white;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+ 
 }

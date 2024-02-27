@@ -1,27 +1,25 @@
-<ion-row style="color: white;">
-  <ion-menu-toggle style="margin: 0px;padding: 0px;">
-    <ion-button fill="clear">
-      <span class="menu">&#9776;</span>
-    </ion-button>
-  </ion-menu-toggle>
+<ion-row class="main">
 
-  <ion-button fill="clear">
+  <ion-button mat-icon-button (click)="onToggleSidebar()" fill="clear">
+    <span class="menu">&#9776;</span>
+  </ion-button>
+
+  <ion-button (click)="landingPage()" fill="clear">
     <ion-icon class="homeicon" name="home-sharp"></ion-icon>
   </ion-button>
   <ion-title class="title">Estimation Tool</ion-title>
+
   <div class="dropdown">
     <ion-buttons>
       <ion-button class="text-white mr-3 mt-2 text-capitalize" (click)="toggleDropdown()" fill="clear">
-        <ion-icon style="width: 22px; height: 22px" class="mr-2" name="person-circle-outline"></ion-icon>
-        <p
-          style="font-family: Roboto; font-size: 13px; font-weight: 400; line-height: 23px; letter-spacing: 0em; text-align: left; margin-bottom: 0px;">
-         {{this.userName}}</p>
+        <ion-icon class=" profile mr-2" name="person-circle-outline"></ion-icon>
+        <p class="username">
+          {{this.userName}}</p>
         <ion-icon class="ml-2" name="chevron-down-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
     <div class="dropdown-content" [ngClass]="{ show: isDropdownOpen }">
-      <a style="cursor: pointer" (click)="logout()">Logout</a>
+      <a class="logout-btn" (click)="logout()">Logout</a>
     </div>
   </div>
-
 </ion-row>

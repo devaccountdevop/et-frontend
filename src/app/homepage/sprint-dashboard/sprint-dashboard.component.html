@@ -1,172 +1,10 @@
 <ion-app>
-  <ion-header>
-    <!-- <ion-menu-toggle>
-      <ion-button class="menubutton" fill="clear"
-        ><span class="menu">&#9776;</span></ion-button
-      >
-    </ion-menu-toggle>
-    <ion-button (click)="landingPage()" fill="clear"
-      ><ion-icon class="homeicon" name="home-sharp"></ion-icon
-    ></ion-button>
-    <ion-title
-      style="
-        font-family: Roboto;
-        font-size: 22px;
-        font-weight: 400;
-        line-height: 26px;
-        letter-spacing: 0em;
-        text-align: left;
-        padding-left: 0px;
-      "
-      >Estimation Tool</ion-title
-    >
-  
-    <div class="dropdown">
-      <ion-buttons>
-        <ion-button
-          class="text-white mr-3 mt-2 text-capitalize"
-          (click)="toggleDropdown()"
-          fill="clear"
-        >
-          <ion-icon
-            style="width: 22px; height: 22px"
-            class="mr-2"
-            name="person-circle-outline"
-          ></ion-icon>
-          <p
-            style="
-              font-family: Roboto;
-              font-size: 13px;
-              font-weight: 400;
-              line-height: 23px;
-              letter-spacing: 0em;
-              text-align: left;
-              margin-bottom: 0px;
-            "
-          >
-            Admin
-          </p>
-          <ion-icon class="ml-2" name="chevron-down-outline"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-      <div class="dropdown-content" [ngClass]="{ show: isDropdownOpen }">
-        <a style="cursor: pointer" (click)="logout()">Logout</a>
-      </div>
-    </div> -->
-    <app-header></app-header>
-  </ion-header>
+ 
   <ion-content style="overflow-x: hidden">
     <ion-row style="height: 100%">
+     
       <ion-col
-        size="2"
-        style="
-          margin: 0px;
-          background-color: white;
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-          height: 100%;
-        "
-      >
-        <ion-row
-          style="
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-            text-align: left;
-          "
-        >
-          <ion-col style="background-color: white; color: black; display: flex">
-            <img
-              src="/assets/images/Dashboard.png"
-              alt="Your Image"
-              style="width: 25px; height: 25px; margin-right: 10px"
-            />
-            <p
-              style="
-                margin-bottom: 0px;
-                font-family: Roboto;
-                font-size: 18px;
-                font-weight: 500;
-                line-height: 25px;
-                letter-spacing: 0px;
-                text-align: left;
-                color: rgba(26, 74, 96, 1);
-              "
-            >
-              Dashboard
-            </p>
-          </ion-col>
-        </ion-row>
-        <ion-row
-          style="
-            display: flex;
-            justify-content: center;
-            margin-top: -10px;
-            text-align: left;
-          "
-        >
-          <ion-col style="background-color: white; color: black; display: flex">
-            <img
-              src="/assets/images/journals (1).png"
-              alt="Your Image"
-              style="
-                width: 25px;
-                height: 25px;
-                margin-right: 10px;
-                fill: #a1a1a1;
-              "
-            />
-            <p
-              style="
-                margin-bottom: 0px;
-                font-family: Roboto;
-                font-size: 18px;
-                font-weight: 300;
-                line-height: 25px;
-                letter-spacing: 0px;
-                text-align: left;
-                color: rgba(0, 0, 0, 1);
-              "
-            >
-              Projects
-            </p>
-          </ion-col>
-        </ion-row>
-        <!-- <ion-row style="
-            display: flex;
-            justify-content: center;
-            margin-top: -10px;
-            text-align: left;
-          ">
-          <ion-col style="background-color: white; color: black">
-            <img src="/assets/images/Vector.png" alt="Your Image" style="margin-bottom: -6px; margin-right: 10px" />
-            User
-          </ion-col>
-        </ion-row>
-        <ion-row style="
-            display: flex;
-            justify-content: center;
-            margin-top: -10px;
-            text-align: left;
-          ">
-          <ion-col style="background-color: white; color: black">
-            <img src="/assets/images/Vector (1).png" alt="Your Image" style="margin-bottom: -6px; margin-right: 10px" />
-            Report
-          </ion-col>
-        </ion-row>
-        <ion-row style="
-            display: flex;
-            justify-content: center;
-            margin-top: -10px;
-            text-align: left;
-          ">
-          <ion-col style="background-color: white; color: black">
-            <img src="/assets/images/Settings.png" alt="Your Image" style="margin-bottom: -6px; margin-right: 10px" />
-            Setting
-          </ion-col>
-        </ion-row> -->
-      </ion-col>
-      <ion-col
-        size="10"
+        size="12"
         style="
           margin: 0px;
           height: 100%;
@@ -333,7 +171,11 @@
                       <ion-card-content class="card-content">{{
                         item.sprintName
                       }} 
-                     <mat-icon class="check-icon" [ngClass]="{ 'error': getIcon(i) === 'error', 'warning': getIcon(i) === 'warning','check_circle': getIcon(i) === 'check_circle' }">{{ getIcon(i) }}</mat-icon>
+                   <mat-icon (mouseenter)="openGraphPopup($event, item)" (mouseleave)="closePopup()" [ngClass]="getIconColor(item.sumOfOriginalEstimate, item.sumOfAiEstimate)">
+                    {{ getIconColor(item.sumOfOriginalEstimate, item.sumOfAiEstimate) === 'error' ? 'error' :
+                       getIconColor(item.sumOfOriginalEstimate, item.sumOfAiEstimate) === 'warning' ? 'warning' :
+                       'check_circle' }}
+                  </mat-icon>
 
 
                      
@@ -358,10 +200,4 @@
       </ion-col>
     </ion-row>
   </ion-content>
-
-  <ion-footer>
-    <ion-title style="text-align: end; font-size: medium"
-      >Copyright Text</ion-title
-    >
-  </ion-footer>
 </ion-app>
