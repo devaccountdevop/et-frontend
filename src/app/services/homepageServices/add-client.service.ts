@@ -15,7 +15,13 @@ export class AddClientService {
 
   constructor(private http: HttpClient) { }
 
+ 
+  
 
+  setClientList(item: any) {
+    this.clientListSubject.next(item);
+  
+  }
   public saveClient( formData:FormData): Observable<any> {
     const fullApiUrl = this.apiUrl + "/saveclient";
     return this.http.post<any>(fullApiUrl, formData);

@@ -12,10 +12,12 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
 import { SpinnerComponent } from './spinner/spinner/spinner.component';
 import { SpinnerInterceptor } from './interceptor/spinner.interceptor';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Import BrowserAnimationsModule
+import { DashboardComponent } from './dashboard/dashboard.component';
 @NgModule({
-  declarations: [AppComponent,SpinnerComponent ],
+  declarations: [AppComponent,SpinnerComponent, DashboardComponent ],
   imports: [BrowserModule, 
+    BrowserAnimationsModule,
     IonicModule.forRoot(), 
     AppRoutingModule,
     LoginModule,

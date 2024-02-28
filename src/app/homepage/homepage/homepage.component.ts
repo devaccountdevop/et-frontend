@@ -8,6 +8,8 @@ import { Router } from "@angular/router";
 import { AuthenticationService } from "src/app/services/authentication.service";
 import { ImportModalComponent } from "../import-modal/import-modal.component";
 import { CommanLoaderService } from "src/app/services/comman-loader.service";
+import { Observable } from "rxjs";
+import { MenuService } from "src/app/services/menu.service";
 
 @Component({
   selector: "app-homepage",
@@ -59,6 +61,10 @@ export class HomepageComponent implements OnInit {
       this.clientList.push(...res);
     });
     this.getClientByUserId(this.UserDetails?.id);
+    this.clientService.clientList$.subscribe((res)=>{
+      this.clientList.length = 0;
+      this.clientList.push(...res); 
+    })
   }
   getClientByUserId(Userid: any) {
     this.clientService.getClientByUserId(Userid).subscribe((clientRes) => {
@@ -165,7 +171,7 @@ export class HomepageComponent implements OnInit {
   }
 
   getSprints(name: any, projectId: number) {
-    this.router.navigate(["estimation-tool/homepage/sprintdashboard"], {
+    this.router.navigate(["estimation-tool/sprintdashboard"], {
       queryParams: {
         projectId: projectId,
         clientId: this.clientId,
@@ -191,5 +197,10 @@ export class HomepageComponent implements OnInit {
       console.log("The dialog was closed");
       this.getClientByUserId(this.UserDetails?.id);
     });
+  }
+  iconList = ["check_circle", "error", "warning"];
+
+  getIcon(index: number): string {
+    return this.iconList[index % this.iconList.length];
   }
 }
