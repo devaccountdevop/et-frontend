@@ -171,7 +171,8 @@
                       <ion-card-content class="card-content">{{
                         item.sprintName
                       }} 
-                   <mat-icon (mouseenter)="openGraphPopup($event, item)" (mouseleave)="closePopup()" [ngClass]="getIconColor(item.sumOfOriginalEstimate, item.sumOfAiEstimate)">
+                      <!--  -->
+                   <mat-icon (mouseover)="openGraphPopup($event, item)" (mouseout)="closePopup()"  [ngClass]="getIconColor(item.sumOfOriginalEstimate, item.sumOfAiEstimate)">
                     {{ getIconColor(item.sumOfOriginalEstimate, item.sumOfAiEstimate) === 'error' ? 'error' :
                        getIconColor(item.sumOfOriginalEstimate, item.sumOfAiEstimate) === 'warning' ? 'warning' :
                        'check_circle' }}

@@ -145,31 +145,47 @@ getIcon(index: number): string {
    //}
  
    openGraphPopup(event: MouseEvent, item: any) {
-     this.sprintService.setSharedItem(item);
-     const offsetX = 470; 
-     const offsetY = 250; 
-     
-     const clientX = event.clientX;
-     const clientY = event.clientY;
-     const viewportHeight = window.innerHeight;
-     
-     let positionTop = clientY;
-     if (clientY + offsetY > viewportHeight) {
-       
-       positionTop = viewportHeight - offsetY;
-     }
-   
-     let dialogRef = this.dialog.open(TaskGraphComponent, {
-       width: "450px",
-       height: "225px",
-       data: { item },
-       hasBackdrop: false,
-       position: { left: (clientX - offsetX) + 'px', top: positionTop + 'px' },
-     });
-     dialogRef.afterClosed().subscribe((result) => { 
-      
-     });
-   }
+    this.sprintService.setSharedItem(item);
+  
+    const offsetX = 470;
+    const offsetY = 360;
+  
+    const clientX = event.clientX;
+    const clientY = event.clientY;
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+  
+    let positionLeft = clientX - offsetX;
+    let positionTop = clientY;
+  
+    // Adjust position if dialog goes off the screen on the right
+    if (positionLeft + 500 > viewportWidth) {
+      positionLeft = viewportWidth - 500;
+    }
+  
+    // Adjust position if dialog goes off the screen on the bottom
+    if (positionTop + offsetY > viewportHeight) {
+      positionTop = viewportHeight - offsetY;
+    }
+  
+    // Adjust position if dialog goes off the screen on the left
+    if (positionLeft < 0) {
+      positionLeft = 0;
+    }
+  
+    let dialogRef = this.dialog.open(TaskGraphComponent, {
+      width: "400px",
+      height: "310px",
+      data: { item },
+      hasBackdrop: false,
+      position: { left: positionLeft + 'px', top: positionTop + 'px' },
+    });
+  
+    dialogRef.afterClosed().subscribe((result) => {
+      // Handle dialog close if needed
+    });
+  }
+  
    getIconColor(originalEstimate: number, aiEstimate: number): string {
     const differencePercentage = (originalEstimate - aiEstimate) / aiEstimate * 100;
     
