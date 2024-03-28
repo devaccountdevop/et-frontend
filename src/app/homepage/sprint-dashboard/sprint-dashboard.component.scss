@@ -266,3 +266,17 @@ ion-card:hover {
   margin: 5px; 
 }
 
+/* This is your component's CSS file */
+.graph-popup {
+  display: none;
+  position: absolute;
+  width: 300px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  padding: 10px;
+  z-index: 1; /* Ensure popup is above other content */
+}
+
+.mat-icon:hover + .graph-popup {
+  display: block;
+}
