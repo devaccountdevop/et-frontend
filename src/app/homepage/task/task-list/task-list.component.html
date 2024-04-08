@@ -10,7 +10,7 @@
         ">
         <div class="innerbox">
           <ion-row class="subheader" style="align-items: center; margin-bottom: 20px">
-            <ion-col size="6" style="background-color: white; border: 0%; margin: 0%">
+            <ion-col size="5.5" style="background-color: white; border: 0%; margin: 0%">
               <button (click)="updateEstimatesInJira()" class="updatebtn">
                 Update Ai Estimates In Jira
                 <ion-icon name="checkmark-outline" style="font-size: medium; margin-bottom: -2px"></ion-icon>
@@ -21,14 +21,14 @@
                   <ion-icon style="margin-left: 5px; margin-bottom: -1.7px"
                     name="sync-outline"></ion-icon></button></span>
             </ion-col>
-            <ion-col size="2" style="background-color: white; border: 0%; margin: 0%">
+            <ion-col size="2.5" style="background-color: white; border: 0%; margin: 0%">
               <span style="
                   background-color: white;
                   border: 0%;
                   margin: 0%;
                   color: rgb(63, 61, 61);
                 ">
-                <b>Dashboard</b></span></ion-col>
+                <b>Sprint: {{sprintName}}</b></span></ion-col>
             <ion-col size="4" style="
                 background-color: white;
                 border: 0%;
@@ -43,26 +43,39 @@
           </ion-row>
           <ion-row>
             <ion-col
-            class="show_count selector-col"
-            size="6"
-        
-          >
-            <p class="show-text">Show</p>
-            <select
-             class="input-select"
-              [(ngModel)]="pageFilterDefault"
+              class="show_count d-flex"
+              size="4.5"
+             
             >
-              <option *ngFor="let item of pageFilter" [value]="item.code">
-                {{ item.name }}
-              </option>
-            </select>
-            <span>
-              <p class="entries">
-                entries
-              </p>
-            </span>
-          </ion-col>
-            <ion-col size="6" style="
+              <p class="show-text">Show</p>
+              <select
+                class="input-select"
+               style=" width: 70px;
+               height: 20px;"
+                [(ngModel)]="pageFilterDefault"
+              >
+                <option *ngFor="let item of pageFilter" [value]="item.code">
+                  {{ item.name }}
+                </option>
+              </select>
+              <span>
+                <p class="entries" >
+                  entries
+                </p>
+              </span>
+            </ion-col>
+            <ion-col size="4.5" style="
+            background-color: white;
+            border: 0%;
+            margin: 0%;
+            display: flex;
+            justify-content: start;
+            color: black;
+          ">
+          <p *ngIf="sprintStartDate != null && sprintEndDate != null" style="color: rgb(63, 61, 61); font-size: small; text-align: left;" > <b>start & end date: [{{sprintStartDate | date: "short"}} to {{sprintEndDate | date:"short"}}]</b>  </p>
+         
+        </ion-col>
+            <ion-col size="3" style="
                 background-color: white;
                 border: 0%;
                 margin: 0%;
@@ -70,7 +83,7 @@
                 justify-content: end;
                 color: black;
               ">
-              <p style="margin-bottom: 0px">{{ this.sprintName }}</p>
+              <!-- <p style="margin-bottom: 0px; font-size: small; text-align: left;" > Sprint Start & end Date</p> -->
               <p style="
                   font-size: small;
                   text-align: start;

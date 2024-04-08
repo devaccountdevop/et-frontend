@@ -296,17 +296,28 @@ tr:nth-child(even) {
 }
 .input-select{
  
-  width: 70px;
-  height: 20px;
+ 
   color: black;
   margin-left: 3px;
   font-size: 13px;
 
 }
-.show_count[_ngcontent-ng-c2859058665] select[_ngcontent-ng-c2859058665] {
+.show_count  {
 
-  width: 70px;
-  height: 20px;
+ 
+  // width: 70px;
+  // height: 20px;
+
+  background-color: white;
+  border-radius: 0%;
+  margin: 0%;
+  display: flex;
+  justify-content: start;
+  padding-left: 19px;
+  color: black;
+
 }
+
+
 
 

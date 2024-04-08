@@ -1,14 +1,4 @@
-<ion-app>
-  <!-- <div class="main">
-    <canvas baseChart 
-            [datasets]="barChartData" 
-            [labels]="barChartLabels" 
-            [options]="barChartOptions"
-            [legend]="barChartLegend"
-            chartType="bar">
-    </canvas>
-  </div>  -->
-
+<ion-app  (mouseenter)="onMouseEnterDialog()" (mouseleave)="onMouseLeaveDialog()">
   <div class="convas " >
     <div class="main-div">
     <div class="convas-div">
@@ -16,7 +6,7 @@
       </canvas>
       
     </div>
-<table class="table-data"> 
+<!-- <table class="table-data"> 
   <tr> 
       <td style="border: none;" > No of days </td> 
       <td>D1</td> 
@@ -113,9 +103,47 @@
     <td>50</td>   
    
   </tr> 
-</table> 
+</table>  -->
+<div class="table-data">
+<table  >
+  <tr>
+    <td>Total Estimate (3-Point)</td>
+    <td>{{totalThreePointEstimate}}</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Actual To Date</td>
+    <td>{{totalActualEstimate}}</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Remaining</td>
+<td style="display: flex;">{{totalRemaining}}
+      <!-- <mat-icon style="font-size: 17px; color: green; height: 17px; margin-left: 10px;margin-top: 1px;" >
+      check_circle
+ </mat-icon>  -->
+</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>AI Estimate</td>
+    <td>{{totalSumOfAiEstimate}}</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Average Velocity/Day</td>
+    <td></td>
+    <td>{{averageVelocity}}</td>
+  </tr>
+  <tr>
+    <td>Average Risk Factor</td>
+    <td></td>
+    <td>{{totalRiskFactors}}</td>
+  </tr>
+</table>
 </div>
-<div class="velocity">
+</div>
+<!-- <div class="velocity">
   <table style="font-size: small;">
     <tr>
       <td class="velocity-col1">0.92</td>
@@ -123,7 +151,7 @@
      
     </tr>
   </table>
-</div>
+</div> -->
 
 </div>
 
