@@ -17,8 +17,12 @@ import { PopoverController } from "@ionic/angular";
 export class TaskListComponent implements OnInit {
   projectId:any;
   projectName:any;
+  projectStartDate:any;
+  projectEndDate:any;
   sprintId: any;
-  sprintName: any = "et-Sprint 1";
+  sprintStartDate:any;
+sprintEndDate:any;
+  sprintName: any ;
   pageListNo = 15;
   menuType: string = "reveal";
   isModalOpen: boolean = false;
@@ -80,6 +84,10 @@ export class TaskListComponent implements OnInit {
       this.sprintName = params["sprintName"];
       this.projectId = params["projectId"];
       this.clientId = params["clientId"];
+      this.sprintStartDate= params["startDate"];
+      this.sprintEndDate= params["endDate"];
+      this.projectStartDate=  params["projectStartDate"]
+      this.projectEndDate=  params["projectEndDate"]
     });
     if (this.sprintId !== 0) {
      this.getTaskBySprintId(this.sprintId,this.projectId);
@@ -108,6 +116,11 @@ export class TaskListComponent implements OnInit {
           this.sprintId = params["sprintId"];
           this.sprintName = params["sprintName"];
           this.projectId = params["projectId"];
+          this.clientId = params["clientId"];
+          this.sprintStartDate= params["startDate"];
+          this.sprintEndDate= params["endDate"];
+          this.projectStartDate=  params["projectStartDate"]
+          this.projectEndDate=  params["projectEndDate"]
         });
         if(this.sprintId&&this.projectId){this.getTaskBySprintId(this.sprintId,this.projectId);}
        }
@@ -127,6 +140,7 @@ export class TaskListComponent implements OnInit {
   }
   landingPage() {
     this.route.navigate(["/estimation-tool/"]);
+    
   }
   sortData(column: string) {
     if (this.sortedColumn === column) {
@@ -214,8 +228,8 @@ export class TaskListComponent implements OnInit {
   }
 
   goBack(): void {
-    this.route.navigate(["estimation-tool/sprintdashboard"], {
-      queryParams: { projectId: this.projectId,clientId:this.clientId,projectName: this.projectName },
+    this.route.navigate(["estimation-tool/sprintdashboard"],  {
+      queryParams: { sprintId:this.sprintId,  sprintName:this.sprintName, projectId: this.projectId,clientId:this.clientId,projectName: this.projectName, projectStartDate:this.projectStartDate, projectEndDate:this.projectEndDate},
     });
   }
 

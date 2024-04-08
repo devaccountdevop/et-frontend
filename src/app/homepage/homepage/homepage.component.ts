@@ -170,12 +170,14 @@ export class HomepageComponent implements OnInit {
     });
   }
 
-  getSprints(name: any, projectId: number) {
+  getSprints(item:any) {
     this.router.navigate(["estimation-tool/sprintdashboard"], {
       queryParams: {
-        projectId: projectId,
+        projectId: item.projectId,
         clientId: this.clientId,
-        projectName: name,
+        projectName: item.projectName,
+        projectStartDate: item.projectStartDate,
+        projectEndDate: item.projectEndDate
       },
     });
   }

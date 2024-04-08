@@ -17,18 +17,18 @@ import { TaskGraphComponent } from '../task/task-graph/task-graph.component';
 export class SprintDashboardComponent  implements OnInit {
   projectName:any;
   projectId:any;
+  projectStartDate:any;
+  projectEndDate: any;
   pageListNo = 15;
   clientId: any;
   menuType: string = "reveal";
   isModalOpen: boolean = false;
   isDropdownOpen = false;
   id: any = 45;
-  // Pagination variables
   p: number = 1;
   searchText: any;
   sprintsList: Project[] = [];
 
-  // clientList: any[] = [];
   pageFilter = [
     { code: "15", name: "15" },
     { code: "30", name: "30" },
@@ -52,7 +52,9 @@ export class SprintDashboardComponent  implements OnInit {
     this.router.queryParams.subscribe(params => {
       this.projectId = params['projectId'];
       this.projectName = params['projectName'];
-      this.clientId = params['clientId']
+      this.clientId = params['clientId'],
+      this.projectStartDate = params['projectStartDate'],
+      this.projectEndDate = params['projectEndDate']
    });
    if(this.projectId !== 0){
    this.getSprints(this.projectId)
@@ -91,7 +93,6 @@ export class SprintDashboardComponent  implements OnInit {
     this.isModalOpen = isOpen;
   }
   loadItems() {
-    // Simulated data loading
     this.sprintsList = [];
   }
 
@@ -100,7 +101,7 @@ export class SprintDashboardComponent  implements OnInit {
   }
 
   optionSelected() {
-    console.log(this.pageFilterDefault); // This will print the selected option's value
+    console.log(this.pageFilterDefault); 
   }
   logout() {
     this.authService.logout();
@@ -112,20 +113,11 @@ export class SprintDashboardComponent  implements OnInit {
   }
   getTask(item:any){
     this.route.navigate(["estimation-tool/tasklist"], {
-      queryParams: { sprintId:item.sprintId,  sprintName:item.summary, projectId: this.projectId,clientId:this.clientId,projectName: this.projectName},
+      queryParams: { sprintId:item.sprintId,  sprintName:item.sprintName, projectId: this.projectId,clientId:this.clientId,projectName: this.projectName, startDate:item.startDate, endDate:item.endDate, projectStartDate:this.projectStartDate, projectEndDate:this.projectEndDate},
     });
-    
+     this.dialog.closeAll();
   }
-   checkNumber(number: number): string {
-    if (number % 2 === 0) {
-        return "green"; // Even number
-    } else if (number % 3 === 0) {
-        return "blue"; // Divisible by 3
-    } else {
-        return "red"; // Odd number
-    }
-    
-}
+ 
 iconList = ['check_circle', 'error', 'warning'];
 
 getIcon(index: number): string {
@@ -142,7 +134,7 @@ getIcon(index: number): string {
 //   await modal.present();
 //   await modal.onDidDismiss();
 //   console.log("The modal was dismissed");
-   //}
+//    }
  
    openGraphPopup(event: MouseEvent, item: any) {
     this.sprintService.setSharedItem(item);
@@ -177,7 +169,7 @@ getIcon(index: number): string {
       width: "400px",
       height: "310px",
       data: { item },
-      hasBackdrop: false,
+      hasBackdrop: true,
       position: { left: positionLeft + 'px', top: positionTop + 'px' },
     });
   
@@ -186,6 +178,48 @@ getIcon(index: number): string {
     });
   }
   
+
+  // openGraphPopup(event: MouseEvent, item: any) {
+  //   this.sprintService.setSharedItem(item);
+  
+  //   const offsetX = 480;
+  //   const offsetY = 360;
+  
+  //   const clientX = event.clientX;
+  //   const clientY = event.clientY;
+  //   const viewportWidth = window.innerWidth;
+  //   const viewportHeight = window.innerHeight;
+  
+  //   let positionLeft = clientX - offsetX;
+  //   let positionTop = clientY;
+  
+  //   // Adjust position if dialog goes off the screen on the right
+  //   if (positionLeft + 500 > viewportWidth) {
+  //     positionLeft = viewportWidth - 500;
+  //   }
+  
+  //   // Adjust position if dialog goes off the screen on the bottom
+  //   if (positionTop + offsetY > viewportHeight) {
+  //     positionTop = viewportHeight - offsetY;
+  //   }
+  
+  //   // Adjust position if dialog goes off the screen on the left
+  //   if (positionLeft < 0) {
+  //     positionLeft = 0;
+  //   }
+  
+  //   let dialogRef = this.dialog.open(TaskGraphComponent, {
+  //     width: "470px",
+  //     height: "310px",
+  //     data: { item },
+  //     hasBackdrop: true,
+  //     position: { left: positionLeft + 'px', top: positionTop + 'px' },
+  //   });
+  
+  //   dialogRef.afterClosed().subscribe((result) => {
+  //     // Handle dialog close if needed
+  //   });
+  // }
    getIconColor(originalEstimate: number, aiEstimate: number): string {
     const differencePercentage = (originalEstimate - aiEstimate) / aiEstimate * 100;
     
@@ -199,10 +233,6 @@ getIcon(index: number): string {
   }
    
  closePopup(){
-   //this.popover.dismiss();
    this.dialog.closeAll();
- 
  }
-
-
 }
