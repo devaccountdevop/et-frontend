@@ -29,6 +29,7 @@ import { TaskGraphComponent } from "./task/task-graph/task-graph.component";
 import { NgChartsModule } from 'ng2-charts';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { MainComponent } from "./main/main.component";
+import { ProjectGraphComponent } from "./homepage/project-graph/project-graph.component";
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { MainComponent } from "./main/main.component";
     DateFormatPipe,
     HeaderComponent,
     TaskGraphComponent,
-    MainComponent
+    MainComponent,
+    ProjectGraphComponent
   ],
   imports: [
     CommonModule,

@@ -44,7 +44,7 @@
           <ion-row>
             <ion-col
               class="show_count d-flex"
-              size="4.5"
+              size="4.7"
              
             >
               <p class="show-text">Show</p>
@@ -64,7 +64,7 @@
                 </p>
               </span>
             </ion-col>
-            <ion-col size="4.5" style="
+            <ion-col size="4.3" style="
             background-color: white;
             border: 0%;
             margin: 0%;
@@ -72,7 +72,7 @@
             justify-content: start;
             color: black;
           ">
-          <p *ngIf="sprintStartDate != null && sprintEndDate != null" style="color: rgb(63, 61, 61); font-size: small; text-align: left;" > <b>start & end date: [{{sprintStartDate | date: "short"}} to {{sprintEndDate | date:"short"}}]</b>  </p>
+          <p *ngIf="sprintStartDate != null && sprintEndDate != null" style="color: black; font-size: small; text-align: left;" > Start & End Date: [ {{sprintStartDate | date:"mediumDate"}} To {{sprintEndDate | date:"mediumDate"}} ]  </p>
          
         </ion-col>
             <ion-col size="3" style="
