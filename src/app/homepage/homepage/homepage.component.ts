@@ -10,6 +10,7 @@ import { ImportModalComponent } from "../import-modal/import-modal.component";
 import { CommanLoaderService } from "src/app/services/comman-loader.service";
 import { Observable } from "rxjs";
 import { MenuService } from "src/app/services/menu.service";
+import { ProjectGraphComponent } from "./project-graph/project-graph.component";
 
 @Component({
   selector: "app-homepage",
@@ -22,6 +23,7 @@ export class HomepageComponent implements OnInit {
   isModalOpen: boolean = false;
   isDropdownOpen = false;
   selectedOption: any;
+  showDiv: boolean = false;
   // Pagination variables
   p: number = 1;
   searchText: any;
@@ -56,6 +58,10 @@ export class HomepageComponent implements OnInit {
         this.getProjectList(clientId);
       } else {
         this.projectList = [];
+        setTimeout(() => {
+          this.showDiv = true;
+      }, 1000); // Delay for 2 seconds (2000 milliseconds)
+  
       }
       this.clientList.length = 0;
       this.clientList.push(...res);
@@ -77,6 +83,10 @@ export class HomepageComponent implements OnInit {
           this.getProjectList(clientId);
         } else {
           this.projectList = [];
+          setTimeout(() => {
+            this.showDiv = true;
+        }, 1000); // Delay for 2 seconds (2000 milliseconds)
+    
         }
       }
     });
@@ -89,6 +99,10 @@ export class HomepageComponent implements OnInit {
         this.projectList = projectsRes.data;
       } else {
         this.projectList = [];
+        setTimeout(() => {
+          this.showDiv = true;
+      }, 1000); // Delay for 2 seconds (2000 milliseconds)
+  
       }
     });
     console.log(this.clientId);
@@ -100,7 +114,7 @@ export class HomepageComponent implements OnInit {
         if (res.code == 200) {
           this.getProjectList(this.clientId);
           this.getClientByUserId(this.UserDetails?.id);
-          if (res.data !== null) {
+          if (res.data !== null &&  res.data.length>0) {
             this.updatedProject = res.data;
             let projectIds = this.updatedProject
               .map((project) => project.projectId)
@@ -126,7 +140,7 @@ export class HomepageComponent implements OnInit {
             this.commonService.presentToast(
               "Syncing is completed",
               3000,
-              "toast-success-mess"
+              "toast-succuss-mess"
             );
           }
         } else if (res.code == 401) {
@@ -149,6 +163,10 @@ export class HomepageComponent implements OnInit {
           this.projectList = res.data;
         } else {
           this.projectList = [];
+          setTimeout(() => {
+            this.showDiv = true;
+        }, 1000); // Delay for 2 seconds (2000 milliseconds)
+    
         }
       });
     }
@@ -198,6 +216,48 @@ export class HomepageComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       console.log("The dialog was closed");
       this.getClientByUserId(this.UserDetails?.id);
+    });
+  }
+
+  openGraphPopup(event: MouseEvent, item: any) {
+     this.projectService.setSharedItem(item);
+  
+    const offsetX = 470;
+    const offsetY = 360;
+  
+    const clientX = event.clientX;
+    const clientY = event.clientY;
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+  
+    let positionLeft = clientX - offsetX;
+    let positionTop = clientY;
+  
+    // Adjust position if dialog goes off the screen on the right
+    if (positionLeft + 500 > viewportWidth) {
+      positionLeft = viewportWidth - 500;
+    }
+  
+    // Adjust position if dialog goes off the screen on the bottom
+    if (positionTop + offsetY > viewportHeight) {
+      positionTop = viewportHeight - offsetY;
+    }
+  
+    // Adjust position if dialog goes off the screen on the left
+    if (positionLeft < 0) {
+      positionLeft = 0;
+    }
+  
+    let dialogRef = this.dialog.open(ProjectGraphComponent, {
+      width: "410px",
+      height: "220px",
+      data: { item },
+      hasBackdrop: true,
+      position: { left: positionLeft + 'px', top: positionTop + 'px' },
+    });
+  
+    dialogRef.afterClosed().subscribe((result) => {
+      // Handle dialog close if needed
     });
   }
   iconList = ["check_circle", "error", "warning"];

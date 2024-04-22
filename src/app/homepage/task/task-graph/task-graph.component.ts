@@ -80,7 +80,10 @@ export class TaskGraphComponent implements OnInit {
           } else {
             this.AiEstimateForChart.push(0);
           }
-          this.labels.push("D" + (i + 1));
+    const dateParts = key.split('-');
+    const dateObject = new Date(`${dateParts[0]}-${dateParts[1]}-${dateParts[2]}`);
+    const formattedDate = dateObject.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+    this.labels.push(formattedDate);
         }
 
         this.AiEstimateForChart.forEach((val) => {
@@ -290,7 +293,9 @@ export class TaskGraphComponent implements OnInit {
           data: this.actualForChart,
           backgroundColor: "rgb(251, 194, 0)",
           borderColor: "rgb(251, 194, 0)",
-
+         pointStyle:"circle",
+         
+         
           hoverBackgroundColor: "orange",
         },
       ],

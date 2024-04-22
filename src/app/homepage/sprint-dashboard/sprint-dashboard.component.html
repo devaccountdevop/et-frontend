@@ -18,14 +18,18 @@
             class="subheader"
             style="align-items: center; margin-bottom: 10px"
           >
+
+          <ion-col size="5.5" style="background-color: white; border: 0%; margin: 0%">
+          
+          </ion-col>
             <ion-col
-              size="7"
+              size="3.5"
               style="
                 background-color: white;
                 border-radius: 0%;
                 margin: 0%;
                 display: flex;
-                justify-content: end;
+               
               "
             >
               <span style="color: rgb(63, 61, 61)">
@@ -33,7 +37,7 @@
               ></ion-col
             >
             <ion-col
-              size="5"
+              size="3"
               style="
                 background-color: white;
                 border-radius: 0%;
@@ -58,7 +62,7 @@
           >
             <ion-col
               class="show_count d-flex"
-              size="4.5"
+              size="5"
               style="
                 background-color: white;
                 border-radius: 0%;
@@ -92,8 +96,8 @@
               </span>
             </ion-col>
 
-            <ion-col size="4.5" class="sprint-date-col">
-          <p *ngIf="projectStartDate != null && projectEndDate != null" class="sprint-date" > <b>start & end date: [{{projectStartDate | date: "short"}} to {{projectEndDate | date:"short"}}]</b>  </p>
+            <ion-col size="4" class="sprint-date-col">
+          <p *ngIf="projectStartDate != null && projectEndDate != null" style="font-size: small; color: black" class="sprint-date" >  Start & End Date: [ {{projectStartDate | date:"mediumDate"}} To {{projectEndDate | date:"mediumDate"}} ] </p>
          
         </ion-col>
             <ion-col

@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthenticationService } from '../authentication.service';
 import { ActivatedRoute } from '@angular/router';
@@ -13,6 +13,13 @@ export class ProjectsService {
 
   constructor(private http: HttpClient,
     private authService: AuthenticationService,private route:ActivatedRoute) { }
+
+    public sharedItemSubject: BehaviorSubject<any> = new BehaviorSubject(null);
+    sharedItem$: Observable<any> = this.sharedItemSubject.asObservable();
+  
+    setSharedItem(item: any) {
+      this.sharedItemSubject.next(item);
+    }
 
   public getProjects(id: any): Observable<any> {
     
