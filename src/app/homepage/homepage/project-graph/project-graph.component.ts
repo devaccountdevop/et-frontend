@@ -1,30 +1,33 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
+import { ChartConfiguration, ChartData, ChartType } from "chart.js";
 import * as pluginDataLabels from "chartjs-plugin-datalabels";
-import { BaseChartDirective } from 'ng2-charts';
-import { ProjectsService } from 'src/app/services/homepageServices/projects.service';
-import { SprintService } from 'src/app/services/sprint.service';
+import { BaseChartDirective } from "ng2-charts";
+import { ProjectsService } from "src/app/services/homepageServices/projects.service";
 
 @Component({
-  selector: 'app-project-graph',
-  templateUrl: './project-graph.component.html',
-  styleUrls: ['./project-graph.component.scss'],
+  selector: "app-project-graph",
+  templateUrl: "./project-graph.component.html",
+  styleUrls: ["./project-graph.component.scss"],
 })
-export class ProjectGraphComponent  implements OnInit {
-
+export class ProjectGraphComponent implements OnInit {
   mouseInsideDialog: boolean = false;
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
   item: any;
-sprintDaysinWeeks:any;
+  sprintDaysinWeeks: any;
   noOfDays: any[] = [];
   labels: any[] = [];
   barChartData: ChartData<"bar" | "line"> = {
     labels: [],
-    datasets: [],
+    datasets: [
+     
+    ],
+    
   };
   sprintDates: any[] = [];
-   sprintDataForBar: any[] = [];
+  sprintDataForBar: any[] = [];
+  aisumofaiestimate: any[] = [];
+  sumoforiginal: any[] = [];
   // actualForChart: number[] = [];
   // remainingforTable: number[] = [];
   // threePointForChart: any[] = [];
@@ -40,29 +43,50 @@ sprintDaysinWeeks:any;
     private sprintService: ProjectsService
   ) {}
   ngOnInit(): void {
+
+    this.labels =[];
+    this.sprintDataForBar = [];
     this.sprintService.sharedItem$.subscribe((item: any) => {
-     if(item.sprintInfoDtos.length == 0){
-      this.sprintDates = [];
-     }else{
-      this.sprintDates = [];
-        item.sprintInfoDtos.forEach((sprintInfoDto: any) => {
-            Object.keys(sprintInfoDto.graphData).forEach((key: string) => {
-                this.sprintDates.push(key);
-            });
-        });
-         this.sprintDaysinWeeks = this.sprintDates.length/7;
+      if (item.sprintInfoDtos.length == 0) {
+        this.sprintDates = [];
+      } else {
+        // this.sprintDates = [];
+        //   item.sprintInfoDtos.forEach((sprintInfoDto: any) => {
+        //       Object.keys(sprintInfoDto.graphData).forEach((key: string) => {
+        //           this.sprintDates.push(key);
+        //       });
+        //   });
+        //    this.sprintDaysinWeeks = this.sprintDates.length/7; 
 
-       
-         
-     }
+    item.sprintInfoDtos.forEach((sprintInfoDto: any, index: number) => {
+    const doneTasksInSprint = sprintInfoDto.taskDetails.filter((task: any) => task.taskStatus === "Done");
+    this.sprintDataForBar.push(doneTasksInSprint.length);
+    let aiEstimateSum = 0;
+    let originalEstimateSum = 0;
+    doneTasksInSprint.forEach((task: any) => {
+        aiEstimateSum += parseFloat(task.aiEstimate);
+        originalEstimateSum += parseFloat(task.originalEstimate) ;
     });
-
-    if (this.sprintDaysinWeeks < 20) {
-      const newArrayLength = this.sprintDaysinWeeks;
-      this.sprintDataForBar = Array.from({ length: newArrayLength }, () => 5);
-      this.labels = Array.from({ length: newArrayLength }, (_, index) => index + 1);
+    this.aisumofaiestimate.push(aiEstimateSum);
+    this.sumoforiginal.push(originalEstimateSum);
+    this.labels.push(`Sprint ${index + 1}`);
+   });
+   const secondsPer8HourWorkday = 8 * 60 * 60; 
+   const sumIn8HourWorkdays = this.sumoforiginal.map(sumInSeconds => sumInSeconds / secondsPer8HourWorkday);
+  const aiEstimateInDays = this.aisumofaiestimate.map(sumInSeconds => sumInSeconds / 8);
+   
   }
-    this.updateChart();
+});
+this.updateChart();
+    // if (this.sprintDaysinWeeks < 20) {
+    //   const newArrayLength = this.sprintDaysinWeeks;
+    //   this.sprintDataForBar = Array.from({ length: newArrayLength }, () => 5);
+    //   this.labels = Array.from(
+    //     { length: newArrayLength },
+    //     (_, index) => index + 1
+    //   );
+    // }
+ 
   }
 
   public barChartOptions: ChartConfiguration["options"] = {
@@ -75,10 +99,10 @@ sprintDaysinWeeks:any;
           display: false,
         },
         ticks: {
-          display: false,
-          font:{
-            size:8
-          }
+          display: true,
+          font: {
+            size: 8,
+          },
         },
       },
 
@@ -111,16 +135,7 @@ sprintDaysinWeeks:any;
       },
       tooltip: {
         callbacks: {
-          label: function (context: any) {
-            let label = context.dataset.label || "";
-            if (label) {
-              label += ": ";
-            }
-            if (context.parsed.y !== null) {
-              label += context.parsed.y;
-            }
-            return label;
-          },
+         
         },
       },
     },
@@ -130,8 +145,9 @@ sprintDaysinWeeks:any;
   public barChartPlugins = [pluginDataLabels];
 
   updateChart() {
+
     this.barChartData = {
-       labels: this.labels,
+      labels: this.labels,
       //labels:["sprint 1","sprint 2","sprint 3", "sprint 4","sprint 5","sprint 6", "sprint 7"],
       datasets: [
         // {
@@ -174,18 +190,19 @@ sprintDaysinWeeks:any;
         // },
 
         {
-          label: "weeks",
+          label: "Tasks",
           hidden: false,
           type: "bar",
-           data: this.labels, 
+          data: this.sprintDataForBar,
           //data: [15, 25, 35, 45, 55,65,75],
           backgroundColor: "rgb(251, 194, 0)",
           borderColor: "rgb(251, 194, 0)",
-         pointStyle:"circle",
-         maxBarThickness:30,
+          pointStyle: "circle",
+          maxBarThickness: 30,
           hoverBackgroundColor: "orange",
         },
       ],
+    
     };
   }
   //  barChartData: ChartData<'bar' | 'line'> = {
