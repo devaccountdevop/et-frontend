@@ -38,6 +38,7 @@ export class ProjectGraphComponent implements OnInit {
   totalPlanned: any[] = [];
   overEstimate: any[] = [];
   sumOfVelocity: any[] = [];
+  totalScope = [80, 100, 100, 80, 80, 80, 150];
   // totalActualEstimate = 0;
   // totalRemaining = 0;
   // averageVelocity = 0;
@@ -146,6 +147,17 @@ export class ProjectGraphComponent implements OnInit {
         // console.log(aiEstimateInDays, sumIn8HourWorkdays, aiEstimateInDay );
       }
     });
+    if(this.labels.length != 0){
+      this.totalScope = [];
+
+      // Values to be assigned in totalScope
+      const values = [100, 150, 160, 170, 200,300,350,400,450];
+  
+      // Populate totalScope with values
+      for (let i = 0; i < this.labels.length; i++) {
+          this.totalScope[i] = values[i % values.length];
+      }
+    }
    this.updateGraph();
   }
   public barChartOptions: ChartConfiguration["options"] = {
@@ -217,7 +229,7 @@ export class ProjectGraphComponent implements OnInit {
     this.barChartData = [
       {
         label: "Total Scope",
-        data: [80, 100, 100, 80, 80, 80, 550],
+        data: this.totalScope,
         type: "line",
         backgroundColor: "rgb(79, 129, 189)",
         borderColor: "rgb(79, 129, 189)",
@@ -256,6 +268,7 @@ export class ProjectGraphComponent implements OnInit {
         // borderColor: 'black',
         pointStyle: false,
         type: "bar",
+        maxBarThickness:30
       },
   
       {
@@ -267,6 +280,7 @@ export class ProjectGraphComponent implements OnInit {
         backgroundColor: "rgb(128, 100, 162)",
         borderColor: "rgb(128, 100, 162)",
         hoverBackgroundColor: "rgb(128, 100, 162)",
+        maxBarThickness:30
       },
       {
         data: this.overEstimate,
@@ -275,6 +289,7 @@ export class ProjectGraphComponent implements OnInit {
         stack: "a",
         pointStyle: false,
         type: "bar",
+        maxBarThickness:30
       },
     ];
   }

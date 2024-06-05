@@ -69,7 +69,7 @@ export class ImportModalComponent implements OnInit {
 
         } else {
           this.close();
-          this.commanService.presentToast("Invalid file format. Only .xlsx files are allowed.", 3000, "toast-error-mess");
+          this.commanService.presentToast(res.message, 3000, "toast-error-mess");
         }
       },
       (error) => {
@@ -136,7 +136,7 @@ export class ImportModalComponent implements OnInit {
 
         } else {
           this.close();
-          this.commanService.presentToast("Invalid file format. Only .xlsx files are allowed.", 3000, "toast-error-mess");
+          this.commanService.presentToast(res.message, 3000, "toast-error-mess");
         }
       },
         (error) => {
