@@ -215,6 +215,7 @@ export class HomepageComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log("The dialog was closed");
+     
       this.getClientByUserId(this.UserDetails?.id);
     });
   }
@@ -223,7 +224,7 @@ export class HomepageComponent implements OnInit {
      this.projectService.setSharedItem(item);
   
     const offsetX = 470;
-    const offsetY = 360;
+    const offsetY = 400;
   
     const clientX = event.clientX;
     const clientY = event.clientY;
@@ -247,22 +248,37 @@ export class HomepageComponent implements OnInit {
     if (positionLeft < 0) {
       positionLeft = 0;
     }
-  
+  if(item.sprintInfoDtos.length ==0){
+    this.commonService.presentToast("Graph data not available for " + item.projectName+ " project.", 3000, "toast-error-mess");
+  }else{
     let dialogRef = this.dialog.open(ProjectGraphComponent, {
-      width: "410px",
-      height: "220px",
+      width: "460px",
+      height: "400px",
       data: { item },
       hasBackdrop: true,
       position: { left: positionLeft + 'px', top: positionTop + 'px' },
     });
-  
     dialogRef.afterClosed().subscribe((result) => {
-      // Handle dialog close if needed
+     
+      this.p = 0;
+
     });
+  }
+    
+  
+   
   }
   iconList = ["check_circle", "error", "warning"];
 
-  getIcon(index: number): string {
-    return this.iconList[index % this.iconList.length];
+  getIconColor(originalEstimate: number, aiEstimate: number): string {
+    const differencePercentage = (originalEstimate - aiEstimate) / aiEstimate * 100;
+    
+    if (differencePercentage > 10) {
+      return 'error';
+    } else if (differencePercentage >= 0 && differencePercentage <= 10) {
+      return 'warning';
+    } else {
+      return 'success';
+    }
   }
 }

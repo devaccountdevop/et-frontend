@@ -62,7 +62,13 @@
               class="threePointEstimate">{{sharedItem.threePointEstimate}}</span></p>
           <p style="margin-top: 20px;"> Risk Factor <span class="riskFactor">{{sharedItem.riskFactor}}</span>
           </p>
-          <p style="margin-top: 20px;">AI Estimates <span class="aiEstimate">{{sharedItem.aiEstimate}}</span>
+          <p style="margin-top: 20px; display: flex;">AI Estimates <span class="aiEstimate">{{sharedItem.aiEstimate}}</span>
+            <mat-icon *ngIf="AiResponseStatus == 'YES'"    (mouseover)="showContent = true" (mouseout)="showContent = false" class="error" style="font-size: 14px; margin-left: 20px; margin-top: 1px; cursor: pointer;" title="{{ AiResponseMsg }}" >
+              error
+            </mat-icon>
+            <mat-icon *ngIf="AiResponseStatus == 'NO'"    (mouseover)="showContent = true" (mouseout)="showContent = false" class="success" style="font-size: 14px; margin-left: 20px; margin-top: 1px; cursor: pointer;" title="{{ AiResponseMsg }}" >
+              check_circle
+            </mat-icon>
           </p>
         </div>
       </tr>

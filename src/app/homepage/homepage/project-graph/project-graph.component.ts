@@ -1,35 +1,44 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
+import {
+  ChartConfiguration,
+  ChartData,
+  ChartDataset,
+  ChartType,
+} from "chart.js";
 import * as pluginDataLabels from "chartjs-plugin-datalabels";
-import { BaseChartDirective } from 'ng2-charts';
-import { ProjectsService } from 'src/app/services/homepageServices/projects.service';
-import { SprintService } from 'src/app/services/sprint.service';
+import { BaseChartDirective } from "ng2-charts";
+import { ProjectsService } from "src/app/services/homepageServices/projects.service";
 
 @Component({
-  selector: 'app-project-graph',
-  templateUrl: './project-graph.component.html',
-  styleUrls: ['./project-graph.component.scss'],
+  selector: "app-project-graph",
+  templateUrl: "./project-graph.component.html",
+  styleUrls: ["./project-graph.component.scss"],
 })
-export class ProjectGraphComponent  implements OnInit {
-
+export class ProjectGraphComponent implements OnInit {
   mouseInsideDialog: boolean = false;
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
   item: any;
-sprintDaysinWeeks:any;
+  p: number = 1;
+  pageFilterDefault: any = 10;
+  sprintDaysinWeeks: any;
   noOfDays: any[] = [];
   labels: any[] = [];
-  barChartData: ChartData<"bar" | "line"> = {
-    labels: [],
-    datasets: [],
-  };
+  barChartData: ChartDataset[] = [
+  ]
   sprintDates: any[] = [];
-   sprintDataForBar: any[] = [];
-  // actualForChart: number[] = [];
-  // remainingforTable: number[] = [];
-  // threePointForChart: any[] = [];
-  // riskFactorForTable: any[] = [];
-  // totalSumOfAiEstimate = 0;
+  sprintDataForBar: any[] = [];
+  aisumofaiestimate: any[] = [];
+  sumoforiginal: any[] = [];
+  sumofworklogs: any[] = [];
+  originalEstimateData: any[] = [];
+  workLogEstimateData: any[] = [];
+  completedTask: any[] = [];
+  notStartedTask: any[] = [];
+  totalPlanned: any[] = [];
+  overEstimate: any[] = [];
+  sumOfVelocity: any[] = [];
+  totalScope = [80, 100, 100, 80, 80, 80, 150];
   // totalActualEstimate = 0;
   // totalRemaining = 0;
   // averageVelocity = 0;
@@ -38,57 +47,139 @@ sprintDaysinWeeks:any;
   constructor(
     private dialog: MatDialog,
     private sprintService: ProjectsService
-  ) {}
+  ) { }
   ngOnInit(): void {
+    this.labels = [];
+    this.sprintDataForBar = [];
+    this.sprintDates = [];
+    this.sprintDataForBar = [];
+    this.aisumofaiestimate = [];
+    this.sumoforiginal = [];
+    this.sumofworklogs= [];
+    this.originalEstimateData = [];
+    this.workLogEstimateData = [];
+    this.completedTask = [];
+    this.notStartedTask = [];
+    this.totalPlanned = [];
+    this.overEstimate = [];
     this.sprintService.sharedItem$.subscribe((item: any) => {
-     if(item.sprintInfoDtos.length == 0){
-      this.sprintDates = [];
-     }else{
-      this.sprintDates = [];
-        item.sprintInfoDtos.forEach((sprintInfoDto: any) => {
-            Object.keys(sprintInfoDto.graphData).forEach((key: string) => {
-                this.sprintDates.push(key);
-            });
+      if (item.sprintInfoDtos.length == 0) {
+        this.sprintDates = [];
+      } else {
+        item.sprintInfoDtos.forEach((sprintInfoDto: any, index: number) => {
+          const doneTasksInSprint = sprintInfoDto.taskDetails.filter(
+            (task: any) => task.taskStatus === "Done"
+          );
+          const notStartedTasksInSprint = sprintInfoDto.taskDetails.filter(
+            (task: any) => task.taskStatus === "To Do"
+          );
+
+          const completedTaskSum = doneTasksInSprint.reduce((sum: number, task: any) => {
+            return sum + parseFloat(task.originalEstimate);
+          }, 0);
+
+          // Sum of original estimates for not started tasks
+          const notStartedTaskSum = notStartedTasksInSprint.reduce((sum: number, task: any) => {
+            return sum + parseFloat(task.originalEstimate);
+          }, 0);
+
+          const sumOfOriginalEstimate = sprintInfoDto.taskDetails.reduce((sum: number, task: any) => {
+            return sum + parseFloat(task.originalEstimate);
+          }, 0);
+          const sumOfVelocity = sprintInfoDto.taskDetails.reduce((sum: number, task: any) => {
+           if(task.storyPoints == null){
+            return 0;
+           }
+            return sum + parseFloat(task.storyPoints);
+          }, 0);
+
+          const doneTasksOriginalEstimateHours = completedTaskSum / 3600;
+          const notStartedTasksOriginalEstimateHours = notStartedTaskSum / 3600;
+          this.sumOfVelocity.push(sumOfVelocity * 8);
+          this.totalPlanned.push(sumOfOriginalEstimate / 3600);
+          this.completedTask.push(doneTasksOriginalEstimateHours);
+          this.notStartedTask.push(notStartedTasksOriginalEstimateHours);
+
+
+          let aiEstimateSum = 0;
+          let originalEstimateSum = 0;
+          let sumofworklogs = 0;
+          doneTasksInSprint.forEach((task: any) => {
+            aiEstimateSum += parseFloat(task.aiEstimate);
+            originalEstimateSum += parseFloat(task.originalEstimate);
+            // Check if the task has worklogs
+            if (task.worklogs && task.worklogs.length > 0) {
+              let worklogestimate = 0;
+              task.worklogs.forEach((worklog: any) => {
+                worklogestimate += parseFloat(worklog.timeSpentSeconds);
+              });
+              sumofworklogs += worklogestimate; // Accumulate worklog estimates
+            }
+          });
+
+          this.aisumofaiestimate.push(aiEstimateSum);
+          this.sumoforiginal.push(originalEstimateSum);
+          this.sumofworklogs.push(sumofworklogs / 3600); // Add the total worklog estimate for this sprint to the array
+          this.labels.push(`S-${index + 1}`);
         });
-         this.sprintDaysinWeeks = this.sprintDates.length/7;
 
-       
-         
-     }
+        this.overEstimate = this.sumofworklogs.map((worklog, index) => {
+          const planned = this.totalPlanned[index];
+          const over = worklog - planned;
+          if (over < 0) {
+            return 0;
+          } else {
+            return over;
+          }
+        });
+        console.log(this.completedTask, this.notStartedTask, this.sumofworklogs, this.totalPlanned, this.overEstimate, this.sumOfVelocity);
+        const secondsPer8HourWorkday = 60 * 60;
+        this.originalEstimateData = this.sumoforiginal.map(
+          (sumInSeconds) => sumInSeconds / secondsPer8HourWorkday
+        );
+        const aiEstimateInDays = this.aisumofaiestimate.map(
+          (sumInSeconds) => sumInSeconds
+        );
+        this.workLogEstimateData = this.sumofworklogs.map(
+          (sumInSeconds) => sumInSeconds / secondsPer8HourWorkday
+        );
+
+        // console.log(aiEstimateInDays, sumIn8HourWorkdays, aiEstimateInDay );
+      }
     });
+    if(this.labels.length != 0){
+      this.totalScope = [];
 
-    if (this.sprintDaysinWeeks < 20) {
-      const newArrayLength = this.sprintDaysinWeeks;
-      this.sprintDataForBar = Array.from({ length: newArrayLength }, () => 5);
-      this.labels = Array.from({ length: newArrayLength }, (_, index) => index + 1);
+      // Values to be assigned in totalScope
+      const values = [100, 150, 160, 170, 200,300,350,400,450];
+  
+      // Populate totalScope with values
+      for (let i = 0; i < this.labels.length; i++) {
+          this.totalScope[i] = values[i % values.length];
+      }
+    }
+   this.updateGraph();
   }
-    this.updateChart();
-  }
-
   public barChartOptions: ChartConfiguration["options"] = {
     responsive: true,
     scales: {
       x: {
-        position: "bottom",
-        stacked: true,
+        position: "bottom", // Show x-axis labels at the bottom
+
         grid: {
-          display: false,
+          display: false, // Set to false to hide grid lines for x-axis
         },
         ticks: {
           display: false,
-          font:{
-            size:8
-          }
         },
       },
 
       y: {
-        stacked: false,
         display: true,
-        position: "left",
+        position: "left", // Position the y-axis on the left side
         title: {
           display: true,
-          text: "Estimation",
+          text: "Estimation", // Add the title 'Estimation' to the y-axis
           font: {
             size: 12,
             weight: "bold",
@@ -96,6 +187,7 @@ sprintDaysinWeeks:any;
         },
       },
     },
+
     plugins: {
       legend: {
         display: true,
@@ -103,145 +195,104 @@ sprintDaysinWeeks:any;
         align: "center",
 
         labels: {
-          boxWidth: 28,
+          // boxWidth:30,
+          textAlign: "left",
           font: {
-            size: 10,
+            size: 8,
           },
         },
       },
-      tooltip: {
-        callbacks: {
-          label: function (context: any) {
-            let label = context.dataset.label || "";
-            if (label) {
-              label += ": ";
-            }
-            if (context.parsed.y !== null) {
-              label += context.parsed.y;
-            }
-            return label;
-          },
-        },
-      },
+      tooltip: {},
     },
   };
+  pagination = [
+    "S-1",
+    "S-2",
+    "S-3",
+    "S-4",
+    "S-5",
+    "S-6",
+    "S-7",
+    "S-8",
+    "S-9",
+    "S-10",
 
+  ];
+  public barChartLabels :any[]= [];
   public barChartType: ChartType = "bar";
-  public barChartPlugins = [pluginDataLabels];
+  public barChartLegend = true;
+  public barChartPlugins = [];
 
-  updateChart() {
-    this.barChartData = {
-       labels: this.labels,
-      //labels:["sprint 1","sprint 2","sprint 3", "sprint 4","sprint 5","sprint 6", "sprint 7"],
-      datasets: [
-        // {
-        //   label: "Ai Estimated",
-        //   // data: this.AiEstimateForChart,
-        //   data: [5, 10, 15, 20, 25,30,35],
-        //   type: "line",
-        //   backgroundColor: "rgb(118, 169, 81)",
-        //   borderColor: "rgb(118, 169, 81)",
-        //   pointBackgroundColor: "rgb(118, 169, 81)",
-        //   pointBorderColor: "rgb(118, 169, 81)",
-        //   pointHoverBorderColor: "rgb(118, 169, 81)",
-        //   pointHoverBackgroundColor: "rgb(118, 169, 81)",
-        //   // borderJoinStyle: "round",
-        //   pointStyle: false,
-        // },
-        // {
-        //   // data: this.threePointForChart,
-        //   data: [2, 4, 6, 8, 10,12,14],
-        //   label: "3-Point",
-        //   backgroundColor: "rgb(89, 156, 216)",
-        //   borderColor: "rgb(89, 156, 216)",
-        //   pointBackgroundColor: "rgb(89, 156, 216)",
-        //   pointBorderColor: "rgb(89, 156, 216)",
-        //   pointStyle: false,
-        //   type: "line",
-        //   hidden: false,
-        // },
-        // {
-        //   label: "Velocity",
-        //   // data: this.velocityForChart,
-        //   data: [5, 7, 9, 11, 13,15,17],
-        //   type: "line",
-        //   backgroundColor: "rgb(45, 65, 117)",
-        //   borderColor: "rgb(45, 65, 117)",
-        //   pointBackgroundColor: "rgb(45, 65, 117)",
-        //   pointBorderColor: "rgb(45, 65, 117)",
-        //   pointStyle: false,
-        //   hidden: false,
-        // },
-
-        {
-          label: "weeks",
-          hidden: false,
-          type: "bar",
-           data: this.labels, 
-          //data: [15, 25, 35, 45, 55,65,75],
-          backgroundColor: "rgb(251, 194, 0)",
-          borderColor: "rgb(251, 194, 0)",
-         pointStyle:"circle",
-         maxBarThickness:30,
-          hoverBackgroundColor: "orange",
-        },
-      ],
-    };
+  updateGraph(){
+    this.barChartLabels = this.labels;
+    this.barChartLegend = true;
+    this.barChartData = [
+      {
+        label: "Total Scope",
+        data: this.totalScope,
+        type: "line",
+        backgroundColor: "rgb(79, 129, 189)",
+        borderColor: "rgb(79, 129, 189)",
+        pointBackgroundColor: "rgb(79, 129, 189)",
+        pointBorderColor: "rgb(79, 129, 189)",
+        pointHoverBorderColor: "rgb(79, 129, 189)",
+        pointHoverBackgroundColor: "rgb(79, 129, 189)",
+        pointStyle: false,
+      },
+      {
+        label: "Velocity",
+        data: this.sumOfVelocity,
+        type: "line",
+        backgroundColor: "rgb(44, 77, 117)",
+        borderColor: "rgb(44, 77, 117)",
+        pointBackgroundColor: "rgb(44, 77, 117)",
+        pointBorderColor: "rgb(44, 77, 117)",
+        pointStyle: false,
+      },
+      {
+        data: this.completedTask,
+        label: "Completed",
+        backgroundColor: "rgb(247, 150, 70)",
+        borderColor: "rgb(247, 150, 70)",
+        pointBackgroundColor: "rgb(247, 150, 70)",
+        pointBorderColor: "rgb(247, 150, 70)",
+        pointStyle: false,
+        type: "line",
+      },
+  
+      {
+        data: this.notStartedTask,
+        label: "Not Started",
+        stack: "a",
+        backgroundColor: "rgb(93, 138, 192)",
+        // borderColor: 'black',
+        pointStyle: false,
+        type: "bar",
+        maxBarThickness:30
+      },
+  
+      {
+        label: "Planned",
+        hidden: false,
+        type: "bar",
+        stack: "a",
+        data: this.totalPlanned,
+        backgroundColor: "rgb(128, 100, 162)",
+        borderColor: "rgb(128, 100, 162)",
+        hoverBackgroundColor: "rgb(128, 100, 162)",
+        maxBarThickness:30
+      },
+      {
+        data: this.overEstimate,
+        label: "Over Estimate",
+        backgroundColor: "rgb(119, 44, 42)",
+        stack: "a",
+        pointStyle: false,
+        type: "bar",
+        maxBarThickness:30
+      },
+    ];
   }
-  //  barChartData: ChartData<'bar' | 'line'> = {
-  //   labels: this.labels,
-  //   datasets: [
-  //     {
-  //       label: 'Ai Estimated',
-  //       data: [80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80,80,80,80],
-  //       type: 'line',
-  //       backgroundColor: 'rgb(118, 169, 81)',
-  //       borderColor: 'rgb(118, 169, 81)',
-  //       pointBackgroundColor: 'rgb(118, 169, 81)',
-  //       pointBorderColor: 'rgb(118, 169, 81)',
-  //       pointHoverBorderColor: 'rgb(118, 169, 81)',
-  //       pointHoverBackgroundColor: 'rgb(118, 169, 81)',
-  //       borderJoinStyle: 'round',
-  //       pointStyle: false,
-  //     },
-  //     {
-  //       data: [1, 3, 2, 4, 2, 1, 9, 1, 2, 4, 1,4,2,1],
-  //       label: '3-Point',
-  //       backgroundColor: 'rgb(89, 156, 216)',
-  //       borderColor: 'rgb(89, 156, 216)',
-  //       pointBackgroundColor: 'rgb(89, 156, 216)',
-  //       pointBorderColor: 'rgb(89, 156, 216)',
-  //       pointStyle: false,
-  //       type: 'line',
-  //       hidden: false,
-
-  //     },
-  //     {
-  //       label: 'Velocity',
-  //       data: [2, 3, 4, 5, 4, 3, 5, 9, 7, 8, 10,12,11,13],
-  //       type: 'line',
-  //       backgroundColor: 'rgb(45, 65, 117)',
-  //       borderColor: 'rgb(45, 65, 117)',
-  //       pointBackgroundColor: 'rgb(45, 65, 117)',
-  //       pointBorderColor: 'rgb(45, 65, 117)',
-  //       pointStyle: false,
-  //       hidden: false
-  //     },
-
-  //     {
-  //       label: 'Actual',
-  //       hidden: false,
-  //       type: 'bar',
-  //       data: [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60,65,70,75,80],
-  //       backgroundColor: 'rgb(251, 194, 0)',
-  //       borderColor: 'rgb(251, 194, 0)',
-
-  //       hoverBackgroundColor: 'orange',
-
-  //     },
-  //   ]
-  // };
-
   onMouseEnterDialog() {
     this.mouseInsideDialog = true;
   }
@@ -250,4 +301,13 @@ sprintDaysinWeeks:any;
       this.dialog.closeAll();
     }
   }
+  ngOnDestroy(): void {
+    console.log("parveen");
+
+    this.pagination = [];
+    this.pageFilterDefault = "";
+    this.p = 0;
+  }
+
+
 }

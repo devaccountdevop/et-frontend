@@ -315,13 +315,6 @@ ion-card:hover {
 .card-content {
   margin-top: 5px;
 }
-.check-icon {
-  position: absolute; 
-  top: -2px; 
-  right: 0; 
-  color: red;
-  margin: 5px; 
-}
 .error {
   position: absolute; 
   top: -2px; 
@@ -336,7 +329,7 @@ ion-card:hover {
   color: orange;
   margin: 5px; 
 }
-.check_circle {
+.success {
   position: absolute; 
   top: -2px; 
   right: 0; 
@@ -357,4 +350,7 @@ margin-left: 220px;
    background-color: white;
    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
  
+}
+.pagination{
+ font-size: small;
 }

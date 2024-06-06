@@ -95,7 +95,13 @@ tr:nth-child(even) {
   margin-left: 62px;
 }
 .aiEstimate {
-  margin-left: 54px;
+  margin-left: 58px;
+}
+.error {
+  color: red;
+}
+.success{
+  color: green;
 }
 .threePointEstimate {
   margin-left: 20px;

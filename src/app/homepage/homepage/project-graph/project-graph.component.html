@@ -1,150 +1,93 @@
-<ion-app  (mouseenter)="onMouseEnterDialog()" (mouseleave)="onMouseLeaveDialog()" >
+<ion-app (mouseenter)="onMouseEnterDialog()" (mouseleave)="onMouseLeaveDialog()">
   <!--  -->
-  <div class="convas " >
+  <div class="convas " *ngIf="labels.length !==0">
     <div class="main-div">
-    <div class="convas-div">
-      <canvas  baseChart [data]="barChartData" [options]="barChartOptions"  [type]="barChartType">
-      </canvas>
-      
-    </div>
-<!-- <table class="table-data"> 
-  <tr> 
-      <td style="border: none;" > No of days </td> 
-      <td>D1</td> 
-      <td>D2</td> 
-      <td>D3</td> 
-      <td>D4</td> 
-      <td>D5</td> 
-      <td>D6</td> 
-      <td>D6</td> 
-      <td>D7</td> 
-      <td>D8</td> 
-      <td>D9</td> 
-      <td>D10</td> 
-      <td>D11</td>
-      <td>D12</td>
-      <td>D13</td>
-      <td>D14</td>
-     
-  </tr> 
-  <tr> 
-    <td  class="label">Actual</td> 
-    <td>0</td> 
-    <td>2</td> 
-    <td>12</td> 
-    <td>14</td> 
-    <td>6</td> 
-    <td>7</td> 
-    <td>9</td> 
-    <td>9</td> 
-    <td>10</td> 
-    <td>12</td>
-    <td>12</td>  
-    <td>10</td> 
-    <td>12</td>
-    <td>15</td>  
-    <td>3</td>  
-</tr> 
-  <tr> 
-    <td class="label">Remaining</td> 
-    <td>0</td> 
-    <td>9</td> 
-    <td>6</td> 
-    <td>3</td> 
-    <td>7</td> 
-    <td>9</td> 
-    <td>3</td> 
-    <td>8</td> 
-    <td>15</td> 
-    <td>5</td> 
-    <td>06</td>
-    <td>10</td> 
-    <td>12</td>
-    <td>12</td>  
-     
-    <td>3</td>  
-   
-  </tr> 
-  <tr> 
-    <td class="label">Ai Estimated</td> 
-    <td>02</td> 
-    <td>02</td> 
-    <td>02</td> 
-    <td>02</td> 
-    <td>02</td> 
-    <td>02</td> 
-    <td>02</td> 
-    <td>02</td> 
-    <td>02</td> 
-    <td>02</td> 
-    <td>92</td> 
-    <td>10</td> 
-    <td>12</td>
-    <td>12</td> 
-  
-    <td>3</td>   
-   
-  </tr> 
-  <tr> 
-    <td class="label">Velocity</td> 
-    <td>5</td> 
-    <td>7</td> 
-    <td>12</td> 
-    <td>24</td> 
-    <td>30</td> 
-    <td>40</td> 
-    <td>50</td> 
-    <td>22</td> 
-    <td>50</td> 
-    <td>50</td> 
-    <td>10</td> 
-    <td>12</td>
-    <td>12</td> 
-    <td>15</td>  
-    <td>50</td>   
-   
-  </tr> 
-</table>  -->
-<!-- <div class="table-data">
+      <div class="convas-div">
+        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+          [plugins]="barChartPlugins" [legend]="barChartLegend" chartType="barChartType">
+        </canvas>
+
+      </div>
+      <div style="width: 100%;">
+
+        <table class="table-data">
+          <tr>
+            <td style="border: none;"> Sprints </td>
+            <td *ngFor="
+            let item of barChartLabels
+             
+              | paginate
+                : { itemsPerPage: pageFilterDefault, currentPage: p };
+            let i = index
+          ">{{item}}</td>
+          </tr>
+          <tr>
+            <td class="label">Over Estimate</td>
+            <td *ngFor="let items of overEstimate">{{items}}</td>
+          </tr>
+          <tr>
+            <td class="label">Total planned</td>
+            <td *ngFor="let items of totalPlanned">{{items}}</td>
+          </tr>
+          <tr>
+            <td class="label">Not_started</td>
+            <td *ngFor="let items of notStartedTask">{{items}}</td>
+          </tr>
+          <tr>
+            <td class="label">Total Scope</td>
+            <td *ngFor="let items of totalScope">{{items}}</td>
+          </tr>
+          <tr>
+            <td class="label">Velocity</td>
+            <td *ngFor="let items of sumOfVelocity">{{items}}</td>
+          </tr>
+          <tr>
+            <td class="label">Completed</td>
+            <td *ngFor="let items of completedTask">{{items}}</td>
+          </tr>
+        </table>
+
+      </div>
+      <!-- <div class="table-data">
 <table  >
   <tr>
     <td>Total Estimate (3-Point)</td>
-    <td>{{totalThreePointEstimate}}</td>
+    <td>6</td>
     <td></td>
   </tr>
   <tr>
     <td>Actual To Date</td>
-    <td>{{totalActualEstimate}}</td>
+    <td>5</td>
     <td></td>
   </tr>
   <tr>
     <td>Remaining</td>
-<td style="display: flex;">{{totalRemaining}}
-     <mat-icon style="font-size: 17px; color: green; height: 17px; margin-left: 10px;margin-top: 1px;" >
+<td style="display: flex;">7
+      <mat-icon style="font-size: 17px; color: green; height: 17px; margin-left: 10px;margin-top: 1px;" >
       check_circle
- </mat-icon>  
+ </mat-icon> 
 </td>
     <td></td>
   </tr>
   <tr>
     <td>AI Estimate</td>
-    <td>{{totalSumOfAiEstimate}}</td>
+    <td>6</td>
     <td></td>
   </tr>
   <tr>
     <td>Average Velocity/Day</td>
     <td></td>
-    <td>{{averageVelocity}}</td>
+    <td>4</td>
   </tr>
   <tr>
     <td>Average Risk Factor</td>
     <td></td>
-    <td>{{totalRiskFactors}}</td>
+    <td>3</td>
   </tr>
 </table>
 </div> -->
-</div>
-
-</div>
-
+    </div>
+    <!-- *ngIf="pagination.length>10" -->
+    <pagination-controls class=" pagination " (pageChange)="p = $event"></pagination-controls>
+  </div>
 </ion-app>

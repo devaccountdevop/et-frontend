@@ -10,7 +10,7 @@
     <div class="flex-container">
       <input type="file" #fileUpload (change)="onFileSelected($event)" [ngStyle]="{'display':displayValue}">
       <button  type="file" class="button2" (click)="fileUpload.click()" >Browse</button>
-      <button class="button2" style="margin-left: 10px; width: 170px;" (click)="downloadTemplate()">Download Templates</button>
+      <button class="button2" style="margin-left: 10px; width: 170px;" (click)="downloadTemplate()">Download Template</button>
     </div>
     <div class="drag" id="dropArea" (drop)="handleDrop($event)" (dragover)="handleDragOver($event)"
       (dragleave)="handleDragLeave($event)" [class.drag-over]="isDragOver">

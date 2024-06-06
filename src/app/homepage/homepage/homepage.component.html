@@ -134,7 +134,11 @@
                     >
                       <ion-card-content class="card-content">{{
                         item.projectName
-                      }}  <mat-icon  (mouseover)="openGraphPopup($event, item)" class="check-icon" [ngClass]="{ 'error': getIcon(i) === 'error', 'warning': getIcon(i) === 'warning','check_circle': getIcon(i) === 'check_circle' }">{{ getIcon(i) }}</mat-icon></ion-card-content>
+                      }}      <mat-icon (mouseover)="openGraphPopup($event, item)"   [ngClass]="getIconColor(item.sumOfOriginalEstimate, item.sumOfAiEstimate)">
+                    {{ getIconColor(item.sumOfOriginalEstimate, item.sumOfAiEstimate) === 'error' ? 'error' :
+                       getIconColor(item.sumOfOriginalEstimate, item.sumOfAiEstimate) === 'warning' ? 'warning' :
+                       'check_circle' }}
+                  </mat-icon></ion-card-content>
                       
                     </ion-card>
                   </ion-col>
@@ -149,7 +153,8 @@
             </ion-grid>
           </div>
           <pagination-controls
-            style="font-size: small"
+          class="pagination"
+            
             (pageChange)="p = $event"
           ></pagination-controls>
         </div>
