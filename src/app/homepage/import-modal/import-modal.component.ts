@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Workbook } from 'exceljs';
+import * as FileSaver from 'file-saver';
 import * as saveAs from 'file-saver';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CommanLoaderService } from 'src/app/services/comman-loader.service';
@@ -153,20 +155,70 @@ export class ImportModalComponent implements OnInit {
     }
 
   }
+  // downloadTemplate() {
+  //   this.templateService.downloadTemplate().subscribe((res) => {
+  //     const data = [
+  //       res.data[0],
+  //       ...res.data.slice(1),
+  //     ];
+  //     const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(data);
+
+  //     const wb: XLSX.WorkBook = XLSX.utils.book_new();
+  //     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+  //     const arrayBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+
+  //     const blob = new Blob([arrayBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  //     saveAs(blob, 'template.xlsx');
+  //   });
+  // }
+
   downloadTemplate() {
     this.templateService.downloadTemplate().subscribe((res) => {
       const data = [
-        res.data[0],
-        ...res.data.slice(1),
+        res.data[0], // First row
+        res.data[1], // Second row
+        ...res.data.slice(2) // Rest of the rows
       ];
-      const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(data);
+  
+      const workbook = new Workbook();
+      const worksheet = workbook.addWorksheet('Sheet1');
 
-      const wb: XLSX.WorkBook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-      const arrayBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+      const firstRow = res.data[0];
+      const secondRow = res.data[1];
+  
+      const colCount = firstRow.length;
 
-      const blob = new Blob([arrayBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-      saveAs(blob, 'template.xlsx');
+      worksheet.addRow(firstRow);
+      worksheet.addRow(secondRow);
+  
+     
+      const endColumn = String.fromCharCode(64 + colCount); 
+      worksheet.mergeCells(`A1:${endColumn}2`);
+  
+      
+    firstRow.forEach((cellValue: string, index: number) => {
+    const cell = worksheet.getCell(`${String.fromCharCode(65 + index)}1`);
+    cell.alignment = { vertical: 'top', horizontal: 'left', wrapText: true };
+    cell.font = { bold: true, color: { argb: '000000' } };
+});
+  
+     
+      res.data.slice(2).forEach((dataRow: any) => {
+        worksheet.addRow(dataRow);
+      });
+  
+      // Set row heights
+      worksheet.getRow(1).height = 30;
+      worksheet.getRow(2).height = 30; 
+      worksheet.columns.forEach(column => {
+        column.width = 20; 
+      });
+  
+      // Generate the Excel file
+      workbook.xlsx.writeBuffer().then((buffer) => {
+        const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        FileSaver.saveAs(blob, 'template.xlsx');
+      });
     });
   }
   close() {
