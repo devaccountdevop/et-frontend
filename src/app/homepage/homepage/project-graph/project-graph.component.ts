@@ -22,7 +22,7 @@ export class ProjectGraphComponent implements OnInit {
   p: number = 1;
   pageFilterDefault: any = 10;
   sprintDaysinWeeks: any;
-  noOfDays: any[] = [];
+  noOfDays: number[] = [];
   labels: any[] = [];
   barChartData: ChartDataset[] = [
   ]
@@ -38,7 +38,8 @@ export class ProjectGraphComponent implements OnInit {
   totalPlanned: any[] = [];
   overEstimate: any[] = [];
   sumOfVelocity: any[] = [];
-  totalScope = [80, 100, 100, 80, 80, 80, 150];
+  threePointEstimate:any[] = [];
+  totalScope :any[] = [];
   // totalActualEstimate = 0;
   // totalRemaining = 0;
   // averageVelocity = 0;
@@ -62,6 +63,7 @@ export class ProjectGraphComponent implements OnInit {
     this.notStartedTask = [];
     this.totalPlanned = [];
     this.overEstimate = [];
+    this.threePointEstimate = [];
     this.sprintService.sharedItem$.subscribe((item: any) => {
       if (item.sprintInfoDtos.length == 0) {
         this.sprintDates = [];
@@ -87,14 +89,22 @@ export class ProjectGraphComponent implements OnInit {
             return sum + parseFloat(task.originalEstimate);
           }, 0);
           const sumOfVelocity = sprintInfoDto.taskDetails.reduce((sum: number, task: any) => {
-           if(task.storyPoints == null){
-            return 0;
-           }
+            if (task.storyPoints == null) {
+              return sum;
+            }
             return sum + parseFloat(task.storyPoints);
           }, 0);
 
+          const sumOfThreePointEstimate = sprintInfoDto.taskDetails.reduce((sum: number, task: any) => {
+            if(task.threePointEstimate == null){
+             return 0;
+            }
+             return sum + parseFloat(task.threePointEstimate);
+           }, 0);
+
           const doneTasksOriginalEstimateHours = completedTaskSum / 3600;
           const notStartedTasksOriginalEstimateHours = notStartedTaskSum / 3600;
+          this.totalScope.push(sumOfThreePointEstimate);
           this.sumOfVelocity.push(sumOfVelocity * 8);
           this.totalPlanned.push(sumOfOriginalEstimate / 3600);
           this.completedTask.push(doneTasksOriginalEstimateHours);
@@ -120,7 +130,12 @@ export class ProjectGraphComponent implements OnInit {
           this.aisumofaiestimate.push(aiEstimateSum);
           this.sumoforiginal.push(originalEstimateSum);
           this.sumofworklogs.push(sumofworklogs / 3600); // Add the total worklog estimate for this sprint to the array
-          this.labels.push(`S-${index + 1}`);
+          const sprintNumber = sprintInfoDto.sprintName.split(' ').pop();
+          this.labels.push(`S-${sprintNumber}`);
+          const startDate = new Date(sprintInfoDto.startDate);
+        const endDate = new Date(sprintInfoDto.endDate);
+        const sprintDurationInDays = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
+        this.noOfDays.push(sprintDurationInDays);
         });
 
         this.overEstimate = this.sumofworklogs.map((worklog, index) => {
@@ -132,7 +147,7 @@ export class ProjectGraphComponent implements OnInit {
             return over;
           }
         });
-        console.log(this.completedTask, this.notStartedTask, this.sumofworklogs, this.totalPlanned, this.overEstimate, this.sumOfVelocity);
+        console.log(this.completedTask, this.notStartedTask, this.sumofworklogs, this.totalPlanned, this.overEstimate, this.sumOfVelocity, this.noOfDays);
         const secondsPer8HourWorkday = 60 * 60;
         this.originalEstimateData = this.sumoforiginal.map(
           (sumInSeconds) => sumInSeconds / secondsPer8HourWorkday
@@ -147,17 +162,7 @@ export class ProjectGraphComponent implements OnInit {
         // console.log(aiEstimateInDays, sumIn8HourWorkdays, aiEstimateInDay );
       }
     });
-    if(this.labels.length != 0){
-      this.totalScope = [];
-
-      // Values to be assigned in totalScope
-      const values = [100, 150, 160, 170, 200,300,350,400,450];
-  
-      // Populate totalScope with values
-      for (let i = 0; i < this.labels.length; i++) {
-          this.totalScope[i] = values[i % values.length];
-      }
-    }
+   
    this.updateGraph();
   }
   public barChartOptions: ChartConfiguration["options"] = {
@@ -302,7 +307,6 @@ export class ProjectGraphComponent implements OnInit {
     }
   }
   ngOnDestroy(): void {
-    console.log("parveen");
 
     this.pagination = [];
     this.pageFilterDefault = "";
