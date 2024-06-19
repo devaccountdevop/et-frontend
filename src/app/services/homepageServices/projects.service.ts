@@ -28,6 +28,13 @@ export class ProjectsService {
     return this.http.get<any>(fullApiUrl);
   }
 
+  public getImportedProjects(id: any): Observable<any> {
+    
+    const fullApiUrl = this.apiUrl + "/getimportprojects/"+id;
+
+    return this.http.get<any>(fullApiUrl);
+  }
+
   syncData(userId:any,clientId:any){
     return this.http.get<any>(this.apiUrl+'/sync'+`/${userId}`+`/${clientId}`);
   }

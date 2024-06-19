@@ -69,9 +69,37 @@ export class ImportModalComponent implements OnInit {
             this.commanService.presentToast("File uploaded successfully. ", 5000, "toast-succuss-mess");
           }
 
-        } else {
+        } else if(res.code === 901) {
+          if (res.data !== null && res.data.length > 0) {
+            this.updatedProject = res.data;
+            let projectIds = this.updatedProject
+              .map((project) => project.projectId)
+              .join(", ");
+            let projectname = this.updatedProject
+              .map((project) => project.projectName)
+              .join(", ");
+
+            let message = "";
+            if (this.updatedProject.length === 1) {
+              message =
+                "Project " + "'" + projectname + "'" + " name has been changed";
+            } else {
+              message = "Projects " + projectIds + " have been changed";
+            }
+            this.close();
+            this.commanService.presentToast(
+              message,
+              5000,
+              "toast-succuss-mess"
+            );
+
+          } else {
+            this.close();
+            this.commanService.presentToast("File uploaded successfully. ", 5000, "toast-succuss-mess");
+          }
+        }else if (res.code ===404) {
           this.close();
-          this.commanService.presentToast(res.message, 3000, "toast-error-mess");
+          this.commanService.presentToast("Invalid file format. Only .xlsx files are allowed.", 5000, "toast-error-mess");
         }
       },
       (error) => {
@@ -136,9 +164,37 @@ export class ImportModalComponent implements OnInit {
             this.commanService.presentToast("File uploaded successfully. ", 5000, "toast-succuss-mess");
           }
 
-        } else {
+          } else if(res.code === 901) {
+          if (res.data !== null && res.data.length > 0) {
+            this.updatedProject = res.data;
+            let projectIds = this.updatedProject
+              .map((project) => project.projectId)
+              .join(", ");
+            let projectname = this.updatedProject
+              .map((project) => project.projectName)
+              .join(", ");
+
+            let message = "";
+            if (this.updatedProject.length === 1) {
+              message =
+                "Project " + "'" + projectname + "'" + " name has been changed";
+            } else {
+              message = "Projects " + projectIds + " have been changed";
+            }
+            this.close();
+            this.commanService.presentToast(
+              message,
+              5000,
+              "toast-succuss-mess"
+            );
+
+          } else {
+            this.close();
+            this.commanService.presentToast("File uploaded successfully. ", 5000, "toast-succuss-mess");
+          }
+        }else if (res.code ===404) {
           this.close();
-          this.commanService.presentToast(res.message, 3000, "toast-error-mess");
+          this.commanService.presentToast("Invalid file format. Only .xlsx files are allowed.", 5000, "toast-error-mess");
         }
       },
         (error) => {

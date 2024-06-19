@@ -107,6 +107,14 @@ sprintEndDate:any;
     });
   }
   syncData(){
+
+    if(this.clientId ==="0000"){
+      this.commanService.presentToast(
+      "Sync only works with Jira client" ,
+       3000,
+       "toast-error-mess"
+     );
+   }else{
     let UserDetails = this.authService.getUserDetails();
     this.projectService.syncData(UserDetails?.id,this.clientId).subscribe((res)=>{
       if(this.sprintId&&this.projectId){
@@ -127,6 +135,7 @@ sprintEndDate:any;
        if(res.code==200){this.commanService.presentToast("Sync is completed", 5000 , "toast-succuss-mess");}
        else{this.commanService.presentToast(res.data, 5000 , "toast-error-mess");}
     })
+  }
   }
   toggleSortingDirection() {
     this.isAscending = !this.isAscending;
