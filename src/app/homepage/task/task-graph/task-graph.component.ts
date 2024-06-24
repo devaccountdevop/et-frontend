@@ -75,7 +75,7 @@ export class TaskGraphComponent implements OnInit {
             this.velocityForChart.push(dataForDate[0].velocity);
             this.threePointForChart.push(dataForDate[0].threePointEstimate);
             this.riskFactorForTable.push(dataForDate[0].riskFactor);
-            this.actualForChart.push(dataForDate[0].actualEstimate / 8);
+            this.actualForChart.push(dataForDate[0].actualEstimate );
             this.remainingforTable.push(dataForDate[0].remaining / 8);
           } else {
             this.AiEstimateForChart.push(0);

@@ -181,7 +181,7 @@
                         item.sprintName
                       }} 
                       <!-- (mouseout)="closePopup()" -->
-                   <mat-icon (mouseover)="openGraphPopup($event, item)"   [ngClass]="getIconColor(item.sumOfOriginalEstimate, item.sumOfAiEstimate)">
+                   <mat-icon *ngIf="item.sprintId >0" (mouseover)="openGraphPopup($event, item)"   [ngClass]="getIconColor(item.sumOfOriginalEstimate, item.sumOfAiEstimate)">
                     {{ getIconColor(item.sumOfOriginalEstimate, item.sumOfAiEstimate) === 'error' ? 'error' :
                        getIconColor(item.sumOfOriginalEstimate, item.sumOfAiEstimate) === 'warning' ? 'warning' :
                        'check_circle' }}

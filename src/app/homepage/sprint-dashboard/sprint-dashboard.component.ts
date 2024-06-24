@@ -27,7 +27,7 @@ export class SprintDashboardComponent  implements OnInit {
   id: any = 45;
   p: number = 1;
   searchText: any;
-  sprintsList: Project[] = [];
+  sprintsList: any[] = [];
 
   pageFilter = [
     { code: "15", name: "15" },
@@ -65,6 +65,11 @@ export class SprintDashboardComponent  implements OnInit {
     this.sprintService.getSprints(projectId).subscribe((res)=>{
       if(res.code === 200){  
         this.sprintsList = res.data;
+        this.sprintsList.push({sprintId:-1,projectId:'',sprintName:"Backlog"})
+
+        console.log(this.sprintsList);
+        
+       
       }else{
         this.sprintsList =[];
       }
@@ -72,23 +77,30 @@ export class SprintDashboardComponent  implements OnInit {
   }
 
   syncData(){
+
+    if(this.clientId ==="0000"){
+      this.commanService.presentToast(
+      "Sync only works with Jira client" ,
+       3000,
+       "toast-error-mess"
+     );
+   }else{
     let UserDetails = this.authService.getUserDetails();
-   this.projectService.syncData(UserDetails?.id,this.clientId).subscribe((res)=>{
-    if(this.projectId){
-      this.getSprints(this.projectId)
-    }else{
-      this.router.queryParams.subscribe(params => {
-        this.projectId = params['projectId'];
-        this.projectName= params['projectName'];
-     });
-     if(this.projectId !== 0)this.getSprints(this.projectId)
-    }
-    if(res.code==200){this.commanService.presentToast("Sync is completed", 5000 , "toast-succuss-mess");}
-    else{this.commanService.presentToast(res.data, 5000 , "toast-error-mess");}
-   })
-
+    this.projectService.syncData(UserDetails?.id,this.clientId).subscribe((res)=>{
+     if(this.projectId){
+       this.getSprints(this.projectId)
+     }else{
+       this.router.queryParams.subscribe(params => {
+         this.projectId = params['projectId'];
+         this.projectName= params['projectName'];
+      });
+      if(this.projectId !== 0)this.getSprints(this.projectId)
+     }
+     if(res.code==200){this.commanService.presentToast("Sync is completed", 5000 , "toast-succuss-mess");}
+     else{this.commanService.presentToast(res.data, 5000 , "toast-error-mess");}
+    })
+   }
   }
-
   setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;
   }

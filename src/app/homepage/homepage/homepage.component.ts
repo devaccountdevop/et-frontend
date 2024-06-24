@@ -11,6 +11,7 @@ import { CommanLoaderService } from "src/app/services/comman-loader.service";
 import { Observable } from "rxjs";
 import { MenuService } from "src/app/services/menu.service";
 import { ProjectGraphComponent } from "./project-graph/project-graph.component";
+import { TaskService } from "src/app/services/task.service";
 
 @Component({
   selector: "app-homepage",
@@ -30,6 +31,7 @@ export class HomepageComponent implements OnInit {
   pageFilterDefault: any = 15;
   clientId: any;
   projectList: Project[] = [];
+  checkprojectList:any []=[];
   UserDetails: any;
   clientList: any[] = [];
   pageFilter = [
@@ -44,7 +46,8 @@ export class HomepageComponent implements OnInit {
     private clientService: AddClientService,
     private router: Router,
     private authService: AuthenticationService,
-    private commonService: CommanLoaderService
+    private commonService: CommanLoaderService,
+    private taskService: TaskService
   ) {}
 
   ngOnInit() {
@@ -56,12 +59,14 @@ export class HomepageComponent implements OnInit {
         this.clientId = clientId;
 
         this.getProjectList(clientId);
-      } else {
-        this.projectList = [];
+      } else if(this.clientId ==="0000"){}
+      else {
+        
+       this.projectList =[];
         setTimeout(() => {
           this.showDiv = true;
       }, 1000); // Delay for 2 seconds (2000 milliseconds)
-  
+      this.clientId = undefined;
       }
       this.clientList.length = 0;
       this.clientList.push(...res);
@@ -71,6 +76,10 @@ export class HomepageComponent implements OnInit {
       this.clientList.length = 0;
       this.clientList.push(...res); 
     })
+   
+    
+   
+    
   }
   getClientByUserId(Userid: any) {
     this.clientService.getClientByUserId(Userid).subscribe((clientRes) => {
@@ -80,6 +89,9 @@ export class HomepageComponent implements OnInit {
         if (this.clientList?.length > 0) {
           const clientId = this.clientList[0].id;
           this.clientId = clientId;
+          const client = this.clientList.find(client => {
+            return client.id == this.clientId;
+        });
           this.getProjectList(clientId);
         } else {
           this.projectList = [];
@@ -94,7 +106,9 @@ export class HomepageComponent implements OnInit {
   }
 
   private getProjectList(clientId: string): void {
+    this.projectList=[];
     this.projectService.getProjects(clientId).subscribe((projectsRes) => {
+
       if (projectsRes.data.length > 0) {
         this.projectList = projectsRes.data;
       } else {
@@ -108,6 +122,19 @@ export class HomepageComponent implements OnInit {
     console.log(this.clientId);
   }
   syncData() {
+    if(this.clientId ==="0000"){
+       this.commonService.presentToast(
+       "Sync only works with Jira client" ,
+        3000,
+        "toast-error-mess"
+      );
+    }else if(this.clientId === undefined){
+      this.commonService.presentToast(
+        "please select a client" ,
+         3000,
+         "toast-error-mess"
+       );
+    }  else{
     this.projectService
       .syncData(this.UserDetails?.id, this.clientId)
       .subscribe((res) => {
@@ -151,24 +178,46 @@ export class HomepageComponent implements OnInit {
           );
         }
       });
+    }
   }
 
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
   getProjectByselectedClient() {
-    if (this.clientId !== undefined) {
-      this.projectService.getProjects(this.clientId).subscribe((res) => {
-        if (res.code == 200) {
+    if (this.clientId !== undefined) {   
+      if(this.clientId ==="0000"){
+        const importedData = {id: "0000", clientName: 'Imported Data', jiraUserName: '', token: "", userId: this.UserDetails?.id};
+        
+        this.projectService.getImportedProjects(this.UserDetails?.id).subscribe((res)=>{
+        if(res.code ==200){
           this.projectList = res.data;
-        } else {
-          this.projectList = [];
-          setTimeout(() => {
-            this.showDiv = true;
-        }, 1000); // Delay for 2 seconds (2000 milliseconds)
-    
+        
+        }else{
+          this.projectList=[];
+         
         }
-      });
+        });
+      
+        }else{
+          const client = this.clientList.find(client => {
+            return client.id == this.clientId;
+        });
+  
+              this.projectService.getProjects(this.clientId).subscribe((res) => {
+                if (res.code == 200) {
+                  this.projectList = res.data;
+         
+                } else {
+                  this.projectList = [];
+                  setTimeout(() => {
+                    this.showDiv = true;
+                }, 1000); // Delay for 2 seconds (2000 milliseconds)
+            
+                }
+              });
+            }
+      
     }
   }
   public isDialogVisible: boolean = false;
@@ -185,6 +234,19 @@ export class HomepageComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log("The dialog was closed");
+      this.clientService.clientList$.subscribe((res)=>{
+        if(this.clientId !=="0000"){
+          this.projectList=[];
+        }
+if(res.length==0){
+this.clientId = undefined
+this.projectList = [];
+}
+      })
+      const client = this.clientList.find(client => {
+        return client.id == this.clientId;
+    });
+
     });
   }
 
@@ -222,6 +284,10 @@ export class HomepageComponent implements OnInit {
 
   openGraphPopup(event: MouseEvent, item: any) {
      this.projectService.setSharedItem(item);
+
+
+
+     
   
     const offsetX = 470;
     const offsetY = 400;
@@ -249,8 +315,13 @@ export class HomepageComponent implements OnInit {
       positionLeft = 0;
     }
   if(item.sprintInfoDtos.length ==0){
+  
     this.commonService.presentToast("Graph data not available for " + item.projectName+ " project.", 3000, "toast-error-mess");
   }else{
+
+    this.taskService.getBacklogTask(item.projectId).subscribe((res)=>{
+      this.projectService.setBacklogtask(res.data);
+    })
     let dialogRef = this.dialog.open(ProjectGraphComponent, {
       width: "460px",
       height: "400px",

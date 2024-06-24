@@ -26,6 +26,14 @@ export class TaskService {
     return this.http.get<any>(fullApiUrl );
  
   }
+
+  public getBacklogTask( projectId:any): Observable<any> {
+ 
+    const fullApiUrl = this.apiUrl + "/getprojectbacklog/"+projectId;
+    return this.http.get<any>(fullApiUrl );
+ 
+  }
+
   updateEstimatesInJira(updateTasks: any):Observable<any> {
    // console.log('Update Tasks:', updateTasks);
     const fullApiUrl = this.apiUrl + "/updatestimates";

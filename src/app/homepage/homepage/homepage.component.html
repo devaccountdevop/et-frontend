@@ -23,13 +23,19 @@
                 <ng-container
                   *ngIf="clientList.length === 0; else clientOptions"
                 >
-                  <option value="undefined" disabled selected>
+                  <option *ngIf="clientList.length === 0" value="undefined" disabled selected>
                     No Client Available
+                  </option>
+                  <option  value="0000" selected>
+                    No Client 
                   </option>
                 </ng-container>
                 <ng-template #clientOptions>
                   <option *ngFor="let item of clientList" [value]="item.id">
                     {{ item.clientName }}
+                  </option>
+                  <option value="0000" selected>
+                    No Client  
                   </option>
                 </ng-template>
               </select>

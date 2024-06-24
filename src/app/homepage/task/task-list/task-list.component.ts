@@ -94,19 +94,35 @@ sprintEndDate:any;
     }
   }
   getTaskBySprintId(sprintId:any,projectId:any){
-    this.taskService.getTaskBySprintId(sprintId,projectId).subscribe((res) => {
-      this.tableData = res.data;
-      // Convert original estimates in the tableData array from seconds to hours
-      this.tableData.forEach((task) => {
-        if (task.originalEstimate) {
-          // Assuming 1 hour = 3600 seconds
-          task.originalEstimate = task.originalEstimate / 3600;
-        }
-      });
 
-    });
+    if(sprintId <0){
+      this.taskService.getBacklogTask(projectId).subscribe((res)=>{
+        this.tableData = res.data;
+      });
+    }else{
+      this.taskService.getTaskBySprintId(sprintId,projectId).subscribe((res) => {
+        this.tableData = res.data;
+        // Convert original estimates in the tableData array from seconds to hours
+        this.tableData.forEach((task) => {
+          if (task.originalEstimate) {
+            // Assuming 1 hour = 3600 seconds
+            task.originalEstimate = task.originalEstimate / 3600;
+          }
+        });
+  
+      });
+    }
+    
   }
   syncData(){
+
+    if(this.clientId ==="0000"){
+      this.commanService.presentToast(
+      "Sync only works with Jira client" ,
+       3000,
+       "toast-error-mess"
+     );
+   }else{
     let UserDetails = this.authService.getUserDetails();
     this.projectService.syncData(UserDetails?.id,this.clientId).subscribe((res)=>{
       if(this.sprintId&&this.projectId){
@@ -127,6 +143,7 @@ sprintEndDate:any;
        if(res.code==200){this.commanService.presentToast("Sync is completed", 5000 , "toast-succuss-mess");}
        else{this.commanService.presentToast(res.data, 5000 , "toast-error-mess");}
     })
+  }
   }
   toggleSortingDirection() {
     this.isAscending = !this.isAscending;

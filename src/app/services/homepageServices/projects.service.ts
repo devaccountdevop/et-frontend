@@ -16,6 +16,13 @@ export class ProjectsService {
 
     public sharedItemSubject: BehaviorSubject<any> = new BehaviorSubject(null);
     sharedItem$: Observable<any> = this.sharedItemSubject.asObservable();
+
+    public backlogTaskSubject: BehaviorSubject<any> = new BehaviorSubject(null);
+    backlogTask: Observable<any> = this.backlogTaskSubject.asObservable();
+  
+    setBacklogtask(item: any) {
+      this.backlogTaskSubject.next(item);
+    }
   
     setSharedItem(item: any) {
       this.sharedItemSubject.next(item);
@@ -24,6 +31,13 @@ export class ProjectsService {
   public getProjects(id: any): Observable<any> {
     
     const fullApiUrl = this.apiUrl + "/getAllProjects/"+id;
+
+    return this.http.get<any>(fullApiUrl);
+  }
+
+  public getImportedProjects(id: any): Observable<any> {
+    
+    const fullApiUrl = this.apiUrl + "/getimportprojects/"+id;
 
     return this.http.get<any>(fullApiUrl);
   }

@@ -13,7 +13,7 @@
         <table class="table-data">
           <tr>
             <td style="border: none;"> Sprints </td>
-            <td *ngFor="
+            <td class="tableheader" *ngFor="
             let item of barChartLabels
              
               | paginate
@@ -24,26 +24,32 @@
           <tr>
             <td class="label">Over Estimate</td>
             <td *ngFor="let items of overEstimate">{{items}}</td>
+            <td>0</td>
           </tr>
           <tr>
             <td class="label">Total planned</td>
             <td *ngFor="let items of totalPlanned">{{items}}</td>
+            <td>0</td>
           </tr>
           <tr>
             <td class="label">Not_started</td>
             <td *ngFor="let items of notStartedTask">{{items}}</td>
+            <td>0</td>
           </tr>
           <tr>
             <td class="label">Total Scope</td>
             <td *ngFor="let items of totalScope">{{items}}</td>
+            <td >{{totalThreePointEstimateOfBacklog}}</td>
           </tr>
           <tr>
             <td class="label">Velocity</td>
             <td *ngFor="let items of sumOfVelocity">{{items}}</td>
+            <td>0</td>
           </tr>
           <tr>
             <td class="label">Completed</td>
             <td *ngFor="let items of completedTask">{{items}}</td>
+            <td>0</td>
           </tr>
         </table>
 
