@@ -9,6 +9,7 @@ import {
 import * as pluginDataLabels from "chartjs-plugin-datalabels";
 import { BaseChartDirective } from "ng2-charts";
 import { ProjectsService } from "src/app/services/homepageServices/projects.service";
+import { TaskService } from "src/app/services/task.service";
 
 @Component({
   selector: "app-project-graph",
@@ -38,8 +39,10 @@ export class ProjectGraphComponent implements OnInit {
   totalPlanned: any[] = [];
   overEstimate: any[] = [];
   sumOfVelocity: any[] = [];
-  threePointEstimate:any[] = [];
-  totalScope :any[] = [];
+  threePointEstimate: any[] = [];
+  backlogTask: any[] = [];
+  totalScope: any[] = [];
+  totalThreePointEstimateOfBacklog = 0;
   // totalActualEstimate = 0;
   // totalRemaining = 0;
   // averageVelocity = 0;
@@ -47,16 +50,16 @@ export class ProjectGraphComponent implements OnInit {
   // totalRiskFactors = 0;
   constructor(
     private dialog: MatDialog,
-    private sprintService: ProjectsService
+    private sprintService: ProjectsService,
+    private taskService: TaskService
   ) { }
   ngOnInit(): void {
     this.labels = [];
     this.sprintDataForBar = [];
     this.sprintDates = [];
-    this.sprintDataForBar = [];
     this.aisumofaiestimate = [];
     this.sumoforiginal = [];
-    this.sumofworklogs= [];
+    this.sumofworklogs = [];
     this.originalEstimateData = [];
     this.workLogEstimateData = [];
     this.completedTask = [];
@@ -64,7 +67,12 @@ export class ProjectGraphComponent implements OnInit {
     this.totalPlanned = [];
     this.overEstimate = [];
     this.threePointEstimate = [];
+    this.totalScope = [];
+    this.sumOfVelocity = [];
+    this.noOfDays = [];
+
     this.sprintService.sharedItem$.subscribe((item: any) => {
+      this.labels = [];
       if (item.sprintInfoDtos.length == 0) {
         this.sprintDates = [];
       } else {
@@ -80,7 +88,6 @@ export class ProjectGraphComponent implements OnInit {
             return sum + parseFloat(task.originalEstimate);
           }, 0);
 
-          // Sum of original estimates for not started tasks
           const notStartedTaskSum = notStartedTasksInSprint.reduce((sum: number, task: any) => {
             return sum + parseFloat(task.originalEstimate);
           }, 0);
@@ -96,11 +103,11 @@ export class ProjectGraphComponent implements OnInit {
           }, 0);
 
           const sumOfThreePointEstimate = sprintInfoDto.taskDetails.reduce((sum: number, task: any) => {
-            if(task.threePointEstimate == null){
-             return 0;
+            if (task.threePointEstimate == null) {
+              return 0;
             }
-             return sum + parseFloat(task.threePointEstimate);
-           }, 0);
+            return sum + parseFloat(task.threePointEstimate);
+          }, 0);
 
           const doneTasksOriginalEstimateHours = completedTaskSum / 3600;
           const notStartedTasksOriginalEstimateHours = notStartedTaskSum / 3600;
@@ -110,43 +117,38 @@ export class ProjectGraphComponent implements OnInit {
           this.completedTask.push(doneTasksOriginalEstimateHours);
           this.notStartedTask.push(notStartedTasksOriginalEstimateHours);
 
-
           let aiEstimateSum = 0;
           let originalEstimateSum = 0;
           let sumofworklogs = 0;
           doneTasksInSprint.forEach((task: any) => {
             aiEstimateSum += parseFloat(task.aiEstimate);
             originalEstimateSum += parseFloat(task.originalEstimate);
-            // Check if the task has worklogs
             if (task.worklogs && task.worklogs.length > 0) {
               let worklogestimate = 0;
               task.worklogs.forEach((worklog: any) => {
                 worklogestimate += parseFloat(worklog.timeSpentSeconds);
               });
-              sumofworklogs += worklogestimate; // Accumulate worklog estimates
+              sumofworklogs += worklogestimate;
             }
           });
 
           this.aisumofaiestimate.push(aiEstimateSum);
           this.sumoforiginal.push(originalEstimateSum);
-          this.sumofworklogs.push(sumofworklogs / 3600); // Add the total worklog estimate for this sprint to the array
+          this.sumofworklogs.push(sumofworklogs / 3600);
           const sprintNumber = sprintInfoDto.sprintName.split(' ').pop();
           this.labels.push(`S-${sprintNumber}`);
           const startDate = new Date(sprintInfoDto.startDate);
-        const endDate = new Date(sprintInfoDto.endDate);
-        const sprintDurationInDays = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
-        this.noOfDays.push(sprintDurationInDays);
+          const endDate = new Date(sprintInfoDto.endDate);
+          const sprintDurationInDays = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
+          this.noOfDays.push(sprintDurationInDays);
         });
 
         this.overEstimate = this.sumofworklogs.map((worklog, index) => {
           const planned = this.totalPlanned[index];
           const over = worklog - planned;
-          if (over < 0) {
-            return 0;
-          } else {
-            return over;
-          }
+          return over < 0 ? 0 : over;
         });
+
         console.log(this.completedTask, this.notStartedTask, this.sumofworklogs, this.totalPlanned, this.overEstimate, this.sumOfVelocity, this.noOfDays);
         const secondsPer8HourWorkday = 60 * 60;
         this.originalEstimateData = this.sumoforiginal.map(
@@ -158,12 +160,40 @@ export class ProjectGraphComponent implements OnInit {
         this.workLogEstimateData = this.sumofworklogs.map(
           (sumInSeconds) => sumInSeconds / secondsPer8HourWorkday
         );
-
-        // console.log(aiEstimateInDays, sumIn8HourWorkdays, aiEstimateInDay );
       }
+
+      this.backlogTaskfetch();
     });
-   
-   this.updateGraph();
+  }
+  async backlogTaskfetch() {
+    await this.sprintService.backlogTask.subscribe((res) => {
+      this.backlogTask = [];
+      const backlogTask = res;
+      this.totalThreePointEstimateOfBacklog;
+      if (backlogTask != null) {
+        const sumOfThreePointEstimatess = backlogTask.reduce((sum: number, task: any) => {
+          if (task.threePointEstimate == null) {
+            return sum;
+          }
+          return sum + parseFloat(task.threePointEstimate);
+        }, 0);
+        this.totalThreePointEstimateOfBacklog = sumOfThreePointEstimatess;
+      }
+
+      this.backlogTask = this.labels.map(() => 0);
+      this.backlogTask.pop();
+      this.backlogTask.push(this.totalThreePointEstimateOfBacklog);
+      if (!this.labels.includes("Backlog Task"))
+        this.labels.push("Backlog Task");
+
+
+      console.log(this.backlogTask, this.labels);
+      this.updateGraph();
+
+    });
+
+
+
   }
   public barChartOptions: ChartConfiguration["options"] = {
     responsive: true,
@@ -223,12 +253,12 @@ export class ProjectGraphComponent implements OnInit {
     "S-10",
 
   ];
-  public barChartLabels :any[]= [];
+  public barChartLabels: any[] = [];
   public barChartType: ChartType = "bar";
   public barChartLegend = true;
   public barChartPlugins = [];
 
-  updateGraph(){
+  updateGraph() {
     this.barChartLabels = this.labels;
     this.barChartLegend = true;
     this.barChartData = [
@@ -264,7 +294,7 @@ export class ProjectGraphComponent implements OnInit {
         pointStyle: false,
         type: "line",
       },
-  
+
       {
         data: this.notStartedTask,
         label: "Not Started",
@@ -273,9 +303,9 @@ export class ProjectGraphComponent implements OnInit {
         // borderColor: 'black',
         pointStyle: false,
         type: "bar",
-        maxBarThickness:30
+        maxBarThickness: 30
       },
-  
+
       {
         label: "Planned",
         hidden: false,
@@ -285,7 +315,7 @@ export class ProjectGraphComponent implements OnInit {
         backgroundColor: "rgb(128, 100, 162)",
         borderColor: "rgb(128, 100, 162)",
         hoverBackgroundColor: "rgb(128, 100, 162)",
-        maxBarThickness:30
+        maxBarThickness: 30
       },
       {
         data: this.overEstimate,
@@ -294,7 +324,16 @@ export class ProjectGraphComponent implements OnInit {
         stack: "a",
         pointStyle: false,
         type: "bar",
-        maxBarThickness:30
+        maxBarThickness: 30
+      },
+      {
+        data: this.backlogTask,
+        label: "Three Point Estimate",
+        backgroundColor: "red",
+        stack: "a",
+        pointStyle: false,
+        type: "bar",
+        maxBarThickness: 30
       },
     ];
   }

@@ -27,7 +27,7 @@ export class SprintDashboardComponent  implements OnInit {
   id: any = 45;
   p: number = 1;
   searchText: any;
-  sprintsList: Project[] = [];
+  sprintsList: any[] = [];
 
   pageFilter = [
     { code: "15", name: "15" },
@@ -65,6 +65,11 @@ export class SprintDashboardComponent  implements OnInit {
     this.sprintService.getSprints(projectId).subscribe((res)=>{
       if(res.code === 200){  
         this.sprintsList = res.data;
+        this.sprintsList.push({sprintId:-1,projectId:'',sprintName:"Backlog"})
+
+        console.log(this.sprintsList);
+        
+       
       }else{
         this.sprintsList =[];
       }

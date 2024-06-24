@@ -11,6 +11,7 @@ import { CommanLoaderService } from "src/app/services/comman-loader.service";
 import { Observable } from "rxjs";
 import { MenuService } from "src/app/services/menu.service";
 import { ProjectGraphComponent } from "./project-graph/project-graph.component";
+import { TaskService } from "src/app/services/task.service";
 
 @Component({
   selector: "app-homepage",
@@ -46,6 +47,7 @@ export class HomepageComponent implements OnInit {
     private router: Router,
     private authService: AuthenticationService,
     private commonService: CommanLoaderService,
+    private taskService: TaskService
   ) {}
 
   ngOnInit() {
@@ -282,6 +284,10 @@ this.projectList = [];
 
   openGraphPopup(event: MouseEvent, item: any) {
      this.projectService.setSharedItem(item);
+
+
+
+     
   
     const offsetX = 470;
     const offsetY = 400;
@@ -309,8 +315,13 @@ this.projectList = [];
       positionLeft = 0;
     }
   if(item.sprintInfoDtos.length ==0){
+  
     this.commonService.presentToast("Graph data not available for " + item.projectName+ " project.", 3000, "toast-error-mess");
   }else{
+
+    this.taskService.getBacklogTask(item.projectId).subscribe((res)=>{
+      this.projectService.setBacklogtask(res.data);
+    })
     let dialogRef = this.dialog.open(ProjectGraphComponent, {
       width: "460px",
       height: "400px",

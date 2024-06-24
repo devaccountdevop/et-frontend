@@ -16,6 +16,13 @@ export class ProjectsService {
 
     public sharedItemSubject: BehaviorSubject<any> = new BehaviorSubject(null);
     sharedItem$: Observable<any> = this.sharedItemSubject.asObservable();
+
+    public backlogTaskSubject: BehaviorSubject<any> = new BehaviorSubject(null);
+    backlogTask: Observable<any> = this.backlogTaskSubject.asObservable();
+  
+    setBacklogtask(item: any) {
+      this.backlogTaskSubject.next(item);
+    }
   
     setSharedItem(item: any) {
       this.sharedItemSubject.next(item);
