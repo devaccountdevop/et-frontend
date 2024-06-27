@@ -237,12 +237,26 @@ ion-card:hover {
   width: 100%;
   margin: 0px;
   padding: 0px;
-  text-align: center;
-}
-.card-content {
-  margin-top: 5px;
+  // text-align: center;
 }
 
+
+.sprintname{
+text-align: center; 
+flex-grow: 1; 
+margin-top: -1%;
+margin-right: 5%;
+}
+
+.card-content {
+display: flex; 
+justify-content: space-between; 
+align-items: center;
+  margin-top: 5px;
+}
+.mat-icon-hover:hover {
+  font-weight: bold;
+}
 
 .error {
   position: absolute; 
