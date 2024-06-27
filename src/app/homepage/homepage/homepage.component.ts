@@ -12,6 +12,7 @@ import { Observable } from "rxjs";
 import { MenuService } from "src/app/services/menu.service";
 import { ProjectGraphComponent } from "./project-graph/project-graph.component";
 import { TaskService } from "src/app/services/task.service";
+import { ExcelDownloadService } from "src/app/services/excel-download.service";
 
 @Component({
   selector: "app-homepage",
@@ -47,7 +48,8 @@ export class HomepageComponent implements OnInit {
     private router: Router,
     private authService: AuthenticationService,
     private commonService: CommanLoaderService,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private downloadProjectExcel: ExcelDownloadService
   ) {}
 
   ngOnInit() {
@@ -351,5 +353,29 @@ this.projectList = [];
     } else {
       return 'success';
     }
+  }
+  downloadProject(item:any){
+   console.log(this.clientId);
+   const projectName = item.projectName;
+    const formData = new FormData();
+    formData.append("userId", this.UserDetails.id);
+    formData.append("projectId", item.projectId);
+    if(this.clientId == "0000"){
+      formData.append("clientId", '0');
+    }else{
+      formData.append("clientId", this.clientId);
+    }
+    formData.append("sprintId", "");
+
+   this.downloadProjectExcel.downloadProject(formData).subscribe((blob)=>{
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${projectName}.xlsx`; 
+    a.click();
+    window.URL.revokeObjectURL(url);
+   })
+   
+
   }
 }

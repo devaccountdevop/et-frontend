@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CommanLoaderService } from 'src/app/services/comman-loader.service';
 import { TaskGraphComponent } from '../task/task-graph/task-graph.component';
+import { ExcelDownloadService } from 'src/app/services/excel-download.service';
 
 @Component({
   selector: 'app-sprint-dashboard',
@@ -26,6 +27,7 @@ export class SprintDashboardComponent  implements OnInit {
   isDropdownOpen = false;
   id: any = 45;
   p: number = 1;
+  UserDetails: any;
   searchText: any;
   sprintsList: any[] = [];
 
@@ -43,7 +45,8 @@ export class SprintDashboardComponent  implements OnInit {
     private sprintService: SprintService,
     private router: ActivatedRoute,
     private route: Router,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private downloadProjectExcel: ExcelDownloadService
 
     
   ) {}
@@ -247,4 +250,30 @@ getIcon(index: number): string {
  closePopup(){
    this.dialog.closeAll();
  }
+ downloadSprint(item:any){
+  this.UserDetails =   this.authService.getUserDetails();
+  console.log(this.clientId);
+    const formData = new FormData();
+    formData.append("userId", this.UserDetails.id);
+    formData.append("projectId", this.projectId);
+    if(this.clientId == "0000"){
+      formData.append("clientId", '0');
+    }else{
+      formData.append("clientId", this.clientId);
+    }
+   if(item.sprintId>0){
+    formData.append("sprintId", item.sprintId);
+   }
+   else{
+    formData.append("sprintId", "0");
+   }
+   this.downloadProjectExcel.downloadProject(formData).subscribe((blob)=>{
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${this.projectName}_${item.sprintName}.xlsx`; 
+    a.click();
+    window.URL.revokeObjectURL(url);
+   })
+}
 }

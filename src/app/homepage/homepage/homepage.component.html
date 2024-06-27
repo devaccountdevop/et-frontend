@@ -127,7 +127,7 @@
                   "
                 >
                   <ion-col
-                    (click)="getSprints(item)"
+                   
                     class="projectlist-col"
                     size="3.7"
                   >
@@ -138,13 +138,21 @@
                       }"
                       class="projectlist-card"
                     >
-                      <ion-card-content class="card-content">{{
-                        item.projectName
-                      }}      <mat-icon (mouseover)="openGraphPopup($event, item)"   [ngClass]="getIconColor(item.sumOfOriginalEstimate, item.sumOfAiEstimate)">
-                    {{ getIconColor(item.sumOfOriginalEstimate, item.sumOfAiEstimate) === 'error' ? 'error' :
-                       getIconColor(item.sumOfOriginalEstimate, item.sumOfAiEstimate) === 'warning' ? 'warning' :
-                       'check_circle' }}
-                  </mat-icon></ion-card-content>
+                     
+                    <ion-card-content class="card-content" >
+                      <span>
+                        <mat-icon class="mat-icon-hover"  (click)="downloadProject(item)">save_alt</mat-icon>
+                      </span>
+                      <div  (click)="getSprints(item)" class="projectname">
+                        {{ item.projectName }}
+                      </div>
+                      <mat-icon (mouseover)="openGraphPopup($event, item)" [ngClass]="getIconColor(item.sumOfOriginalEstimate, item.sumOfAiEstimate)">
+                        {{ getIconColor(item.sumOfOriginalEstimate, item.sumOfAiEstimate) === 'error' ? 'error' :
+                           getIconColor(item.sumOfOriginalEstimate, item.sumOfAiEstimate) === 'warning' ? 'warning' :
+                           'check_circle' }}
+                      </mat-icon>
+                    </ion-card-content>
+                    
                       
                     </ion-card>
                   </ion-col>

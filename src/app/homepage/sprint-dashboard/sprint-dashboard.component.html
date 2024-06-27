@@ -166,7 +166,7 @@
                   "
                 >
                   <ion-col
-                    (click)="getTask(item)"
+                   
                     class="sprintlist-col"
                     size="3.7"
                   >
@@ -177,19 +177,22 @@
                       }"
                       class="sprintlist-card"
                     >
-                      <ion-card-content class="card-content">{{
+                     
+                  <ion-card-content class="card-content" >
+                    <span>
+                      <mat-icon class="mat-icon-hover"  (click)="downloadSprint(item)">save_alt</mat-icon>
+                    </span>
+                    <div   (click)="getTask(item)" class="sprintname">
+                      {{
                         item.sprintName
                       }} 
-                      <!-- (mouseout)="closePopup()" -->
-                   <mat-icon *ngIf="item.sprintId >0" (mouseover)="openGraphPopup($event, item)"   [ngClass]="getIconColor(item.sumOfOriginalEstimate, item.sumOfAiEstimate)">
-                    {{ getIconColor(item.sumOfOriginalEstimate, item.sumOfAiEstimate) === 'error' ? 'error' :
-                       getIconColor(item.sumOfOriginalEstimate, item.sumOfAiEstimate) === 'warning' ? 'warning' :
-                       'check_circle' }}
-                  </mat-icon>
-
-
-                     
- </ion-card-content>
+                    </div>
+                    <mat-icon *ngIf="item.sprintId >0" (mouseover)="openGraphPopup($event, item)"   [ngClass]="getIconColor(item.sumOfOriginalEstimate, item.sumOfAiEstimate)">
+                      {{ getIconColor(item.sumOfOriginalEstimate, item.sumOfAiEstimate) === 'error' ? 'error' :
+                         getIconColor(item.sumOfOriginalEstimate, item.sumOfAiEstimate) === 'warning' ? 'warning' :
+                         'check_circle' }}
+                    </mat-icon>
+                  </ion-card-content>
                     </ion-card>
                   </ion-col>
                 </ng-container>
