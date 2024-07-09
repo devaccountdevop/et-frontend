@@ -43,11 +43,10 @@ export class ProjectGraphComponent implements OnInit {
   backlogTask: any[] = [];
   totalScope: any[] = [];
   totalThreePointEstimateOfBacklog = 0;
-  // totalActualEstimate = 0;
-  // totalRemaining = 0;
-  // averageVelocity = 0;
-  // totalThreePointEstimate = 0;
-  // totalRiskFactors = 0;
+  addtotalScope: any[] = [];
+  newScope: any[] = [];
+  scopeForSprint: any[] = [];
+
   constructor(
     private dialog: MatDialog,
     private sprintService: ProjectsService,
@@ -69,72 +68,54 @@ export class ProjectGraphComponent implements OnInit {
     this.threePointEstimate = [];
     this.totalScope = [];
     this.sumOfVelocity = [];
+    this.backlogTask = [];
     this.noOfDays = [];
+    this.newScope=[];
 
     this.sprintService.sharedItem$.subscribe((item: any) => {
-      this.labels = [];
       if (item.sprintInfoDtos.length == 0) {
         this.sprintDates = [];
       } else {
         item.sprintInfoDtos.forEach((sprintInfoDto: any, index: number) => {
-          const doneTasksInSprint = sprintInfoDto.taskDetails.filter(
-            (task: any) => task.taskStatus === "Done"
-          );
-          const notStartedTasksInSprint = sprintInfoDto.taskDetails.filter(
-            (task: any) => task.taskStatus === "To Do"
-          );
-
-          const completedTaskSum = doneTasksInSprint.reduce((sum: number, task: any) => {
-            return sum + parseFloat(task.originalEstimate);
-          }, 0);
-
-          const notStartedTaskSum = notStartedTasksInSprint.reduce((sum: number, task: any) => {
-            return sum + parseFloat(task.originalEstimate);
-          }, 0);
-
           const sumOfOriginalEstimate = sprintInfoDto.taskDetails.reduce((sum: number, task: any) => {
             return sum + parseFloat(task.originalEstimate);
           }, 0);
-          const sumOfVelocity = sprintInfoDto.taskDetails.reduce((sum: number, task: any) => {
-            if (task.storyPoints == null) {
-              return sum;
-            }
-            return sum + parseFloat(task.storyPoints);
-          }, 0);
 
-          const sumOfThreePointEstimate = sprintInfoDto.taskDetails.reduce((sum: number, task: any) => {
-            if (task.threePointEstimate == null) {
-              return 0;
-            }
-            return sum + parseFloat(task.threePointEstimate);
-          }, 0);
-
-          const doneTasksOriginalEstimateHours = completedTaskSum / 3600;
-          const notStartedTasksOriginalEstimateHours = notStartedTaskSum / 3600;
-          this.totalScope.push(sumOfThreePointEstimate);
-          this.sumOfVelocity.push(sumOfVelocity * 8);
-          this.totalPlanned.push(sumOfOriginalEstimate / 3600);
-          this.completedTask.push(doneTasksOriginalEstimateHours);
-          this.notStartedTask.push(notStartedTasksOriginalEstimateHours);
-
-          let aiEstimateSum = 0;
-          let originalEstimateSum = 0;
-          let sumofworklogs = 0;
-          doneTasksInSprint.forEach((task: any) => {
-            aiEstimateSum += parseFloat(task.aiEstimate);
-            originalEstimateSum += parseFloat(task.originalEstimate);
-            if (task.worklogs && task.worklogs.length > 0) {
-              let worklogestimate = 0;
-              task.worklogs.forEach((worklog: any) => {
-                worklogestimate += parseFloat(worklog.timeSpentSeconds);
-              });
-              sumofworklogs += worklogestimate;
-            }
+          let sumOfNotstartedEstimate = 0;
+          let sumOfVelocityEstimate = 0;
+          let sumOfOverEstimate = 0;
+      
+          sprintInfoDto.taskDetails.forEach((task: any) => {
+            
+              
+              const threePointEstimate = parseFloat(task.threePointEstimate);
+              const actual = parseFloat(task.actual);
+             
+              const difference = threePointEstimate - actual;
+  
+              if (difference === threePointEstimate) {
+                  // "not started"
+                  sumOfNotstartedEstimate += threePointEstimate;
+              } else if (difference >= 0) {
+                  // "started"
+                  // Calculate velocity
+                  const velocity = Math.min(actual, threePointEstimate);
+                  const formattedVelocity = parseFloat(velocity.toFixed(2));
+                  sumOfVelocityEstimate += formattedVelocity;
+              } else {
+                  // "over estimate"
+                  sumOfOverEstimate += threePointEstimate;
+              }
           });
-
-          this.aisumofaiestimate.push(aiEstimateSum);
-          this.sumoforiginal.push(originalEstimateSum);
-          this.sumofworklogs.push(sumofworklogs / 3600);
+      
+          // Push accumulated sums to respective arrays
+          this.sumOfVelocity.push(sumOfVelocityEstimate);
+          this.notStartedTask.push(sumOfNotstartedEstimate);
+          this.overEstimate.push(sumOfOverEstimate);
+          this.totalPlanned.push(sumOfOriginalEstimate );
+          this.completedTask.push();
+          this.notStartedTask.push();
+          this.newScope.push(sprintInfoDto.projectScope )
           const sprintNumber = sprintInfoDto.sprintName.split(' ').pop();
           this.labels.push(`S-${sprintNumber}`);
           const startDate = new Date(sprintInfoDto.startDate);
@@ -142,54 +123,76 @@ export class ProjectGraphComponent implements OnInit {
           const sprintDurationInDays = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
           this.noOfDays.push(sprintDurationInDays);
         });
-
-        this.overEstimate = this.sumofworklogs.map((worklog, index) => {
-          const planned = this.totalPlanned[index];
-          const over = worklog - planned;
-          return over < 0 ? 0 : over;
+        let totalSumofOriginal = 0;
+        this.addtotalScope = this.totalPlanned;
+        totalSumofOriginal = this.addtotalScope.reduce((accumulator, currentValue) => {
+          // Convert currentValue to a number if it's not already
+          let numberValue = Number(currentValue);
+          if (isNaN(numberValue)) {
+            throw new Error("All elements in the array must be numbers");
+          }
+          return accumulator + numberValue;
+        }, 0);
+        this.totalPlanned = this.cumulativeSum(this.totalPlanned);
+        this.completedTask = this.cumulativeSum(this.sumOfVelocity);
+        this.backlogTaskfetch();
+        console.log(this.totalScope);
+        const totalSumofOriginalEstimate = this.totalThreePointEstimateOfBacklog ;
+        this.totalScope = this.labels.map(() => totalSumofOriginal + totalSumofOriginalEstimate);
+        this.scopeForSprint = this.totalScope.map((value, index) => {
+          if (value === this.newScope[index]) {
+            return value.toFixed(2); 
+          } else {
+            return (value - this.newScope[index]).toFixed(2);
+           } 
         });
-
-        console.log(this.completedTask, this.notStartedTask, this.sumofworklogs, this.totalPlanned, this.overEstimate, this.sumOfVelocity, this.noOfDays);
-        const secondsPer8HourWorkday = 60 * 60;
-        this.originalEstimateData = this.sumoforiginal.map(
-          (sumInSeconds) => sumInSeconds / secondsPer8HourWorkday
-        );
-        const aiEstimateInDays = this.aisumofaiestimate.map(
-          (sumInSeconds) => sumInSeconds
-        );
-        this.workLogEstimateData = this.sumofworklogs.map(
-          (sumInSeconds) => sumInSeconds / secondsPer8HourWorkday
-        );
+        
+      
+        this.scopeForSprint.pop();
+        this.scopeForSprint.push((totalSumofOriginal + totalSumofOriginalEstimate).toFixed(2));
+        
+      
+        console.log(this.scopeForSprint);
       }
-
-      this.backlogTaskfetch();
     });
+
   }
-  async backlogTaskfetch() {
-    await this.sprintService.backlogTask.subscribe((res) => {
+
+  cumulativeSum(arr: number[]): number[] {
+    let cumulativeArray: number[] = [];
+    let sum: number = 0;
+
+    for (let i = 0; i < arr.length; i++) {
+      sum += arr[i];
+      cumulativeArray.push(sum);
+    }
+
+    return cumulativeArray;
+  }
+  backlogTaskfetch() {
+     this.sprintService.backlogTask.subscribe((res) => {
       this.backlogTask = [];
       const backlogTask = res;
       this.totalThreePointEstimateOfBacklog;
       if (backlogTask != null) {
         const sumOfThreePointEstimatess = backlogTask.reduce((sum: number, task: any) => {
-          if (task.threePointEstimate == null) {
+          if (task.originalEstimate == null) {
             return sum;
           }
-          return sum + parseFloat(task.threePointEstimate);
+          return sum + parseFloat(task.originalEstimate);
         }, 0);
         this.totalThreePointEstimateOfBacklog = sumOfThreePointEstimatess;
       }
 
       this.backlogTask = this.labels.map(() => 0);
-      this.backlogTask.pop();
-      this.backlogTask.push(this.totalThreePointEstimateOfBacklog);
+     // this.backlogTask.pop();
+      // this.backlogTask.push(this.totalThreePointEstimateOfBacklog/3600);
       if (!this.labels.includes("Backlog Task"))
         this.labels.push("Backlog Task");
 
 
       console.log(this.backlogTask, this.labels);
       this.updateGraph();
-
     });
 
 
@@ -264,7 +267,7 @@ export class ProjectGraphComponent implements OnInit {
     this.barChartData = [
       {
         label: "Total Scope",
-        data: this.totalScope,
+        data: this.scopeForSprint,
         type: "line",
         backgroundColor: "rgb(79, 129, 189)",
         borderColor: "rgb(79, 129, 189)",
@@ -272,7 +275,7 @@ export class ProjectGraphComponent implements OnInit {
         pointBorderColor: "rgb(79, 129, 189)",
         pointHoverBorderColor: "rgb(79, 129, 189)",
         pointHoverBackgroundColor: "rgb(79, 129, 189)",
-        pointStyle: false,
+        // pointStyle: false,
       },
       {
         label: "Velocity",
@@ -282,7 +285,7 @@ export class ProjectGraphComponent implements OnInit {
         borderColor: "rgb(44, 77, 117)",
         pointBackgroundColor: "rgb(44, 77, 117)",
         pointBorderColor: "rgb(44, 77, 117)",
-        pointStyle: false,
+        // pointStyle: false,
       },
       {
         data: this.completedTask,
@@ -291,7 +294,7 @@ export class ProjectGraphComponent implements OnInit {
         borderColor: "rgb(247, 150, 70)",
         pointBackgroundColor: "rgb(247, 150, 70)",
         pointBorderColor: "rgb(247, 150, 70)",
-        pointStyle: false,
+        // pointStyle: false,
         type: "line",
       },
 
@@ -301,7 +304,7 @@ export class ProjectGraphComponent implements OnInit {
         stack: "a",
         backgroundColor: "rgb(93, 138, 192)",
         // borderColor: 'black',
-        pointStyle: false,
+        // pointStyle: false,
         type: "bar",
         maxBarThickness: 30
       },
@@ -326,15 +329,15 @@ export class ProjectGraphComponent implements OnInit {
         type: "bar",
         maxBarThickness: 30
       },
-      {
-        data: this.backlogTask,
-        label: "Three Point Estimate",
-        backgroundColor: "red",
-        stack: "a",
-        pointStyle: false,
-        type: "bar",
-        maxBarThickness: 30
-      },
+      // {
+      //   data: this.backlogTask,
+      //   label: "Backlog",
+      //   backgroundColor: "red",
+      //   stack: "a",
+      //   pointStyle: false,
+      //   type: "bar",
+      //   maxBarThickness: 30
+      // },
     ];
   }
   onMouseEnterDialog() {
