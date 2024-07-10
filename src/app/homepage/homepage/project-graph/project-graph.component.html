@@ -1,5 +1,5 @@
-<ion-app (mouseenter)="onMouseEnterDialog()" (mouseleave)="onMouseLeaveDialog()">
-  <!--  -->
+<ion-app (mouseenter)="onMouseEnterDialog()"(mouseleave)="onMouseLeaveDialog()" >
+  <!-- (mouseleave)="onMouseLeaveDialog()" -->
   <div class="convas " *ngIf="labels.length !==0">
     <div class="main-div">
       <div class="convas-div">
@@ -38,8 +38,8 @@
           </tr>
           <tr>
             <td class="label">Total Scope</td>
-            <td *ngFor="let items of totalScope">{{items}}</td>
-            <td >{{totalThreePointEstimateOfBacklog}}</td>
+            <td *ngFor="let items of scopeForSprint">{{items}}</td>
+           
           </tr>
           <tr>
             <td class="label">Velocity</td>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit, signal } from "@angular/core";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthenticationService } from "src/app/services/authentication.service";
@@ -41,7 +41,7 @@ sprintEndDate:any;
 
   // Pagination variables
   p: number = 1;
-  searchText: any;
+    searchText: any;
   selectedItem: any;
   editingItem: any = null;
   editingField: string = ""; 
@@ -68,7 +68,8 @@ sprintEndDate:any;
     private taskService: TaskService,
     private commanService: CommanLoaderService,
     private projectService:ProjectsService,
-    private popover: PopoverController
+    private popover: PopoverController,
+    private cdr: ChangeDetectorRef
     
   ) {
 
@@ -106,7 +107,7 @@ sprintEndDate:any;
         this.tableData.forEach((task) => {
           if (task.originalEstimate) {
             // Assuming 1 hour = 3600 seconds
-            task.originalEstimate = task.originalEstimate / 3600;
+            task.originalEstimate = task.originalEstimate;
           }
         });
   
@@ -294,5 +295,73 @@ closePopup(){
   this.dialog.closeAll();
 
 }
+
+fetchBulkAiResponse(){
+  const requestData = {
+    value: this.tableData,
+  };
+
+ 
+  this.taskService.fetchAiEstimates(requestData).subscribe((res)=>{
+
+if(res.code===200){
+  
+this.tableData = res.data;
+this.tableData.forEach((task) => {
+  if (task.originalEstimate) {
+    // Assuming 1 hour = 3600 seconds
+    task.originalEstimate = task.originalEstimate ;
+  }
+  // this.commanService.presentToast(
+  //   "",
+  //   3000,
+  //   "toast-task-mess"
+  // );
+});
+}else{
+  this.commanService.presentToast("Something went wrong, please try again later", 3000, "toast-error-mess" );
+}
+
+  });
+}
+
+fetchSingleAiEstimates(item:any) {
+  
+  
+  const requestData = {
+    value: item,
+  };
+
+  if(item.estimates.low>0 && item.estimates.realistic>0 && item.estimates.high>0){
+    this.taskService.fetchAiEstimates(requestData).subscribe((res) => {
+      console.log('Response received:', res); // Log response for debugging
+    
+      if (res.code === 200) {
+        console.log('Updating tableData...');
+        this.tableData = this.tableData.map((task) => {
+          if (task.taskId === res.data[0].taskId) {
+            console.log(`Updating task with ID: ${task.taskId}`);
+            return {
+              ...task,
+              aiEstimate: res.data[0].aiEstimate,
+              threePointEstimate: res.data[0].threePointEstimate,
+              riskFactor: res.data[0].riskFactor,
+              replaced: res.data[0].replaced,
+            };
+          }
+          return task;
+        });
+        console.log('Updated tableData:', this.tableData); // Log updated tableData for debugging
+        this.cdr.detectChanges(); // Trigger change detection
+      } else {
+        this.commanService.presentToast("Something went wrong, please try again later", 3000, "toast-error-mess");
+      }
+    });
+  }else{
+    this.commanService.presentToast("Please add low, realistic, and high values", 3000, "toast-error-mess");
+
+  }
+  
+}  
  
 }

@@ -76,14 +76,15 @@ export class TaskGraphComponent implements OnInit {
             this.threePointForChart.push(dataForDate[0].threePointEstimate);
             this.riskFactorForTable.push(dataForDate[0].riskFactor);
             this.actualForChart.push(dataForDate[0].actualEstimate );
-            this.remainingforTable.push(dataForDate[0].remaining / 8);
+            this.remainingforTable.push(dataForDate[0].remaining );
           } else {
             this.AiEstimateForChart.push(0);
           }
-    const dateParts = key.split('-');
-    const dateObject = new Date(`${dateParts[0]}-${dateParts[1]}-${dateParts[2]}`);
-    const formattedDate = dateObject.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
-    this.labels.push(formattedDate);
+    // const dateParts = key.split('-');
+    // const dateObject = new Date(`${dateParts[0]}-${dateParts[1]}-${dateParts[2]}`);
+    // const formattedDate = dateObject.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+    // this.labels.push(formattedDate);
+    this.formatDate(key);
         }
 
         this.AiEstimateForChart.forEach((val) => {
@@ -131,6 +132,24 @@ export class TaskGraphComponent implements OnInit {
         console.log("Item does not have graphData");
       }
     });
+  }
+
+  formatDate(key: string): void {
+    // Split the date string by '/'
+    const dateParts = key.split('/');
+    if (dateParts.length === 3) {
+      const dateObject = new Date(`${dateParts[2]}-${dateParts[0]}-${dateParts[1]}`);
+
+      if (!isNaN(dateObject.getTime())) {
+        // Format the date using toLocaleDateString
+        const formattedDate = dateObject.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+        this.labels.push(formattedDate);
+      } else {
+        console.error('Invalid Date');
+      }
+    } else {
+      console.error('Invalid Date Format');
+    }
   }
 
   public barChartOptions: ChartConfiguration["options"] = {

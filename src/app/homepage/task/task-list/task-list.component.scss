@@ -208,6 +208,17 @@ pagination-controls {
   height: 25px;
   font-size: 13px;
 }
+.aibtn{
+  margin-top: 0px;
+  margin-left: 10px;
+  background-color: white;
+  color: rgba(26, 74, 96, 0.9);
+  border: 2px solid rgba(26, 74, 96, 0.9);
+  border-radius: 5px;
+  width: 150px;
+  height: 25px;
+  font-size: 13px;
+}
 
 table {
   font-family: arial;
@@ -317,6 +328,22 @@ tr:nth-child(even) {
   color: black;
 
 }
+
+.fetchai-btn{
+  text-align: center;
+ float: right;
+  background-color: white;
+  color: rgba(26, 74, 96, 0.9) ;
+  border: 1px solid rgba(26, 74, 96, 0.8999999761581421);
+  border-radius: 3px;
+  width: 40px;
+  height: 20px;
+  font-size: 10px; 
+}
+.fetchai-btn:hover {
+    background-color: rgba(26, 74, 96, 0.8999999761581421);
+    color: white;
+  }
 
 
 

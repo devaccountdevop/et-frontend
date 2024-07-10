@@ -87,10 +87,10 @@ this.AiResponseMsg = "AI Estimate is replaced with 3 point estimate";
     };
     this.taskService.fetchAiEstimates(requestData).subscribe((res) => {
       if (res.code === 200) {
-        this.sharedItem.aiEstimate = res.data.aiEstimate;
-        this.sharedItem.threePointEstimate = res.data.threePointEstimate;
-        this.sharedItem.riskFactor = res.data.riskFactor;
-        this.sharedItem.replaced = res.data.replaced;
+        this.sharedItem.aiEstimate = res.data[0].aiEstimate;
+        this.sharedItem.threePointEstimate = res.data[0].threePointEstimate;
+        this.sharedItem.riskFactor = res.data[0].riskFactor;
+        this.sharedItem.replaced = res.data[0].replaced;
         if( res.data.replaced === "YES"){
          this.AiResponseStatus = res.data.replaced;
 this.AiResponseMsg = "AI Estimate is replaced with 3 point estimate";

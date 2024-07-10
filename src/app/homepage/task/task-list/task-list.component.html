@@ -10,10 +10,13 @@
         ">
         <div class="innerbox">
           <ion-row class="subheader" style="align-items: center; margin-bottom: 20px">
-            <ion-col size="5.5" style="background-color: white; border: 0%; margin: 0%">
+            <ion-col  size="6" style="background-color: white; border: 0%; margin: 0% ">
               <button (click)="updateEstimatesInJira()" class="updatebtn">
                 Update Ai Estimates In Jira
                 <ion-icon name="checkmark-outline" style="font-size: medium; margin-bottom: -2px"></ion-icon>
+              </button>
+              <button *ngIf="clientId =='0000'" (click)="fetchBulkAiResponse()" class="aibtn">
+               Fetch AI Estimate
               </button>
 
               <span><button class="syncbtn" (click)="syncData()">
@@ -21,7 +24,7 @@
                   <ion-icon style="margin-left: 5px; margin-bottom: -1.7px"
                     name="sync-outline"></ion-icon></button></span>
             </ion-col>
-            <ion-col size="2.5" style="background-color: white; border: 0%; margin: 0%">
+            <ion-col size="2" style="background-color: white; border: 0%; margin: 0%">
               <span style="
                   background-color: white;
                   border: 0%;
@@ -184,6 +187,7 @@
                         word-wrap: normal;
                       ">
                       Actual(HRS)
+                    
                     </th>
                     <th rowspan="2" style="
                     width: 50px;
@@ -217,7 +221,12 @@
                     <td (click)="openDialog(item)">{{ item.estimates.realistic }}</td>
                     <td (click)="openDialog(item)">{{ item.estimates.high }}</td>
                     <td (click)="openDialog(item)">{{ item.threePointEstimate }}</td>
-                    <td (click)="openDialog(item)">{{ item.aiEstimate }}</td>
+                    <td>
+                      <span>{{ item.aiEstimate }}</span>
+                      <button (click)="fetchSingleAiEstimates(item)" class="fetchai-btn" >
+                        Fetch
+                        </button>
+                    </td>
                     <td (click)="openDialog(item)">{{ item.originalEstimate }}</td>
                     <!-- <td (mouseenter)="openGraphPopup($event, item)" (mouseleave)="closePopup()"  > -->
                       <td>

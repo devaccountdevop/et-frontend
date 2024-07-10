@@ -17,7 +17,7 @@
       border-collapse: collapse; 
   } 
  .label{
-  width: 90px !important;
+  width: 80px !important;
  }
  .tableheader{
  
@@ -65,7 +65,7 @@
 }
 .table-data{
   width:96%  ;
-  font-size: 11px  ; 
+  font-size: 10px  ; 
   text-align: left;
    margin-top: 0px;
     margin-bottom: 10px;
@@ -92,6 +92,7 @@ border: 1px solid rgb(182, 178, 178);
 .pagination{
 
   justify-content: center;
+  margin-left: -40px;
    margin-top: 5px;
    font-size: 10px;
 }

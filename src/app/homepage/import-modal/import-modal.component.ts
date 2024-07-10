@@ -203,8 +203,6 @@ export class ImportModalComponent implements OnInit {
           this.commanService.presentToast("Something went wrong, please try again later", 3000, "toast-error-mess");
         }
       )
-
-
     } else {
       this.close();
       this.commanService.presentToast("Please select a file to upload", 3000, "toast-error-mess");
