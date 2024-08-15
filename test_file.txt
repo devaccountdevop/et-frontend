@@ -1,9 +1,13 @@
 ndjcbjkz ckjkbcjsdkf kc 
 cmkxnnnnnnnnnnnnnnnnnnnnnnnnnnnnkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
 dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+<<<<<<< HEAD
 
 
 
 
 hello mr imran
 hello world
+=======
+hello imranhello my dear friend
+>>>>>>> origin/main
